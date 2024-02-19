@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/02/13 18:28:57 by yususato         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:22:47 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ char	*get_pass(char	*line)
 		if (end)
 			strncpy(path, str, end - str);
 		else
-			strlcpy(path, str, end - str);
+			strlcpy(path, str, PATH_MAX);
 		strlcat(path, "/", PATH_MAX);
 		strlcat(path, line, PATH_MAX);
 		if (access(path, X_OK) == 0)
 		{
 			copy = strdup(path);
 			if (copy == NULL)
-				exit(0);
+				return (NULL);
 			return (copy);
 		}
 		if (end == NULL)
@@ -44,12 +44,47 @@ char	*get_pass(char	*line)
 	return (NULL);
 }
 
+int	token_count(t_token *token)
+{
+	t_token	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = token;
+	while (tmp != NULL)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+char	**token_list(t_token *token)
+{
+	int		i;
+	char	**args;
+
+	i = 0;
+	i = token_count(token);
+	args = calloc(i + 1, sizeof(char *));
+	if (!args)
+		ft_error();
+	i = 0;
+	while (token->next != NULL)
+	{
+		args[i] = strdup(token->str);
+		i++;
+		token = token->next;
+	}
+	return (args);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*line;
-	t_stack	stack;
-	t_stack	sum;
+	char	**args;
 	t_token	*token;
+	// t_node	*node;
 	pid_t	pid;
 	int		status;
 	char	*path;
@@ -63,37 +98,37 @@ int	main(int ac, char **av, char **env)
 		if (line)
 		{
 			add_history(line);
-			// path = get_pass(line);
-			// pid = fork();
-			// if (pid < 0)
-			// {
-			// 	perror("fork");
-			// 	exit(0);
-			// }
-			// else if (pid == 0)
-			// {
-			// 	char *args[] = {line, NULL};
-				
-			// 	if (execve(path, args, env) == -1)
-			// 	{
-			// 		perror("execve");
-			// 		exit(0);
-			// 	}
-			// }
-			// 	else
-			// 		wait(&status);
-			// free(line);
-			
-			
+			path = get_pass(line);
 			token = lexer(line);
-			// token->next = NULL;
-			while (token != NULL)
+			// node = parser(token);
+			expand(token);
+			pid = fork();
+			if (pid < 0)
 			{
-				printf("%s\n",token->str);
-				token = token->next;
+				perror("fork");
+				exit(0);
 			}
-			// parser(token);
-
+			else if (pid == 0)
+			{
+				args = token_list(token);
+				if (!path)
+				{
+					args++;
+					while (*args != '\0')
+					{
+						printf("%s\n",*args);
+						args++;
+					}
+				}
+				else if (execve(path, args, env) == -1)
+				{
+					perror("execve");
+					exit(0);
+				}
+			}
+				else
+					wait(&status);
+			free(line);
 		}
 	}
 	exit(0);

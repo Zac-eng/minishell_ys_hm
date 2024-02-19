@@ -6,7 +6,7 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/01/29 09:46:42 by yususato         ###   ########.fr        #
+#    Updated: 2024/02/14 14:12:10 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = cc
 INCLUDES_DIR = ./Includes
 CFLAGS =-I$(INCLUDES_DIR)
 
-SRCS = create.c \
+SRCS = expand.c \
 		lexer.c \
 		main.c
 		

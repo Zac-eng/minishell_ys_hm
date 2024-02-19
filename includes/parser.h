@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/02/01 13:11:24 by yususato         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:37:50 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef enum e_redirect_type
 	IN_FILE,
 	OUT_FILE,
 	APPEND
-}						t_redirect_type;
+}	t_redirect_type;
 
 typedef struct s_file
 {

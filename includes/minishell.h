@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/02/13 18:45:11 by yususato         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:02:51 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ t_token	*split_pipe(char **tmp, char *line);
 bool	split_space(char **tmp, char *line);
 t_token	*create_token(char *line, t_token_kind kind);
 bool	check_word(char	*line);
-
-
+void	remove_squote(t_token *token);
+void	expand(t_token *token);
+void	ft_error(void);
+void	remove_dquote(t_token *token);
 
 #endif
