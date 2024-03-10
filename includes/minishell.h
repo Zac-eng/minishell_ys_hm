@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: h.miyazaki <h.miyazaki@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/03/09 11:35:24 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/03/10 13:41:11 by h.miyazaki       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
@@ -51,7 +52,6 @@ typedef struct s_stack
 }	t_stack;
 
 void	signalctrl(void);
-char	*ft_strtrim(char const *s1, char const *set);
 char	*split_quote(t_stack *lexer, char *line);
 char	*split_normal(t_stack *lexer, char *line);
 char	*split_line(t_stack *lexer, char *line);
