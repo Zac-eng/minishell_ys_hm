@@ -5,33 +5,41 @@
 #                                                     +:+ +:+         +:+      #
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/12/01 19:54:07 by hmiyazak          #+#    #+#              #
-#    Updated: 2023/12/01 20:21:45 by hmiyazak         ###   ########.fr        #
+#    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
+#    Updated: 2024/03/13 08:25:24 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-LINKFLAGS = -lreadline
-SRCS = srcs/main.c
-OBJS = $(SRCS:.c=.o)
-INCLUDES = includes
-RM = rm -rf
+INCLUDES_DIR = ./includes
+CFLAGS =-I$(INCLUDES_DIR)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@
+SRCS =	./srcs/signalctrl.c \
+		./srcs/built_in/cd.c \
+		./srcs/main.c
+		
+
+OBJS = $(SRCS:%.c=%.o)
+
+LIBDIR = ./libft
+LIBFT = $(LIBDIR)/libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LINKFLAGS)
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
+
+$(LIBFT):
+	$(MAKE) -C $(LIBDIR)
 
 clean:
+	$(MAKE) clean -C $(LIBDIR)
 	$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(MAKE) fclean -C $(LIBDIR)
+	$(RM) $(NAME) $(LIBFT)
 
 re: fclean all
 
