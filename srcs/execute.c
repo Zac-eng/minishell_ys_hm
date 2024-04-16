@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/03/13 12:06:08 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/16 22:07:55 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define READ  (0)
 #define WRITE (1)
 
-void	execute(char **cmd, t_token sign)
+void	execute(char **cmd, char **env)
 {
 	int		pid;
 	int		status;
@@ -26,25 +26,30 @@ void	execute(char **cmd, t_token sign)
 	if (pipe(pipes) < 0)
 		return ;
 	pid = fork();
+	printf("forked execute\n");
 	if (pid < 0)
 		exit(1);
 	else if (pid == 0)
 	{
 		dup2(pipes[WRITE], 1);
 		printf("called");
+		exit(0);
 	}
 	else
 	{
 		dup2(pipes[READ], 0);
 		read(0, buf, 4);
+		buf[4] = '\0';
 		printf("%d, %s\n", getpid(), buf);
+		wait(&status);
+		exit(status);
 	}
 }
 
-void	pipes_exec(char **cmd)
-{
+// void	pipes_exec(char **cmd)
+// {
 	
-}
+// }
 
 // int	main(void)
 // {
@@ -54,39 +59,39 @@ void	pipes_exec(char **cmd)
 // 	return (0);
 // }
 
-static void	execute_cmd(char **cmd)
-{
-	if (is_equal(cmd[0], "echo") == 1)
-		echo(cmd);
-	else if (is_equal(cmd[0], "cd") == 1)
-		cd(cmd);
-	else if (is_equal(cmd[0], "pwd") == 1)
-		pwd(cmd);
-	else if (is_equal(cmd[0], "export") == 1)
-		export(cmd);
-	else if (is_equal(cmd[0], "unset") == 1)
-		unset(cmd);
-	else if (is_equal(cmd[0], "env") == 1)
-		env(cmd);
-	else if (is_equal(cmd[0], "exit") == 1)
-		exit(1);
-}
+// static void	execute_cmd(char **cmd)
+// {
+// 	if (is_equal(cmd[0], "echo") == 1)
+// 		echo(cmd);
+// 	else if (is_equal(cmd[0], "cd") == 1)
+// 		cd(cmd);
+// 	else if (is_equal(cmd[0], "pwd") == 1)
+// 		pwd(cmd);
+// 	else if (is_equal(cmd[0], "export") == 1)
+// 		export(cmd);
+// 	else if (is_equal(cmd[0], "unset") == 1)
+// 		unset(cmd);
+// 	else if (is_equal(cmd[0], "env") == 1)
+// 		env(cmd);
+// 	else if (is_equal(cmd[0], "exit") == 1)
+// 		exit(1);
+// }
 
-static int	is_equal(char *str, char *ref)
-{
-	int	iter;
+// static int	is_equal(char *str, char *ref)
+// {
+// 	int	iter;
 
-	iter = 0;
-	if (str == NULL || ref == NULL)
-		return (-1);
-	while (str[iter] && ref[iter])
-	{
-		if (str[iter] != ref[iter])
-			return (0);
-		iter++;
-	}
-	if (str[iter] == '\0' && ref[iter] == '\0')
-		return (1);
-	else
-		return (0);
-}
+// 	iter = 0;
+// 	if (str == NULL || ref == NULL)
+// 		return (-1);
+// 	while (str[iter] && ref[iter])
+// 	{
+// 		if (str[iter] != ref[iter])
+// 			return (0);
+// 		iter++;
+// 	}
+// 	if (str[iter] == '\0' && ref[iter] == '\0')
+// 		return (1);
+// 	else
+// 		return (0);
+// }

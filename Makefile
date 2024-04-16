@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/03/13 08:25:24 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/04/16 21:01:36 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CFLAGS =-I$(INCLUDES_DIR)
 
 SRCS =	./srcs/signalctrl.c \
 		./srcs/built_in/cd.c \
+		./srcs/execute.c \
 		./srcs/main.c
 		
 

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/03/12 21:12:33 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/16 21:01:05 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,8 @@ typedef struct s_stack
 }	t_stack;
 
 void	signalctrl(void);
-char	*split_quote(t_stack *lexer, char *line);
-char	*split_normal(t_stack *lexer, char *line);
-char	*split_line(t_stack *lexer, char *line);
-t_stack	lexer(char *line);
-t_stack	*create_stack(void);
-void	push(t_stack *stack, char *i, int type);
-int		pop(t_stack *stack);
+void	execute(char **cmd, char **env);
+t_token	*lexer(char *line);
+
 
 #endif
