@@ -1,0 +1,22 @@
+total 152
+-rw-r--r--   1 yususato  2020   1373  2 14 14:12 Makefile
+-rw-r--r--   1 yususato  2020   1862  2 14 14:54 expand.c
+-rw-r--r--   1 yususato  2020   1696  2 20 14:23 expand.o
+-rw-r--r--   1 yususato  2020   1662  1 29 15:21 file.c
+-rw-r--r--   1 yususato  2020     20  2 20 15:26 hello.txt
+drwxr-xr-x   4 yususato  2020    136  1 31 17:45 includes
+-rw-r--r--   1 yususato  2020   4024  2 16 15:46 lexer.c
+-rw-r--r--   1 yususato  2020   4232  2 20 14:23 lexer.o
+drwxr-xr-x  84 yususato  2020   2856  2 20 14:24 libft
+-rw-r--r--   1 yususato  2020   2759  2 16 18:22 main.c
+-rw-r--r--   1 yususato  2020   3076  2 20 14:23 main.o
+-rwxr-xr-x   1 yususato  2020  14380  2 20 14:24 minishell
+-rw-r--r--   1 yususato  2020      0  2 20 15:26 output.txt
+-rw-r--r--   1 yususato  2020   1003  2 20 15:21 parser.c
+-rw-r--r--   1 yususato  2020   1979  1 29 15:22 pipex.c
+-rw-r--r--   1 yususato  2020     85  2 16 17:16 practice.c
+-rw-r--r--   1 yususato  2020   1157  2 18 13:50 redirect.c
+drwxr-xr-x   4 yususato  2020    136  1 29 09:44 srcs
+-rwxr-xr-x   1 yususato  2020    670  2  8 12:34 test_script.sh
+File list added.
+This is a new line.

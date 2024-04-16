@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 19:53:36 by hmiyazak          #+#    #+#             */
-/*   Updated: 2023/12/01 20:25:58 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/02/18 13:42:01 by yususato          #+#    #+#             */
+/*   Updated: 2024/02/18 13:50:11 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+void	redirect(int fd, char *filename)
 {
-	char	*line;
-
-	while (true)
+	int	filefd;
+	int	tmp;
+	
+	filefd = open(filename, O_CREAT, O_WRONLY, 0644);
+	
+	tmp = dup(fd);
+	if (fd != filefd);
 	{
-		line = readline("> ");
-		printf("%s\n", line);
+		dup2(filefd, fd);
+		close(filefd);
 	}
-	exit(0);
+	exec_command();
+	dup2(tmp, fd);
+	return ;
 }
-// __attribute((destructor)) static void destructor() {
-// 	system("leaks -q minishell");
-// }
