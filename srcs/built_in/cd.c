@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: h.miyazaki <h.miyazaki@student.42.fr>      +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/03/10 14:15:44 by h.miyazaki       ###   ########.fr       */
+/*   Updated: 2024/03/13 12:05:34 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	cd(char	*destination)
 	{
 		create_absolute(&absolute_path[0], destination);
 		if (chdir(absolute_path) != 0)
-			perror("cd: no such file or directory: %s\n", destination);
+			printf("cd: no such file or directory: %s\n", destination);
 	}
 	else
 	{
 		if (chdir(destination) != 0)
-			perror("cd: no such file or directory: %s\n", destination);
+			printf("cd: no such file or directory: %s\n", destination);
 	}
 }
 
@@ -47,16 +47,16 @@ static void	create_absolute(char *buffer, char *dest)
 	i += add_path(&buffer[i], home, PATH_MAX - i);
 	if (i == -1)
 	{
-		ft_bzero(buffer);
+		ft_bzero(buffer, PATH_MAX);
 		return ;
 	}
-	i += add_path(&buffer[i], dest[1], PATH_MAX - i);
+	i += add_path(&buffer[i], &dest[1], PATH_MAX - i);
 	if (i == -1)
 	{
-		ft_bzero(buffer);
+		ft_bzero(buffer, PATH_MAX);
 		return ;
 	}
-	buffer[i] = "\0";
+	buffer[i] = '\0';
 }
 
 static int	add_path(char *dest, char *src, int max_len)

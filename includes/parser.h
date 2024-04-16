@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/21 17:16:38 by yususato          #+#    #+#             */
-/*   Updated: 2024/03/12 21:07:43 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
+/*   Updated: 2024/03/12 19:38:31 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	pwd(void)
+#ifndef PARSER_H
+# define PARSER_H
+
+typedef enum e_redirect_type
 {
-	char	path[PATH_MAX];
+	UNKNOWN,
+	QUOTE_HEREDOC,
+	HEREDOC,
+	IN_FILE,
+	OUT_FILE,
+	APPEND
+}						t_redirect_type;
 
-	if (getcwd(path, sizeof(path)) != NULL)
-		ft_printf("%s\n", path);
-	else
-		perror("Error\n");
-	return ;
-}
-
-
-
-void	echo_n(int ac, char **av)
+typedef struct s_file
 {
-	int	i;
+	char				*file_name;
+	t_redirect_type		type;
+	t_file				*next;
+}						t_file;
 
-	i = 0;
-	while (argv[i])
-	{
-		printf("%s",argv[i]);
-		i++;
-	}
-}
+typedef struct s_parser
+{
+	char				**cmd;
+	t_file				*file;
+	t_parser			*next;
+	t_parser			*prev;
+}						t_parser;
+
+#endif

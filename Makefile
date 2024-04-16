@@ -6,16 +6,17 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/03/09 11:54:03 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/03/13 08:25:24 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-INCLUDES_DIR = ./Includes
+INCLUDES_DIR = ./includes
 CFLAGS =-I$(INCLUDES_DIR)
 
 SRCS =	./srcs/signalctrl.c \
+		./srcs/built_in/cd.c \
 		./srcs/main.c
 		
 

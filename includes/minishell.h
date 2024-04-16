@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: h.miyazaki <h.miyazaki@student.42.fr>      +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/03/10 13:41:11 by h.miyazaki       ###   ########.fr       */
+/*   Updated: 2024/03/12 21:12:33 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdbool.h>
 # include <limits.h>
 # include <string.h>
+# include <signal.h>
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
