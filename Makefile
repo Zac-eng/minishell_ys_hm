@@ -6,17 +6,19 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/04/16 21:01:36 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/04/21 16:04:11 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 INCLUDES_DIR = ./includes
-CFLAGS =-I$(INCLUDES_DIR)
-
+BUILTIN_DIR = ./srcs/built_in
+LP_DIR = ./srcs/lexer_parser
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
 SRCS =	./srcs/signalctrl.c \
-		./srcs/built_in/cd.c \
+		$(BUILTIN_DIR)/cd.c \
+		$(LP_DIR)/lexer.c \
 		./srcs/execute.c \
 		./srcs/main.c
 		

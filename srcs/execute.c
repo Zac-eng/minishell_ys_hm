@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/04/16 22:07:55 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:08:44 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 #define READ  (0)
 #define WRITE (1)
 
-void	execute(char **cmd, char **env)
+// void	execute(char *line, char **env)
+// {
+	
+// }
+
+void	execute(char *line, char **env)
 {
 	int		pid;
 	int		status;
 	int		pipes[2];
 	char	buf[1024];
 
-	if (cmd == NULL || *cmd == NULL)
+	(void)env;
+	if (line == NULL)
 		return ;
 	if (pipe(pipes) < 0)
 		return ;
@@ -75,6 +81,11 @@ void	execute(char **cmd, char **env)
 // 		env(cmd);
 // 	else if (is_equal(cmd[0], "exit") == 1)
 // 		exit(1);
+// 	else
+// 	{
+// 		printf("minishell: command not found: %s\n", cmd[0]);
+// 		exit(0);
+// 	}
 // }
 
 // static int	is_equal(char *str, char *ref)
