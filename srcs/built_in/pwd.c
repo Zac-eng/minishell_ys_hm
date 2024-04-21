@@ -6,9 +6,11 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 17:16:38 by yususato          #+#    #+#             */
-/*   Updated: 2024/03/12 21:07:43 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:59:14 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 void	pwd(void)
 {
@@ -23,7 +25,7 @@ void	pwd(void)
 
 
 
-void	echo_n(int ac, char **av)
+void	echo_n(int argc, char **argv)
 {
 	int	i;
 

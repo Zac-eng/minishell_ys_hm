@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/03/12 21:12:33 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:03:15 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,37 +28,35 @@
 # include <sys/stat.h>
 # include "../libft/libft.h"
 
-typedef enum e_token
+typedef enum e_token_kind
 {
-	PIPE,
-	SPASE,
-	S_QUOTE,
-	D_QUOTE,
-	STR
-}						t_token;
+	TK_PIPE,
+	TK_CMD,
+	TK_SQUOTE,
+	TK_DQUOTE,
+	TK_LESS,
+	TK_DLESS,
+	TK_GREAT,
+	TK_DGREAT
+}						t_token_kind;
 
-typedef struct s_node
+typedef struct s_env
 {
-	int				data;
-	struct s_node	*prev;
-	struct s_node	*next;
-	char			*str;
-}	t_node;
+	char			*name;
+	char			*content;
+	struct t_env	*next;
+}	t_env;
 
-typedef struct s_stack
+typedef struct s_token
 {
-	t_node	*top;
-	t_node	*bottom;
-	int		current;
-}	t_stack;
+	t_token_kind		kind;
+	struct s_token		*next;
+	char				*str;
+}	t_token;
 
 void	signalctrl(void);
-char	*split_quote(t_stack *lexer, char *line);
-char	*split_normal(t_stack *lexer, char *line);
-char	*split_line(t_stack *lexer, char *line);
-t_stack	lexer(char *line);
-t_stack	*create_stack(void);
-void	push(t_stack *stack, char *i, int type);
-int		pop(t_stack *stack);
+void	execute(char *line, char **env);
+t_token	*lexer(char *line);
+
 
 #endif

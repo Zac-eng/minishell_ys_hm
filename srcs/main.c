@@ -6,13 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/03/13 08:54:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:09:08 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	put_error_exit(char *error);
+void	put_error_exit(const char *error);
 void	handle_status(int *status);
 
 int	main(int argc, char **argv, char **env)
@@ -21,6 +21,8 @@ int	main(int argc, char **argv, char **env)
 	pid_t	pid;
 	int		status;
 
+	(void)argc;
+	(void)argv;
 	signalctrl();
 	while (true)
 	{
@@ -34,20 +36,21 @@ int	main(int argc, char **argv, char **env)
 			if (pid < 0)
 				put_error_exit("failed to fork");
 			else if (pid == 0)
-				exit(0);
+				execute(line, env);
 			else
 				handle_status(&status);
 			free(line);
 		}
 	}
+	rl_clear_history();
 	exit(0);
 }
 
-__attribute((destructor)) static void destructor() {
-	system("leaks -q minishell");
-}
+// __attribute((destructor)) static void destructor() {
+// 	system("leaks -q minishell");
+// }
 
-void	put_error_exit(char *error)
+void	put_error_exit(const char *error)
 {
 	perror(error);
 	exit(1);
