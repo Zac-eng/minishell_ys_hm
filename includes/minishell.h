@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/04/21 16:03:15 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/29 00:39:42 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ typedef struct s_token
 void	signalctrl(void);
 void	execute(char *line, char **env);
 t_token	*lexer(char *line);
-
+void	cd(char	*destination);
+void	echo_n(int argc, char **argv);
+void	env();
+void	_export(char	*name, char *value);
+void	pwd(void);
+void	unset(char *name);
 
 #endif

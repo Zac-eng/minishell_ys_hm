@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/04/21 16:09:08 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/29 01:26:33 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,7 @@ int	main(int argc, char **argv, char **env)
 		else
 		{
 			add_history(line);
-			pid = fork();
-			if (pid < 0)
-				put_error_exit("failed to fork");
-			else if (pid == 0)
-				execute(line, env);
-			else
-				handle_status(&status);
+			execute(line, env);
 			free(line);
 		}
 	}

@@ -6,12 +6,14 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:32 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/03/12 21:07:53 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/29 00:47:49 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
 void	unset(char *name)
 {
-	if (unsetev(name) != 0)
+	if (unsetenv(name) != 0)
 		perror("Error\n");
 }
