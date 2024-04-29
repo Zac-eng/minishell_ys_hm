@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/04/29 01:37:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:04:06 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define READ  (0)
 #define WRITE (1)
 
-static void	execute_cmd(char **cmd);
+static void	execute_cmd(char **cmd, char **env);
 static int	is_equal(char *str, char *ref);
 static void	sigexit(int signum);
 
@@ -27,14 +27,15 @@ void	execute(char *line, char **env)
 
 	(void)env;
 	pid = fork();
-	char	*cmd[2] = {"cd", "builtin"};
+	printf("line %s\n", line);
+	char	*cmd[2] = {line, "libft"};
 	if (pid < 0)
 		exit(0);
 	else if (pid == 0)
 	{
 		printf("child\n");
 		signal(SIGINT, sigexit);
-		execute_cmd(&cmd[0]);
+		execute_cmd(&cmd[0], env);
 		exit(0);
 	}
 	else
@@ -79,20 +80,20 @@ void	execute(char *line, char **env)
 // 	return (0);
 // }
 
-static void	execute_cmd(char **cmd)
+static void	execute_cmd(char **cmd, char **env)
 {
 	if (is_equal(cmd[0], "echo") == 1)
-		echo_n(0, cmd);
+		_echo(0, cmd);
 	else if (is_equal(cmd[0], "cd") == 1)
-		cd("./builtin");
+		_cd(cmd[1]);
 	else if (is_equal(cmd[0], "pwd") == 1)
-		pwd();
+		_pwd();
 	else if (is_equal(cmd[0], "export") == 1)
 		_export("TEST", "test");
 	else if (is_equal(cmd[0], "unset") == 1)
-		unset("TEST");
+		_unset("TEST");
 	else if (is_equal(cmd[0], "env") == 1)
-		env("TEST");
+		_env(env);
 	else if (is_equal(cmd[0], "exit") == 1)
 		exit(1);
 	else

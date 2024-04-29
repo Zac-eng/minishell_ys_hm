@@ -6,13 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:55:49 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/04/29 00:44:31 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:04:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo_n(int argc, char **argv)
+void	_echo(int argc, char **argv)
 {
 	int	i;
 

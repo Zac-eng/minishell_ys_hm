@@ -6,13 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:32 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/04/29 00:47:49 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:04:37 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset(char *name)
+void	_unset(char *name)
 {
 	if (unsetenv(name) != 0)
 		perror("Error\n");

@@ -6,13 +6,12 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/04/29 01:26:33 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:43:10 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	put_error_exit(const char *error);
 void	handle_status(int *status);
 
 int	main(int argc, char **argv, char **env)

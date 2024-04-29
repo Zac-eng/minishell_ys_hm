@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/04/29 01:01:25 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/04/29 11:41:38 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ SRCS =	./srcs/signalctrl.c \
 		$(LP_DIR)/lexer.c \
 		./srcs/execute.c \
 		./srcs/main.c
-		
 
 OBJS = $(SRCS:%.c=%.o)
 
