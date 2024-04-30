@@ -16,8 +16,12 @@ int	main(int argc, char **argv, char **env)
 {
 	t_env	*tenv;
 	char	*line;
+	char	**args;
+	t_token	*token;
+	t_env	*enve;
 	pid_t	pid;
 	int		status;
+	char	*path;
 
 	(void)argc;
 	(void)argv;
@@ -28,33 +32,36 @@ int	main(int argc, char **argv, char **env)
 		line = readline("> ");
 		if (!line)
 			break ;
-		else
+		if (line)
 		{
 			add_history(line);
 			execute(line, &tenv);
 			free(line);
 		}
 	}
-	rl_clear_history();
 	exit(0);
 }
 // __attribute((destructor)) static void destructor() {
 // 	system("leaks -q minishell");
 // }
 
-void	put_error_exit(const char *error)
-{
-	perror(error);
-	exit(1);
-}
+// // __attribute((destructor)) static void destructor() {
+// // 	system("leaks -q minishell");
+// // }
 
-void	handle_status(int *status)
-{
-	wait(status);
-	printf("status: %d\n", *status);
-	if (*status != 0)
-		exit(1);
-}
+// void	put_error_exit(const char *error)
+// {
+// 	perror(error);
+// 	exit(1);
+// }
+
+// void	handle_status(int *status)
+// {
+// 	wait(status);
+// 	printf("status: %d\n", *status);
+// 	if (*status != 0)
+// 		exit(1);
+// }
 
 // int	main(int ac, char **av, char **env)
 // {
