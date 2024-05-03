@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/03 22:14:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:45:54 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	execute(char *line, t_env **env)
 	if (line == NULL || env == NULL)
 		exit(1);
 	char	*cmd[2] = {line, "libft"};
-	printf("child\n");
 	signal(SIGINT, sigexit);
 	execute_cmd(&cmd[0], env);
 	// exit(0);
@@ -71,6 +70,8 @@ void	execute(char *line, t_env **env)
 
 static void	execute_cmd(char **cmd, t_env **env)
 {
+	if (cmd == NULL || env == NULL)
+		return ;
 	if (is_equal(cmd[0], "echo") == 1)
 		_echo(0, cmd);
 	else if (is_equal(cmd[0], "cd") == 1)
@@ -80,7 +81,7 @@ static void	execute_cmd(char **cmd, t_env **env)
 	else if (is_equal(cmd[0], "export") == 1)
 		_export(env, "test=test");
 	else if (is_equal(cmd[0], "unset") == 1)
-		_unset(env, "TEST");
+		_unset(env, "test");
 	else if (is_equal(cmd[0], "env") == 1)
 		_env(*env);
 	else if (is_equal(cmd[0], "exit") == 1)
