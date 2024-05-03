@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/03 19:00:53 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:13:41 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
+	t_env	*tenv;
 	char	*line;
 	pid_t	pid;
 	int		status;
@@ -21,6 +22,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	signalctrl();
+	tenv = env_into_tenv(env);
 	while (true)
 	{
 		line = readline("> ");
@@ -29,7 +31,7 @@ int	main(int argc, char **argv, char **env)
 		else
 		{
 			add_history(line);
-			execute(line, env);
+			execute(line, &tenv);
 			free(line);
 		}
 	}

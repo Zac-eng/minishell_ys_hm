@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/03 19:00:20 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:14:26 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,23 @@
 #define READ  (0)
 #define WRITE (1)
 
-static void	execute_cmd(char **cmd, t_env *env);
-static int	is_equal(char *str, char *ref);
+static void	execute_cmd(char **cmd, t_env **env);
 static void	sigexit(int signum);
 
-void	execute(char *line, char **env)
+void	execute(char *line, t_env **env)
 {
 	int		pid;
 	int		status;
-	t_env	*tenv;
 	int		pipes[2];
 	char	buf[1024];
 
-	
+	if (line == NULL || env == NULL)
+		exit(1);
 	char	*cmd[2] = {line, "libft"};
-	pid = fork();
-	if (pid < 0)
-		exit(0);
-	else if (pid == 0)
-	{
-		printf("child\n");
-		tenv = env_into_tenv(env);
-		signal(SIGINT, sigexit);
-		execute_cmd(&cmd[0], tenv);
-		exit(0);
-	}
-	else
-	{
-		handle_status(&status);
-	}
+	printf("child\n");
+	signal(SIGINT, sigexit);
+	execute_cmd(&cmd[0], env);
+	// exit(0);
 }
 
 	// if (pipe(pipes) < 0)
@@ -81,7 +69,7 @@ void	execute(char *line, char **env)
 // 	return (0);
 // }
 
-static void	execute_cmd(char **cmd, t_env *env)
+static void	execute_cmd(char **cmd, t_env **env)
 {
 	if (is_equal(cmd[0], "echo") == 1)
 		_echo(0, cmd);
@@ -90,11 +78,11 @@ static void	execute_cmd(char **cmd, t_env *env)
 	else if (is_equal(cmd[0], "pwd") == 1)
 		_pwd();
 	else if (is_equal(cmd[0], "export") == 1)
-		_export("TEST", "test");
+		_export(env, "test=test");
 	else if (is_equal(cmd[0], "unset") == 1)
-		_unset("TEST");
+		_unset(env, "TEST");
 	else if (is_equal(cmd[0], "env") == 1)
-		_env(env);
+		_env(*env);
 	else if (is_equal(cmd[0], "exit") == 1)
 		exit(1);
 	else
@@ -104,7 +92,7 @@ static void	execute_cmd(char **cmd, t_env *env)
 	}
 }
 
-static int	is_equal(char *str, char *ref)
+int	is_equal(char *str, char *ref)
 {
 	int	iter;
 

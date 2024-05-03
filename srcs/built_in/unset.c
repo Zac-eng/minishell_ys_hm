@@ -6,14 +6,27 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:32 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/04/29 12:04:37 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/03 21:51:24 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	_unset(char *name)
+void	_unset(t_env **env, char *name)
 {
-	if (unsetenv(name) != 0)
-		perror("Error\n");
+	// t_env	*current;
+
+	if (env == NULL || name == NULL)
+		return ;
+	// current = env;
+	// while (current != NULL && current->next != NULL)
+	// {
+	// 	if (is_equal(current->key, name) == 1)
+	// 	{
+			
+	// 	}
+	// 	current = current->next;
+	// }
 }
+
+
