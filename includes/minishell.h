@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/04/29 12:03:06 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:00:47 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef enum e_token_kind
 
 typedef struct s_env
 {
-	char			*name;
-	char			*content;
-	struct t_env	*next;
+	char			*key;
+	char			*value;
+	struct s_env	*next;
 }	t_env;
 
 typedef struct s_token
@@ -56,11 +56,15 @@ typedef struct s_token
 
 void	signalctrl(void);
 void	put_error_exit(const char *error);
+void	handle_status(int *status);
 void	execute(char *line, char **env);
 t_token	*lexer(char *line);
+t_env	*get_key_value(char *env_line);
+void	*free_env(t_env *env);
+t_env	*env_into_tenv(char **env);
 void	_cd(char	*destination);
 void	_echo(int argc, char **argv);
-void	_env(char **env);
+void	_env(t_env *env);
 void	_export(char	*name, char *value);
 void	_pwd(void);
 void	_unset(char *name);

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/04/29 12:04:06 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/03 19:00:20 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define READ  (0)
 #define WRITE (1)
 
-static void	execute_cmd(char **cmd, char **env);
+static void	execute_cmd(char **cmd, t_env *env);
 static int	is_equal(char *str, char *ref);
 static void	sigexit(int signum);
 
@@ -22,25 +22,26 @@ void	execute(char *line, char **env)
 {
 	int		pid;
 	int		status;
+	t_env	*tenv;
 	int		pipes[2];
 	char	buf[1024];
 
-	(void)env;
-	pid = fork();
-	printf("line %s\n", line);
+	
 	char	*cmd[2] = {line, "libft"};
+	pid = fork();
 	if (pid < 0)
 		exit(0);
 	else if (pid == 0)
 	{
 		printf("child\n");
+		tenv = env_into_tenv(env);
 		signal(SIGINT, sigexit);
-		execute_cmd(&cmd[0], env);
+		execute_cmd(&cmd[0], tenv);
 		exit(0);
 	}
 	else
 	{
-		wait(&status);
+		handle_status(&status);
 	}
 }
 
@@ -80,7 +81,7 @@ void	execute(char *line, char **env)
 // 	return (0);
 // }
 
-static void	execute_cmd(char **cmd, char **env)
+static void	execute_cmd(char **cmd, t_env *env)
 {
 	if (is_equal(cmd[0], "echo") == 1)
 		_echo(0, cmd);
