@@ -6,7 +6,21 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:55:49 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/03/13 09:55:49 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:04:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+void	_echo(int argc, char **argv)
+{
+	int	i;
+
+	i = 0;
+	(void)argc;
+	while (argv[i])
+	{
+		printf("%s\n",argv[i]);
+		i++;
+	}
+}
