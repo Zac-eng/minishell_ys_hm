@@ -6,22 +6,26 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:07 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/03 22:11:48 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:44:26 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	_export(t_env **env_head, char *env_line)
+static t_env	*find_node(t_env *env_head, char *key);
+static void		add_env(t_env *env_head, t_env *new_node);
+static int		rewrite_value(char **before, char *after);
+
+void	_export(char **cmd, t_env **env_head)
 {
 	t_env	*new_node;
-	t_env	*current_node;
+	t_env	*target;
 
-	if (env_head == NULL)
+	if (cmd == NULL || env_head == NULL)
 		return ;
-	if (env_line == NULL)
-		_env(*env_head);
-	new_node = get_key_value(env_line);
+	if (cmd[1] == NULL)
+		return (_env(*env_head));
+	new_node = get_key_value(cmd[1]);
 	if (new_node == NULL)
 		return ;
 	if (*env_head == NULL)
@@ -29,12 +33,64 @@ void	_export(t_env **env_head, char *env_line)
 		*env_head = new_node;
 		return ;
 	}
+	target = find_node(*env_head, new_node->key);
+	if (target == NULL)
+		add_env(*env_head, new_node);
 	else
 	{
-		current_node = *env_head;
-		while (current_node->next != NULL)
-			current_node = current_node->next;
-		current_node->next = new_node;
-		printf("%s, %s\n", new_node->key, new_node->value);
+		if (rewrite_value(&target->value, new_node->value) < 0)
+			return ;
+		free_node(new_node);
 	}
+}
+
+static void	add_env(t_env *env_head, t_env *new_node)
+{
+	t_env	*current;
+
+	if (env_head == NULL || new_node == NULL)
+		return ;
+	current = env_head;
+	if (current == NULL)
+		return ;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = new_node;
+}
+
+static t_env	*find_node(t_env *env_head, char *key)
+{
+	t_env	*current;
+
+	if (env_head == NULL || key == NULL)
+		return (NULL);
+	current = env_head;
+	while (is_equal(current->key, key) != 1 && current->next != NULL)
+		current = current->next;
+	if (is_equal(current->key, key) == 1)
+		return (current);
+	else
+		return (NULL);
+}
+
+static int	rewrite_value(char **before, char *after)
+{
+	char	*clone;
+	int		index;
+
+	index = 0;
+	if (before == NULL || after == NULL)
+		return (-1);
+	free(*before);
+	clone = (char *)malloc(sizeof(char) * (ft_strlen(after) + 1));
+	if (clone == NULL)
+		return (-1);
+	while (after[index] != '\0')
+	{
+		clone[index] = after[index];
+		index++;
+	}
+	clone[index] = '\0';
+	*before = clone;
+	return (0);
 }

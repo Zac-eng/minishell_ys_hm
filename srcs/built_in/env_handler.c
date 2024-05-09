@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:28:47 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/03 18:44:35 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:29:26 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,16 @@ void	*free_env(t_env *env)
 	{
 		for_free = current;
 		current = current->next;
-		free(for_free->key);
-		free(for_free->value);
-		free(for_free);
+		free_node(for_free);
 	}
 	return (NULL);
+}
+
+void	free_node(t_env *node)
+{
+	free(node->key);
+	free(node->value);
+	free(node);
 }
 
 static t_env	*allocate_tenv(char *env_line)
@@ -66,7 +71,7 @@ static t_env	*allocate_tenv(char *env_line)
 	int		key_value_len[2];
 	t_env	*env_node;
 
-	if (get_env_len(env_line, &key_value_len[0]) < 0)
+	if (get_env_len(env_line, &key_value_len[0]) != 0)
 		return (NULL);
 	env_node = (t_env *)malloc(sizeof(t_env) * 1);
 	if (env_node == NULL)
@@ -101,5 +106,7 @@ static int	get_env_len(char *env_line, int *key_value_len)
 		return (1);
 	while (env_line[key_value_len[0] + key_value_len[1] + 1] != '\0')
 		key_value_len[1]++;
+	if (key_value_len[1] == 0)
+		return (1);
 	return (0);
 }

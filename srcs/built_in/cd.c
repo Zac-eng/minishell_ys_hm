@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/04/29 12:04:22 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:22:22 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 static void	create_absolute(char *buffer, char *dest);
 static int	add_path(char *dest, char *src, int max_len);
 
-void	_cd(char	*destination)
+void	_cd(char **cmd)
 {
 	char	absolute_path[PATH_MAX];
+	char	*destination;
 
+	if (cmd == NULL || cmd[0] == NULL)
+		return ;
 	ft_bzero(&absolute_path[0], PATH_MAX);
+	destination = cmd[1];
+	if (destination == NULL)
+		destination = "~";
 	if (*destination == '~')
 	{
 		create_absolute(&absolute_path[0], destination);
