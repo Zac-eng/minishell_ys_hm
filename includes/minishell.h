@@ -53,6 +53,30 @@ typedef struct s_token
 	char				*str;
 }	t_token;
 
+typedef enum e_redirect_type
+{
+	UNKNOWN,
+	QUOTE_HEREDOC,
+	HEREDOC,
+	IN_FILE,
+	OUT_FILE,
+	APPEND
+}						t_redirect_type;
+
+typedef struct s_file
+{
+	char				*file_name;
+	t_redirect_type		type;
+	t_file				*next;
+}						t_file;
+
+typedef struct s_parser
+{
+	char				**cmd;
+	t_file				*file;
+	t_parser			*next;
+	t_parser			*prev;
+}	
 void	signalctrl(void);
 void	put_error_exit(const char *error);
 void	handle_status(int *status);
