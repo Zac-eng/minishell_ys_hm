@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/03 22:07:46 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:55:14 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ void	execute(char *line, t_env **env);
 t_token	*lexer(char *line);
 t_env	*get_key_value(char *env_line);
 void	*free_env(t_env *env);
+void	free_node(t_env *node);
 t_env	*env_into_tenv(char **env);
-void	_cd(char	*destination);
-void	_echo(int argc, char **argv);
+void	_cd(char **cmd);
+void	_echo(char **cmd);
 void	_env(t_env *env);
-void	_export(t_env **env_head, char *env_line);
+void	_export(char **cmd, t_env **env_head);
 void	_pwd(void);
-void	_unset(t_env **env, char *name);
+void	_unset(char **cmd, t_env **env);
 int		is_equal(char *str, char *ref);
 
 #endif
