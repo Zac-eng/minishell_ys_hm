@@ -1,41 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/13 19:09:50 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/05/13 20:21:36 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/05/13 20:22:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "minishell.h"
 
-typedef enum e_redirect_type
+void	*free_env(t_env *env)
 {
-	UNKNOWN,
-	QUOTE_HEREDOC,
-	HEREDOC,
-	IN_FILE,
-	OUT_FILE,
-	APPEND
-}	t_redirect_type;
+	t_env	*current;
+	t_env	*for_free;
 
-typedef struct s_file
+	current = env;
+	while (current != NULL)
+	{
+		for_free = current;
+		current = current->next;
+		free_node(for_free);
+	}
+	return (NULL);
+}
+
+void	free_node(t_env *node)
 {
-	char				*file_name;
-	t_redirect_type		type;
-	struct s_file		*next;
-}	t_file;
-
-typedef struct s_parser
-{
-	char				**cmd;
-	t_file				*file;
-	struct s_parser		*next;
-	struct s_parser		*prev;
-}	t_parser;
-
-#endif
+	free(node->key);
+	free(node->value);
+	free(node);
+}

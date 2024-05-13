@@ -6,32 +6,123 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/09 19:58:33 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:43:45 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 #define READ  (0)
 #define WRITE (1)
 
+static void	execute_redirect(t_parser *cmd, t_env **env);
+static void	execute_pipe(t_parser *cmd, t_env **env);
 static void	execute_cmd(char **cmd, t_env **env);
-// static void	sigexit(int signum);
+static void	sigexit(int signum);
 
 void	execute(char *line, t_env **env)
 {
-	// int		pid;
-	// int		status;
-	// int		pipes[2];
-	// char	buf[1024];
+	t_parser	*current;
 
 	if (line == NULL || env == NULL)
 		exit(1);
-	char	**cmd = ft_split(line, ' ');
+
+	//instead of using parser, from here
+	t_parser	parser1;
+	t_parser	parser2;
+	t_file		file1;
+	char *cmd1[] = {"echo", "-n", "thisi", NULL};
+	char *cmd2[] = {"pwd", NULL};
+	parser1.cmd = &cmd1[0];
+	parser1.file = NULL;
+	parser1.next = &parser2;
+	parser1.prev = NULL;
+	parser2.cmd = &cmd2[0];
+	parser2.file = &file1;
+	parser2.next = NULL;
+	parser2.prev = &parser1;
+	file1.file_name = "./test";
+	file1.type = OUT_FILE;
+	file1.next = NULL;
+	//to here
+
+	current = &parser1;
 	// signal(SIGINT, sigexit);
-	execute_cmd(cmd, env);
+	while (current != NULL)
+	{
+		if (current->next != NULL)
+			execute_pipe(current, env);
+		else if (current->file != NULL)
+			execute_redirect(current, env);
+		else
+			execute_cmd(current->cmd, env);
+		current = current->next;
+	}
 	// exit(0);
 }
 
+static void	execute_pipe(t_parser *cmd, t_env **env)
+{
+	int		pipes[2];
+	int		pid;
+	int		original_stdin;
+	int		status;
+	char	buffer[6];
+
+	if (cmd == NULL || env == NULL)
+		return ;
+	if (cmd->next == NULL)
+		return (execute_redirect(cmd, env));
+	if (pipe(pipes) != 0)
+		exit(1);
+	pid = fork();
+	if (pid < 0)
+		put_error_exit("failed to fork");
+	else if (pid == 0)
+	{
+		dup2(pipes[WRITE], 1);
+		execute_redirect(cmd, env);
+		exit(0);
+	}
+	else
+	{
+		original_stdin = dup(0);
+		dup2(pipes[READ], 0);
+		read(0, buffer, 5);
+		buffer[5] = '\0';
+		printf("parent': %s\n", buffer);
+		wait(&status);
+		dup2(original_stdin, 0);
+	}
+}
+
+static void	execute_redirect(t_parser *cmd, t_env **env)
+{
+	int	pid;
+	int	status;
+	int	fd;
+
+	if (cmd == NULL || env == NULL)
+		return ;
+	if (cmd->file == NULL)
+		return (execute_cmd(cmd->cmd, env));
+	pid = fork();
+	if (pid < 0)
+		return ;
+	else if (pid == 0)
+	{
+		fd = open(cmd->file->file_name, O_RDWR);
+		printf("fd%d\n", fd);
+		if (fd < 0)
+			exit(1);
+		dup2(fd, 1);
+		execute_cmd(cmd->cmd, env);
+		close(fd);
+		exit(0);
+	}
+	else
+		handle_status(&status);
+}
 	// if (pipe(pipes) < 0)
 	// 	return ;
 	// while (true)
@@ -70,6 +161,7 @@ void	execute(char *line, t_env **env)
 
 static void	execute_cmd(char **cmd, t_env **env)
 {
+	signal(SIGINT, sigexit);
 	if (cmd == NULL || env == NULL)
 		return ;
 	if (is_equal(cmd[0], "echo") == 1)
@@ -85,32 +177,13 @@ static void	execute_cmd(char **cmd, t_env **env)
 	else if (is_equal(cmd[0], "env") == 1)
 		_env(*env);
 	else if (is_equal(cmd[0], "exit") == 1)
-		exit(0);
+		exit(1);
 	else
 		printf("minishell: command not found: %s\n", cmd[0]);
 }
 
-int	is_equal(char *str, char *ref)
+static void	sigexit(int signum)
 {
-	int	iter;
-
-	iter = 0;
-	if (str == NULL || ref == NULL)
-		return (-1);
-	while (str[iter] && ref[iter])
-	{
-		if (str[iter] != ref[iter])
-			return (0);
-		iter++;
-	}
-	if (str[iter] == '\0' && ref[iter] == '\0')
-		return (1);
-	else
-		return (0);
+	(void)signum;
+	exit(0);
 }
-
-// static void	sigexit(int signum)
-// {
-// 	(void)signum;
-// 	exit(0);
-// }

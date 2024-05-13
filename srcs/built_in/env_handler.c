@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:28:47 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/09 17:29:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/13 20:22:29 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,6 @@ t_env	*get_key_value(char *env_line)
 	}
 	env_node->value[value_index] = '\0';
 	return (env_node);
-}
-
-void	*free_env(t_env *env)
-{
-	t_env	*current;
-	t_env	*for_free;
-
-	current = env;
-	while (current != NULL)
-	{
-		for_free = current;
-		current = current->next;
-		free_node(for_free);
-	}
-	return (NULL);
-}
-
-void	free_node(t_env *node)
-{
-	free(node->key);
-	free(node->value);
-	free(node);
 }
 
 static t_env	*allocate_tenv(char *env_line)

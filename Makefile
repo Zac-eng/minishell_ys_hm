@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/05/09 19:08:13 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/05/13 20:22:25 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CC = cc
 INCLUDES_DIR = ./includes
 BUILTIN_DIR = ./srcs/built_in
 LP_DIR = ./srcs/lexer_parser
-CFLAGS = -I$(INCLUDES_DIR)
+UTILS_DIR = ./srcs/utils
+# CFLAGS = -I$(INCLUDES_DIR)
 CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
 SRCS =	./srcs/signalctrl.c \
 		$(BUILTIN_DIR)/cd.c \
@@ -26,6 +27,10 @@ SRCS =	./srcs/signalctrl.c \
 		$(BUILTIN_DIR)/pwd.c \
 		$(BUILTIN_DIR)/unset.c \
 		$(LP_DIR)/lexer.c \
+		$(UTILS_DIR)/handle_status.c \
+		$(UTILS_DIR)/is_equal.c \
+		$(UTILS_DIR)/put_error_exit.c \
+		$(UTILS_DIR)/free_env.c \
 		./srcs/execute.c \
 		./srcs/main.c
 

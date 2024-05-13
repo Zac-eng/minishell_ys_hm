@@ -1,44 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   is_equal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 09:55:49 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/13 21:03:31 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/05/13 20:17:53 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/05/13 20:18:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	_echo_n(char **words);
-
-void	_echo(char **cmd)
-{
-	if (cmd == NULL || cmd[0] == NULL)
-		return ;
-	if (cmd[1] != NULL && is_equal(cmd[1], "-n") == 1)
-		_echo_n(&cmd[2]);
-	else
-	{
-		_echo_n(&cmd[1]);
-		printf("\n");
-	}
-}
-
-static void	_echo_n(char **words)
+int	is_equal(char *str, char *ref)
 {
 	int	iter;
 
 	iter = 0;
-	if (words == NULL || words[0] == NULL)
-		return ;
-	while (words[iter] != NULL && words[iter + 1] != NULL)
+	if (str == NULL || ref == NULL)
+		return (-1);
+	while (str[iter] && ref[iter])
 	{
-		printf("%s ", words[iter]);
+		if (str[iter] != ref[iter])
+			return (0);
 		iter++;
 	}
-	if (words[iter] != NULL)
-		printf("%s", words[iter]);
+	if (str[iter] == '\0' && ref[iter] == '\0')
+		return (1);
+	else
+		return (0);
 }

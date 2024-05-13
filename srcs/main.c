@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/09 19:57:18 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:44:04 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_env	*tenv;
 	char	*line;
-	// pid_t	pid;
-	// int		status;
 
 	(void)argc;
 	(void)argv;
@@ -38,23 +36,13 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	exit(0);
 }
-__attribute((destructor)) static void destructor() {
-	system("leaks -q minishell");
-}
+// __attribute((destructor)) static void destructor() {
+// 	system("leaks -q minishell");
+// }
 
-void	put_error_exit(const char *error)
-{
-	perror(error);
-	exit(1);
-}
 
-void	handle_status(int *status)
-{
-	wait(status);
-	printf("status: %d\n", *status);
-	if (*status != 0)
-		exit(1);
-}
+
+
 
 // int	main(int ac, char **av, char **env)
 // {
