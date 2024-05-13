@@ -6,38 +6,40 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/09 19:55:14 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:34:17 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
 # include <limits.h>
 # include <string.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/stat.h> 
+# include <sys/stat.h>
+# include "./parser.h"
+# include "../libft/libft.h"
 
 # define MAX_SIZE 100
 
-typedef enum e_token_kind
-{
-	TK_PIPE,
-	TK_CMD,
-	TK_SQUOTE,
-	TK_DQUOTE,
-	TK_LESS,
-	TK_DLESS,
-	TK_GREAT,
-	TK_DGREAT
-}						t_token_kind;
+// typedef enum e_token_kind
+// {
+// 	TK_PIPE,
+// 	TK_CMD,
+// 	TK_SQUOTE,
+// 	TK_DQUOTE,
+// 	TK_LESS,
+// 	TK_DLESS,
+// 	TK_GREAT,
+// 	TK_DGREAT
+// }						t_token_kind;
 
 typedef struct s_env
 {
@@ -46,37 +48,37 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_token
-{
-	t_token_kind		kind;
-	struct s_token		*next;
-	char				*str;
-}	t_token;
+// typedef struct s_token
+// {
+// 	t_token_kind		kind;
+// 	struct s_token		*next;
+// 	char				*str;
+// }	t_token;
 
-typedef enum e_redirect_type
-{
-	UNKNOWN,
-	QUOTE_HEREDOC,
-	HEREDOC,
-	IN_FILE,
-	OUT_FILE,
-	APPEND
-}						t_redirect_type;
+// typedef enum e_redirect_type
+// {
+// 	UNKNOWN,
+// 	QUOTE_HEREDOC,
+// 	HEREDOC,
+// 	IN_FILE,
+// 	OUT_FILE,
+// 	APPEND
+// }						t_redirect_type;
 
-typedef struct s_file
-{
-	char				*file_name;
-	t_redirect_type		type;
-	struct s_file		*next;
-}						t_file;
+// typedef struct s_file
+// {
+// 	char				*file_name;
+// 	t_redirect_type		type;
+// 	struct s_file		*next;
+// }						t_file;
 
-typedef struct s_parser
-{
-	char				**cmd;
-	t_file				*file;
-	struct s_parser		*next;
-	struct s_parser		*prev;
-}	t_parser;
+// typedef struct s_parser
+// {
+// 	char				**cmd;
+// 	t_file				*file;
+// 	struct s_parser		*next;
+// 	struct s_parser		*prev;
+// }	t_parser;
 
 void	signalctrl(void);
 void	put_error_exit(const char *error);

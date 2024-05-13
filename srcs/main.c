@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/09 19:57:18 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:34:30 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_env	*tenv;
 	char	*line;
-	char	**args;
-	t_token	*token;
-	t_env	*enve;
-	pid_t	pid;
-	int		status;
-	char	*path;
 
 	(void)argc;
 	(void)argv;

@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/05/09 19:08:13 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/05/13 18:38:11 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,10 @@ NAME = minishell
 CC = cc
 INCLUDES_DIR = ./includes
 BUILTIN_DIR = ./srcs/built_in
-LP_DIR = ./srcs/lexer
-# CFLAGS = -I$(INCLUDES_DIR)
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
+LEXER_DIR = ./srcs/lexer
+PARSER_DIR = ./srcs/parser
+CFLAGS = -I$(INCLUDES_DIR)
+# CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
 SRCS =	./srcs/signalctrl.c \
 		$(BUILTIN_DIR)/cd.c \
 		$(BUILTIN_DIR)/echo.c \
@@ -25,7 +26,17 @@ SRCS =	./srcs/signalctrl.c \
 		$(BUILTIN_DIR)/export.c \
 		$(BUILTIN_DIR)/pwd.c \
 		$(BUILTIN_DIR)/unset.c \
-		$(LP_DIR)/lexer.c \
+		$(LEXER_DIR)/lexer.c \
+		$(LEXER_DIR)/lexer_check.c \
+		$(LEXER_DIR)/lexer_quote.c \
+		$(LEXER_DIR)/lexer_split.c \
+		$(LEXER_DIR)/lexer_token.c \
+		$(PARSER_DIR)/parser.c \
+		$(PARSER_DIR)/parser_check.c \
+		$(PARSER_DIR)/parser_cmd.c \
+		$(PARSER_DIR)/parser_pipe.c \
+		$(PARSER_DIR)/parser_redirect.c \
+		$(PARSER_DIR)/parser_token.c \
 		./srcs/execute.c \
 		./srcs/main.c
 

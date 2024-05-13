@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_quote.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/13 18:19:28 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/05/13 18:19:42 by hmiyazak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 
@@ -21,7 +33,10 @@ void	remove_squote(t_token *token)
 	}
 
 	if (*tmp == '\0')
-		ft_error();	free(token->str);
+	{
+		ft_error();
+		free(token->str);
+	}
 	token->str = new;
 	return ;
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_token.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/13 18:17:01 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/05/13 18:17:39 by hmiyazak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h";
 
 bool	can_connect(t_token *next)
@@ -13,8 +25,7 @@ bool	start_check(t_token *tmp)
 {
 	// はじめに来ていいトークンか見る
 	// 左スペース、左ダブル、シングルクオート以外
-	
-		return (true);
+	return (true);
 	else
 		return (false);
 }
@@ -32,10 +43,9 @@ void	node_delete(t_token *tmp, t_token *tmp_next)
 
 void	token_check(t_token	*lexer)
 {
-	// 空白、パイプ、リダイレクトは独立させる
-
 	t_token	*tmp;
-	t_token *tmp2;
+	t_token	*tmp2;
+	// 空白、パイプ、リダイレクトは独立させる
 
 	tmp = lexer;
 	tmp2 = lexer;
@@ -43,8 +53,8 @@ void	token_check(t_token	*lexer)
 	{
 		if (start_check(tmp) && can_connect(tmp->next))
 		{
-			strjoin(tmp->str,tmp->next->str);
-			node_delete(tmp, tmp->next)
+			strjoin(tmp->str, tmp->next->str);
+			node_delete(tmp, tmp->next);
 		}
 		else
 			tmp = tmp->next;

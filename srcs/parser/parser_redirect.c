@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_redirect.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/13 18:12:51 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/05/13 18:16:44 by hmiyazak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void file_init(t_file **file, char *file_name, t_token_kind kind, t_token_kind next_kind)
+void	file_init(t_file **file, char *file_name, t_token_kind kind, \
+												t_token_kind next_kind)
 {
 	(*file) = (t_file *)malloc(sizeof(t_file));
 	if ((*file) == NULL)
@@ -19,7 +32,9 @@ void file_init(t_file **file, char *file_name, t_token_kind kind, t_token_kind n
 		(*file)->type = OUT_FILE;
 	return (file);
 }
-void file_add(t_file **file, char *file_name, t_token_kind kind, t_token_kind next_kind)
+
+void	file_add(t_file **file, char *file_name, t_token_kind kind, \
+												t_token_kind next_kind)
 {
 	while ((*file)->next != NULL)
 		(*file) = (*file)->next;
@@ -45,24 +60,20 @@ void file_add(t_file **file, char *file_name, t_token_kind kind, t_token_kind ne
 void	parser_output(t_token **lexer_tmp, t_parser **parser_tmp)
 {
 	if ((*parser_tmp)->file == NULL)
-	{
-		file_init(&(*parser_tmp)->file, (*lexer_tmp)->nexr->str,
-					(*lexer_tmp)->kind, (*lexer_tmp)->nexr->kind)
-	}
+		file_init(&(*parser_tmp)->file, (*lexer_tmp)->nexr->str, \
+					(*lexer_tmp)->kind, (*lexer_tmp)->nexr->kind);
 	else
-		file_add(&(*parser_tmp)->file, (*lexer_tmp)->nexr->str,
+		file_add(&(*parser_tmp)->file, (*lexer_tmp)->nexr->str, \
 					(*lexer_tmp)->kind, (*lexer_tmp)->nexr->kind);
 }
 
 void	parser_input(t_token **lexer_tmp, t_parser **parser_tmp)
 {
 	if ((*parser_tmp)->file == NULL)
-	{
-		file_init(&(*parser_tmp)->file, (*lexer_tmp)->nexr->str,
-					(*lexer_tmp)->kind, (*lexer_tmp)->nexr->kind)
-	}
+		file_init(&(*parser_tmp)->file, (*lexer_tmp)->nexr->str, \
+					(*lexer_tmp)->kind, (*lexer_tmp)->nexr->kind);
 	else
-		file_add(&(*parser_tmp)->file, (*lexer_tmp)->nexr->str,
+		file_add(&(*parser_tmp)->file, (*lexer_tmp)->nexr->str, \
 					(*lexer_tmp)->kind, (*lexer_tmp)->nexr->kind);
 }
 
