@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/03 22:17:24 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:57:18 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	main(int argc, char **argv, char **env)
 	}
 	exit(0);
 }
-// __attribute((destructor)) static void destructor() {
-// 	system("leaks -q minishell");
-// }
+__attribute((destructor)) static void destructor() {
+	system("leaks -q minishell");
+}
 
 // // __attribute((destructor)) static void destructor() {
 // // 	system("leaks -q minishell");

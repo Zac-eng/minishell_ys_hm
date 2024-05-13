@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/03 22:45:54 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:58:33 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 #define WRITE (1)
 
 static void	execute_cmd(char **cmd, t_env **env);
-static void	sigexit(int signum);
+// static void	sigexit(int signum);
 
 void	execute(char *line, t_env **env)
 {
-	int		pid;
-	int		status;
-	int		pipes[2];
-	char	buf[1024];
+	// int		pid;
+	// int		status;
+	// int		pipes[2];
+	// char	buf[1024];
 
 	if (line == NULL || env == NULL)
 		exit(1);
-	char	*cmd[2] = {line, "libft"};
-	signal(SIGINT, sigexit);
-	execute_cmd(&cmd[0], env);
+	char	**cmd = ft_split(line, ' ');
+	// signal(SIGINT, sigexit);
+	execute_cmd(cmd, env);
 	// exit(0);
 }
 
@@ -73,24 +73,21 @@ static void	execute_cmd(char **cmd, t_env **env)
 	if (cmd == NULL || env == NULL)
 		return ;
 	if (is_equal(cmd[0], "echo") == 1)
-		_echo(0, cmd);
+		_echo(cmd);
 	else if (is_equal(cmd[0], "cd") == 1)
-		_cd(cmd[1]);
+		_cd(cmd);
 	else if (is_equal(cmd[0], "pwd") == 1)
 		_pwd();
 	else if (is_equal(cmd[0], "export") == 1)
-		_export(env, "test=test");
+		_export(cmd, env);
 	else if (is_equal(cmd[0], "unset") == 1)
-		_unset(env, "test");
+		_unset(cmd, env);
 	else if (is_equal(cmd[0], "env") == 1)
 		_env(*env);
 	else if (is_equal(cmd[0], "exit") == 1)
-		exit(1);
-	else
-	{
-		printf("minishell: command not found: %s\n", cmd[0]);
 		exit(0);
-	}
+	else
+		printf("minishell: command not found: %s\n", cmd[0]);
 }
 
 int	is_equal(char *str, char *ref)
@@ -112,8 +109,8 @@ int	is_equal(char *str, char *ref)
 		return (0);
 }
 
-static void	sigexit(int signum)
-{
-	(void)signum;
-	exit(0);
-}
+// static void	sigexit(int signum)
+// {
+// 	(void)signum;
+// 	exit(0);
+// }

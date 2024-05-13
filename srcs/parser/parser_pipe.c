@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-bool	parser_pipe(t_parser **parser_tmp, t_parser **parser)
+void	*parser_pipe(t_parser **parser_tmp, t_parser **parser)
 {
 	(*parser_tmp)->next = parser_node_new();
 	if ((*parser_tmp)->next == NULL)
@@ -8,7 +8,7 @@ bool	parser_pipe(t_parser **parser_tmp, t_parser **parser)
 		free_parser(parser);
 		ft_exit();
 	}
-	*parser_tmp = (*parser_tmp)->next;
+	(*parser_tmp) = (*parser_tmp)->next;
 	return (*parser_tmp);
 }
 

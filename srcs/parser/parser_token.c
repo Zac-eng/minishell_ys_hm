@@ -13,9 +13,7 @@ bool	start_check(t_token *tmp)
 {
 	// はじめに来ていいトークンか見る
 	// 左スペース、左ダブル、シングルクオート以外
-	if (tmp->token == TK_PIPE || tmp->token == TK_CMD || tmp->token == TK_SQUOTE ||
-		tmp->token == TK_DQUOTE || tmp->token == TK_LESS || tmp->token == TK_DLESS ||
-		tmp->token == TK_GREAT || tmp->token == TK_DGREAT)
+	
 		return (true);
 	else
 		return (false);
