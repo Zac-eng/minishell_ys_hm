@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/09 19:55:14 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/19 12:16:26 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_token
 }	t_token;
 
 void	signalctrl(void);
+void	sigexit(int signum);
 void	put_error_exit(const char *error);
 void	handle_status(int *status);
 void	execute(char *line, t_env **env);

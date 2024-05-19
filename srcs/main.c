@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/13 21:44:04 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:54:38 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv, char **env)
 			free(line);
 		}
 	}
+	free_env(tenv);
 	rl_clear_history();
 	exit(0);
 }
