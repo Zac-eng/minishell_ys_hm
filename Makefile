@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
+#    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/05/13 18:38:11 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/05/20 20:04:54 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,7 @@ INCLUDES_DIR = ./includes
 BUILTIN_DIR = ./srcs/built_in
 LEXER_DIR = ./srcs/lexer
 PARSER_DIR = ./srcs/parser
-CFLAGS = -I$(INCLUDES_DIR)
-# CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
 SRCS =	./srcs/signalctrl.c \
 		$(BUILTIN_DIR)/cd.c \
 		$(BUILTIN_DIR)/echo.c \
