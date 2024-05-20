@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/05/19 12:15:40 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/05/20 22:33:38 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS =	./srcs/signalctrl.c \
 		$(UTILS_DIR)/put_error_exit.c \
 		$(UTILS_DIR)/sigexit.c \
 		$(UTILS_DIR)/free_env.c \
+		$(UTILS_DIR)/paths.c \
 		./srcs/execute.c \
 		./srcs/main.c
 

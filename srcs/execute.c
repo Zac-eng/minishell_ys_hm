@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/19 14:05:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:58:35 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ static void	execute_pipe(t_parser *cmd, t_env **env, int dup_out)
 	int		pid;
 	int		original_stdin;
 	int		status;
-	char	buffer[1024];
 
 	if (cmd == NULL || env == NULL)
 		return ;
@@ -100,12 +99,8 @@ static void	execute_pipe(t_parser *cmd, t_env **env, int dup_out)
 	else
 	{
 		handle_status(&status);
-		read(pipes[READ], buffer, 5);
-		buffer[5] = '\0';
-		printf("childout; %s", buffer);
 		execute_redirect(cmd, env);
 		dup2(original_stdin, 0);
-		printf("returned");
 	}
 }
 
@@ -117,21 +112,24 @@ static void	execute_redirect(t_parser *cmd, t_env **env)
 
 	if (cmd == NULL || env == NULL)
 		return ;
-	std_out = 1;
 	if (cmd->file == NULL)
 		return (execute_cmd(cmd->cmd, env));
 	current_file = cmd->file;
+	std_out = dup(1);
+	if (std_out < 0)
+		exit(1);
 	while (current_file != NULL)
 	{
 		fd = open(current_file->file_name, O_RDWR);
 		if (fd < 0)
 			exit(1);
-		dup2(fd, std_out);
-		close(std_out);
-		std_out = fd;
+		if (dup2(fd, 1) < 0)
+			exit(1);
 		execute_cmd(cmd->cmd, env);
 		current_file = current_file->next;
 	}
+	if (dup2(std_out, 1) < 0)
+		exit(1);
 }
 	// if (pipe(pipes) < 0)
 	// 	return ;
@@ -174,19 +172,19 @@ static void	execute_cmd(char **cmd, t_env **env)
 	if (cmd == NULL || env == NULL)
 		return ;
 	if (is_equal(cmd[0], "echo") == 1)
-		_echo(cmd);
+		return (_echo(cmd));
 	else if (is_equal(cmd[0], "cd") == 1)
-		_cd(cmd);
+		return (_cd(cmd));
 	else if (is_equal(cmd[0], "pwd") == 1)
-		_pwd();
+		return (_pwd());
 	else if (is_equal(cmd[0], "export") == 1)
-		_export(cmd, env);
+		return (_export(cmd, env));
 	else if (is_equal(cmd[0], "unset") == 1)
-		_unset(cmd, env);
+		return (_unset(cmd, env));
 	else if (is_equal(cmd[0], "env") == 1)
-		_env(*env);
+		return (_env(*env));
 	else if (is_equal(cmd[0], "exit") == 1)
-		exit(1);
+		return (exit(1));
 	//if (execve() == -1)
 		printf("minishell: command not found: %s\n", cmd[0]);
 }

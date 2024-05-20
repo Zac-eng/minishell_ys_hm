@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/19 12:16:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:38:44 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	handle_status(int *status);
 void	execute(char *line, t_env **env);
 t_token	*lexer(char *line);
 t_env	*get_key_value(char *env_line);
+char	**get_paths(void);
+void	free_paths(char **paths);
 void	*free_env(t_env *env);
 void	free_node(t_env *node);
 t_env	*env_into_tenv(char **env);

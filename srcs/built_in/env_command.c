@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:55:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/05 17:03:18 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:40:52 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,31 @@ void	_env(t_env *env)
 
 t_env	*env_into_tenv(char **env)
 {
-	t_env	*env_head;
-	t_env	*env_tail;
+	t_env	*env_head_tail[2];
 	t_env	*env_tmp;
 	int		env_index;
 
 	env_index = 0;
-	env_head = NULL;
-	env_tail = NULL;
+	env_head_tail[0] = NULL;
+	env_head_tail[1] = NULL;
 	if (env == NULL)
-		return (NULL);
+		exit(1);
 	while (env[env_index] != NULL)
 	{
 		env_tmp = get_key_value(env[env_index]);
 		if (env_tmp == NULL)
-			return (free_env(env_head));
-		if (env_head == NULL)
-			env_head = env_tmp;
-		if (env_tail != NULL)
-			env_tail->next = env_tmp;
-		env_tail = env_tmp;
+		{
+			free_env(env_head_tail[0]);
+			exit(1);
+		}
+		if (env_head_tail[0] == NULL)
+			env_head_tail[0] = env_tmp;
+		if (env_head_tail[1] != NULL)
+			env_head_tail[1]->next = env_tmp;
+		env_head_tail[1] = env_tmp;
 		env_index++;
 	}
-	return (env_head);
+	return (env_head_tail[0]);
 }
 
 // char	**env_into_list(t_env *env)
