@@ -31,14 +31,16 @@ SRCS =	./srcs/signalctrl.c \
 		$(LEXER_DIR)/lexer_quote.c \
 		$(LEXER_DIR)/lexer_split.c \
 		$(LEXER_DIR)/lexer_token.c \
-		$(PARSER_DIR)/parser.c \
-		$(PARSER_DIR)/parser_check.c \
-		$(PARSER_DIR)/parser_cmd.c \
+		./srcs/main.c \
+		./srcs/error.c\
+		$(PARSER_DIR)/parser.c  \
 		$(PARSER_DIR)/parser_pipe.c \
+		$(PARSER_DIR)/parser_check.c \
 		$(PARSER_DIR)/parser_redirect.c \
-		$(PARSER_DIR)/parser_token.c \
-		./srcs/execute.c \
-		./srcs/main.c
+		$(PARSER_DIR)/parser_cmd.c \
+		./srcs/execute.c
+
+		# $(PARSER_DIR)/parser_token.c \
 
 OBJS = $(SRCS:%.c=%.o)
 

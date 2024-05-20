@@ -1,0 +1,48 @@
+Makefile
+README.md
+includes
+libft
+minishell
+srcs
+test.txt
+text
+text.txt
+total 112
+-rw-r--r--@  1 sky  staff   2134  5 18 17:36 Makefile
+-rw-r--r--@  1 sky  staff    285  4 30 16:26 README.md
+drwxr-xr-x@  4 sky  staff    128  5 18 17:57 includes
+drwxr-xr-x@ 82 sky  staff   2624  5 17 20:37 libft
+-rwxr-xr-x@  1 sky  staff  34928  5 19 13:27 minishell
+drwxr-xr-x@ 13 sky  staff    416  5 19 13:53 srcs
+-rw-r--r--@  1 sky  staff      3  5  9 21:06 test.txt
+-rw-r--r--@  1 sky  staff     72  5 19 14:09 text
+-rw-r--r--@  1 sky  staff    436  5 19 14:05 text.txt
+Makefile
+README.md
+includes
+libft
+minishell
+srcs
+test.txt
+text
+text.txt
+total 112
+-rw-r--r--@  1 sky  staff   2134  5 18 17:36 Makefile
+-rw-r--r--@  1 sky  staff    285  4 30 16:26 README.md
+drwxr-xr-x@  4 sky  staff    128  5 18 17:57 includes
+drwxr-xr-x@ 82 sky  staff   2624  5 17 20:37 libft
+-rwxr-xr-x@  1 sky  staff  34928  5 19 13:27 minishell
+drwxr-xr-x@ 13 sky  staff    416  5 19 13:53 srcs
+-rw-r--r--@  1 sky  staff      3  5  9 21:06 test.txt
+-rw-r--r--@  1 sky  staff    631  5 19 14:20 text
+-rw-r--r--@  1 sky  staff    436  5 19 14:05 text.txt
+ls
+ks
+ s
+text
+
+
+
+
+
+

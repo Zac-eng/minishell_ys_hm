@@ -14,8 +14,8 @@
 
 bool	is_redirect(t_token *lexer_tmp)
 {
-	if (tmp->token == TK_LESS || tmp->token == TK_DLESS \
-		|| tmp->token == TK_GREAT || tmp->token == TK_DGREAT)
+	if (lexer_tmp->kind == TK_LESS || lexer_tmp->kind == TK_DLESS \
+		|| lexer_tmp->kind == TK_GREAT || lexer_tmp->kind == TK_DGREAT)
 		return (true);
 	else
 		return (false);
@@ -23,7 +23,7 @@ bool	is_redirect(t_token *lexer_tmp)
 
 bool	is_quote(t_token_kind kind)
 {
-	if (tmp->token == TK_SQUOTE || tmp->token == TK_DQUOTE)
+	if (kind == TK_SQUOTE || kind == TK_DQUOTE)
 		return (true);
 	else
 		return (false);
