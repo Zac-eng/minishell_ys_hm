@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/23 21:08:18 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:21:24 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	execute(char *line, t_env **env, char **paths)
 {
 	t_parser	*current;
 
-	if (line == NULL || env == NULL)
+	if (line == NULL || env == NULL || paths == NULL)
 		exit(1);
 	//instead of using parser, from here
 	t_parser	parser1;
@@ -66,10 +66,10 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 	int		original_stdin;
 	int		status;
 
-	if (cmd == NULL || env == NULL)
+	if (cmd == NULL || env == NULL || paths == NULL)
 		return ;
 	if (connect_pipe(&pipes[0], dup_out, &original_stdin) != 0)
-		exit(0);
+		exit(1);
 	if (cmd->prev == NULL)
 		return (execute_redirect(cmd, env, paths));
 	pid = fork();

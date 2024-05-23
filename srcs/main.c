@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/23 19:31:10 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:26:58 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ int	main(int argc, char **argv, char **env)
 static void	free_envvars(t_env *tenv, char **paths)
 {
 	free_env(tenv);
-	free_paths(paths);
+	free_str_list(paths);
 }

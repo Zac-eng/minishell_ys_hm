@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:27:58 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/20 22:38:54 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:24:49 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ char	**get_paths(void)
 	return (path_list);
 }
 
-void	free_paths(char **paths)
+void	free_str_list(char **str_list)
 {
 	int	index;
 
 	index = 0;
-	if (paths == NULL)
+	if (str_list == NULL)
 		return ;
-	while (paths[index] != NULL)
+	while (str_list[index] != NULL)
 	{
-		free(paths[index]);
+		free(str_list[index]);
 		index++;
 	}
-	free(paths);
+	free(str_list);
 }

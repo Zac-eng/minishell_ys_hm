@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/23 18:50:10 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:24:58 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	execute_cmd(char **cmd, t_env **env, char **paths);
 t_token	*lexer(char *line);
 t_env	*get_key_value(char *env_line);
 char	**get_paths(void);
-void	free_paths(char **paths);
+void	free_str_list(char **str_list);
 void	*free_env(t_env *env);
 void	free_node(t_env *node);
 t_env	*env_into_tenv(char **env);
