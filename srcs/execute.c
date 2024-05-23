@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/20 22:58:35 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:10:01 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,16 @@
 #define READ  (0)
 #define WRITE (1)
 
-static void	execute_pipe(t_parser *cmd, t_env **env, int dup_out);
-static void	execute_redirect(t_parser *cmd, t_env **env);
-static void	execute_cmd(char **cmd, t_env **env);
+static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out);
+static void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
 static int	connect_pipe(int *pipes, int dup_out, int *original_stdin);
 
-void	execute(char *line, t_env **env)
+void	execute(char *line, t_env **env, char **paths)
 {
 	t_parser	*current;
 
 	if (line == NULL || env == NULL)
 		exit(1);
-
 	//instead of using parser, from here
 	t_parser	parser1;
 	t_parser	parser2;
@@ -34,7 +32,7 @@ void	execute(char *line, t_env **env)
 	t_file		file2;
 	t_file		file3;
 	char *cmd1[] = {"export", "test=test", NULL};
-	char *cmd2[] = {"env", NULL};
+	char *cmd2[] = {"ls", NULL};
 	parser1.cmd = &cmd1[0];
 	parser1.file = NULL;
 	parser1.next = &parser2;
@@ -54,28 +52,14 @@ void	execute(char *line, t_env **env)
 	file3.next = NULL;
 	current = &parser1;
 	//to here
-
 	if (current == NULL)
 		return ;
 	while (current != NULL && current->next != NULL)
 		current = current->next;
-	execute_pipe(current, env, 1);
-	// signal(SIGINT, sigexit);
-	// while (current != NULL)
-	// {
-	// 	if (current->next != NULL)
-	// 		execute_pipe(current, env, 0);
-	// 	else if (current->file != NULL)
-	// 		execute_redirect(current, env);
-	// 	else
-	// 		execute_cmd(current->cmd, env);
-	// 	current = current->next;
-	// 	_env(*env);
-	// }
-	// exit(0);
+	execute_pipe(current, env, paths, 1);
 }
 
-static void	execute_pipe(t_parser *cmd, t_env **env, int dup_out)
+static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 {
 	int		pipes[2];
 	int		pid;
@@ -87,24 +71,24 @@ static void	execute_pipe(t_parser *cmd, t_env **env, int dup_out)
 	if (connect_pipe(&pipes[0], dup_out, &original_stdin) != 0)
 		exit(0);
 	if (cmd->prev == NULL)
-		return (execute_redirect(cmd, env));
+		return (execute_redirect(cmd, env, paths));
 	pid = fork();
 	if (pid < 0)
 		put_error_exit("failed to fork");
 	else if (pid == 0)
 	{
-		execute_pipe(cmd->prev, env, pipes[WRITE]);
+		execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
 		exit(0);
 	}
 	else
 	{
 		handle_status(&status);
-		execute_redirect(cmd, env);
+		execute_redirect(cmd, env, paths);
 		dup2(original_stdin, 0);
 	}
 }
 
-static void	execute_redirect(t_parser *cmd, t_env **env)
+static void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 {
 	t_file	*current_file;
 	int		std_out;
@@ -113,7 +97,7 @@ static void	execute_redirect(t_parser *cmd, t_env **env)
 	if (cmd == NULL || env == NULL)
 		return ;
 	if (cmd->file == NULL)
-		return (execute_cmd(cmd->cmd, env));
+		return (execute_cmd(cmd->cmd, env, paths));
 	current_file = cmd->file;
 	std_out = dup(1);
 	if (std_out < 0)
@@ -125,68 +109,11 @@ static void	execute_redirect(t_parser *cmd, t_env **env)
 			exit(1);
 		if (dup2(fd, 1) < 0)
 			exit(1);
-		execute_cmd(cmd->cmd, env);
+		execute_cmd(cmd->cmd, env, paths);
 		current_file = current_file->next;
 	}
 	if (dup2(std_out, 1) < 0)
 		exit(1);
-}
-	// if (pipe(pipes) < 0)
-	// 	return ;
-	// while (true)
-	// {
-	// 	printf("abc\n");
-	// 	usleep(1000000);
-	// }
-	// pid = fork();
-	// printf("forked execute\n");
-	// if (pid < 0)
-	// 	exit(1);
-	// else if (pid == 0)
-	// {
-	// 	dup2(pipes[WRITE], 1);
-	// 	printf("called");
-	// 	exit(0);
-	// }
-	// else
-	// {
-	// 	dup2(pipes[READ], 0);
-	// 	read(0, buf, 4);
-	// 	buf[4] = '\0';
-	// 	printf("%d, %s\n", getpid(), buf);
-	// 	wait(&status);
-	// 	exit(status);
-	// }
-
-
-// int	main(void)
-// {
-// 	char *cmd[] = {"ls", "-a"};
-
-// 	execute(&cmd[0], PIPE);
-// 	return (0);
-// }
-
-static void	execute_cmd(char **cmd, t_env **env)
-{
-	if (cmd == NULL || env == NULL)
-		return ;
-	if (is_equal(cmd[0], "echo") == 1)
-		return (_echo(cmd));
-	else if (is_equal(cmd[0], "cd") == 1)
-		return (_cd(cmd));
-	else if (is_equal(cmd[0], "pwd") == 1)
-		return (_pwd());
-	else if (is_equal(cmd[0], "export") == 1)
-		return (_export(cmd, env));
-	else if (is_equal(cmd[0], "unset") == 1)
-		return (_unset(cmd, env));
-	else if (is_equal(cmd[0], "env") == 1)
-		return (_env(*env));
-	else if (is_equal(cmd[0], "exit") == 1)
-		return (exit(1));
-	//if (execve() == -1)
-		printf("minishell: command not found: %s\n", cmd[0]);
 }
 
 static int	connect_pipe(int *pipes, int dup_out, int *original_stdin)

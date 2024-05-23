@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/20 22:39:05 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:31:10 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 		else
 		{
 			add_history(line);
-			execute(line, &tenv);
+			execute(line, &tenv, paths);
 			free(line);
 		}
 	}

@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/05/20 22:33:38 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/05/23 17:59:49 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS =	./srcs/signalctrl.c \
 		$(UTILS_DIR)/free_env.c \
 		$(UTILS_DIR)/paths.c \
 		./srcs/execute.c \
+		./srcs/execute_cmd.c \
 		./srcs/main.c
 
 OBJS = $(SRCS:%.c=%.o)
