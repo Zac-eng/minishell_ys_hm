@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/23 21:21:24 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:45:48 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ static void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 		if (dup2(fd, 1) < 0)
 			exit(1);
 		execute_cmd(cmd->cmd, env, paths);
+		close(fd);
 		current_file = current_file->next;
 	}
 	if (dup2(std_out, 1) < 0)
