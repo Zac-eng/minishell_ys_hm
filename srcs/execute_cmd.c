@@ -6,13 +6,14 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/23 20:06:12 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:16:13 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	execute_execve(char **cmd, t_env *env, char **paths);
+static int	execute_childp(char *path, char **cmd, char **env);
 static char	*create_path(char *where, char *cmd_name);
 
 void	execute_cmd(char **cmd, t_env **env, char **paths)
@@ -41,28 +42,37 @@ static int	execute_execve(char **cmd, t_env *env, char **paths)
 {
 	int		index;
 	char	**env_str;
-	int		pid;
 	int		status;
 
 	index = 0;
 	status = 256;
 	env_str = env_into_list(env);
 	if (env_str == NULL)
-		return (-1);
-	while (paths[index] != NULL && status == 256)
+		exit(1);
+	while (paths[index] != NULL && status != 0)
 	{
-		pid = fork();
-		if (pid < 0)
-			break ;
-		else if (pid == 0)
-		{
-			if (execve(create_path(paths[index], cmd[0]), cmd, env_str) == -1)
-				exit(1);
-		}
-		else
-			wait(&status);
+		status = execute_childp(paths[index], cmd, env_str);
 		index++;
 	}
+	return (status);
+}
+
+static int	execute_childp(char *path, char **cmd, char **env)
+{
+	int	pid;
+	int	status;
+
+	status = 256;
+	pid = fork();
+	if (pid < 0)
+		exit(1);
+	else if (pid == 0)
+	{
+		if (execve(create_path(path, cmd[0]), cmd, env) == -1)
+			exit(1);
+	}
+	else
+		wait(&status);
 	return (status);
 }
 

@@ -6,11 +6,11 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/05/23 17:59:49 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/05/23 21:00:53 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = ./minishell
 CC = cc
 INCLUDES_DIR = ./includes
 BUILTIN_DIR = ./srcs/built_in

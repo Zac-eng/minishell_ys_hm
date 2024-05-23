@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/23 20:10:01 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/23 21:08:18 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ static int	connect_pipe(int *pipes, int dup_out, int *original_stdin)
 	{
 		if (dup2(dup_out, 1) < 0)
 			return (-1);
-		printf("duped");
 	}
 	if (pipe(pipes) != 0)
 		return (-1);
