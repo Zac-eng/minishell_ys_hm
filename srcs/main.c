@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/24 17:39:58 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:54:41 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	main(int argc, char **argv, char **env)
 	char	*line;
 
 	(void)argc, (void)argv;
-	signalctrl();
 	tenv = env_into_tenv(env);
 	paths = get_paths();
 	while (true)
 	{
+		signalctrl();
 		line = readline("> ");
 		if (!line)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/24 17:40:02 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:06:01 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static int	execute_execve(char **cmd, t_env *env, char **paths)
 		status = execute_childp(paths[index], cmd, env_str);
 		index++;
 	}
+	if (status != 0)
+		status = execute_childp(".", cmd, env_str);
 	free_str_list(env_str);
 	return (status);
 }
@@ -75,8 +77,10 @@ static int	execute_childp(char *path, char **cmd, char **env)
 		exit(1);
 	else if (pid == 0)
 	{
+		signal(SIGINT, sigexit);
 		if (execve(path_line, cmd, env) == -1)
 			exit(1);
+		exit(0);
 	}
 	else
 		wait(&status);

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/24 17:29:16 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:31:33 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ void	execute(char *line, t_env **env, char **paths)
 	t_file		file1;
 	t_file		file2;
 	t_file		file3;
-	char *cmd1[] = {"export", "test=test", NULL};
-	char *cmd2[] = {"ls", NULL};
+	char *cmd1[] = {"a.out", NULL};
+	char *cmd2[] = {"ls", "-a", NULL};
 	parser1.cmd = &cmd1[0];
 	parser1.file = NULL;
 	parser1.next = &parser2;
+	// parser1.next = NULL;
 	parser1.prev = NULL;
 	parser2.cmd = &cmd2[0];
 	parser2.file = &file1;
@@ -70,22 +71,22 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 		return ;
 	if (connect_pipe(&pipes[0], dup_out, &original_stdin) != 0)
 		exit(1);
-	if (cmd->prev == NULL)
-		return (execute_redirect(cmd, env, paths));
-	pid = fork();
-	if (pid < 0)
-		put_error_exit("failed to fork");
-	else if (pid == 0)
+	if (cmd->prev != NULL)
 	{
-		execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
-		exit(0);
+		pid = fork();
+		if (pid < 0)
+			put_error_exit("failed to fork");
+		else if (pid == 0)
+		{
+			execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
+			exit(0);
+		}
+		else
+			handle_status(&status);
 	}
-	else
-	{
-		handle_status(&status);
-		execute_redirect(cmd, env, paths);
-		dup2(original_stdin, 0);
-	}
+	execute_redirect(cmd, env, paths);
+	dup2(original_stdin, 0);
+	close(pipes[READ]);
 }
 
 static void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
@@ -94,7 +95,7 @@ static void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	int		std_out;
 	int		fd;
 
-	if (cmd == NULL || env == NULL)
+	if (cmd == NULL || env == NULL || paths == NULL)
 		return ;
 	if (cmd->file == NULL)
 		return (execute_cmd(cmd->cmd, env, paths));
