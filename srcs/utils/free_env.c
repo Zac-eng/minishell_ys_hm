@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:21:36 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/13 20:22:28 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:33:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	*free_env(t_env *env)
 
 void	free_node(t_env *node)
 {
-	free(node->key);
-	free(node->value);
+	if (node == NULL)
+		return ;
+	if (node->key != NULL)
+		free(node->key);
+	if (node->value != NULL)
+		free(node->value);
 	free(node);
 }

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:55:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/23 18:48:28 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:42:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**env_into_list(t_env *env)
 	env_len = get_tenv_len(env);
 	if (env_len < 0)
 		return (NULL);
-	env_list = (char **)malloc(sizeof(char *) * env_len);
+	env_list = (char **)malloc(sizeof(char *) * (env_len + 1));
 	if (env_list == NULL)
 		return (NULL);
 	while (current != NULL)
