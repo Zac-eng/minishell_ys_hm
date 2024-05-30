@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/24 18:06:01 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:40:18 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	execute_execve(char **cmd, t_env *env, char **paths)
 		index++;
 	}
 	if (status != 0)
-		status = execute_childp(".", cmd, env_str);
+		status = execute_childp(cmd[0], cmd, env_str);
 	free_str_list(env_str);
 	return (status);
 }

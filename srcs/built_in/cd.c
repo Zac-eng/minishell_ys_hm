@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/05/24 17:36:37 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:44:14 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	create_absolute(char *buffer, char *dest)
 	if (home == NULL)
 		return ;
 	i += add_path(&buffer[i], home, PATH_MAX - i);
-	// free(home);
 	if (i == -1)
 	{
 		ft_bzero(buffer, PATH_MAX);
