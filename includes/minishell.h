@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/09 19:55:14 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:24:25 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include "parser.h"
 # include "../libft/libft.h"
 
 typedef enum e_token_kind
@@ -55,14 +56,20 @@ typedef struct s_token
 }	t_token;
 
 void	signalctrl(void);
+void	sigexit(int signum);
 void	put_error_exit(const char *error);
 void	handle_status(int *status);
-void	execute(char *line, t_env **env);
+void	execute(char *line, t_env **env, char **paths);
+void	execute_cmd(char **cmd, t_env **env, char **paths);
+void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
 t_token	*lexer(char *line);
 t_env	*get_key_value(char *env_line);
+char	**get_paths(void);
+void	free_str_list(char **str_list);
 void	*free_env(t_env *env);
 void	free_node(t_env *node);
 t_env	*env_into_tenv(char **env);
+char	**env_into_list(t_env *env);
 void	_cd(char **cmd);
 void	_echo(char **cmd);
 void	_env(t_env *env);

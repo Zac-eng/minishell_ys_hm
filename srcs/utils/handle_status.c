@@ -1,41 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   handle_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/13 19:09:50 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/05/13 20:19:08 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/05/19 12:14:37 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "minishell.h"
 
-typedef enum e_redirect_type
+void	handle_status(int *status)
 {
-	UNKNOWN,
-	QUOTE_HEREDOC,
-	HEREDOC,
-	IN_FILE,
-	OUT_FILE,
-	APPEND
-}	t_redirect_type;
-
-typedef struct s_file
-{
-	char				*file_name;
-	t_redirect_type		type;
-	struct s_file		*next;
-}	t_file;
-
-typedef struct s_parser
-{
-	char				**cmd;
-	t_file				*file;
-	struct s_parser		*next;
-	struct s_parser		*prev;
-}	t_parser;
-
-#endif
+	wait(status);
+	if (*status != 0)
+		exit(1);
+}
