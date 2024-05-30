@@ -6,103 +6,67 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/30 15:22:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/30 19:19:56 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	execute_multiple(t_parser *cmd, t_env **env, char **paths);
-static int	redirect_output(char *file_path, t_redirect_type method);
-static void	open_files(t_file *file_head, int *fd_list);
-static void	close_files(int *fd_list);
+static void	redirect_output(t_file *file_head);
+static void	redirect_input(t_file *file_head);
+static void	read_out_file(int fd);
 
 void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 {
-	t_file	*current_file;
+	int		std_in;
 	int		std_out;
-	int		fd;
 
 	if (cmd == NULL || env == NULL || paths == NULL)
 		return ;
 	if (cmd->file == NULL)
 		return (execute_cmd(cmd->cmd, env, paths));
+	std_in = dup(0);
 	std_out = dup(1);
-	if (std_out < 0)
+	if (std_in < 0 || std_out < 0)
 		exit(1);
-	current_file = cmd->file;
-	while (current_file != NULL)
-	{
-		if (current_file->type == OUT_FILE || current_file->type == APPEND)
-		{
-			fd = redirect_output(current_file->file_name, current_file->type);
-			execute_multiple(cmd, env, paths);
-			close(fd);
-		}
-		current_file = current_file->next;
-	}
+	redirect_input(cmd->file);
+	redirect_output(cmd->file);
+	execute_cmd(cmd->cmd, env, paths);
+	if (dup2(std_in, 0) < 0)
+		exit(1);
 	if (dup2(std_out, 1) < 0)
 		exit(1);
 }
 
-static void	execute_multiple(t_parser *cmd, t_env **env, char **paths)
-{
-	int		in_fds[OPEN_MAX];
-	int		std_in;
-	int		index;
-
-	index = 0;
-	ft_bzero(in_fds, sizeof(in_fds));
-	open_files(cmd->file, &in_fds[0]);
-	std_in = dup(0);
-	if (std_in < 0)
-		exit(1);
-	//execute_cmd(cmd->cmd, env, paths);
-	while (in_fds[index] != 0)
-	{
-		if (dup2(in_fds[index], 0) < 0)
-			exit(1);
-		execute_cmd(cmd->cmd, env, paths);
-		index += 1;
-	}
-	close_files(&in_fds[0]);
-	if (dup2(std_in, 0) < 0)
-		exit(1);
-}
-
-static int	redirect_output(char *file_path, t_redirect_type method)
-{
-	char	buffer[1024];
-	int		fd;
-	int		read_len;
-
-	read_len = sizeof(buffer);
-	if (method == OUT_FILE)
-		unlink(file_path);
-	fd = open(file_path, O_CREAT | O_RDWR, 0666);
-	if (fd < 0)
-		exit(1);
-	if (method == APPEND)
-	{
-		while (read_len == sizeof(buffer))
-		{
-			read_len = read(fd, buffer, sizeof(buffer));
-			if (read_len < 0)
-				exit(1);
-		}
-	}
-	if (dup2(fd, 1) < 0)
-		exit(1);
-	return (fd);
-}
-
-static void	open_files(t_file *file_head, int *fd_list)
+static void	redirect_output(t_file *file_head)
 {
 	t_file	*current;
 	int		fd;
 
-	if (file_head == NULL)
-		return ;
+	current = file_head;
+	while (current != NULL)
+	{
+		if (current->type == OUT_FILE || current->type == APPEND)
+		{
+			if (current->type == OUT_FILE)
+				unlink(current->file_name);
+			fd = open(current->file_name, O_CREAT | O_RDWR, 0666);
+			if (fd < 0)
+				exit(1);
+			if (current->type == APPEND)
+				read_out_file(fd);
+			if (dup2(fd, 1) < 0)
+				exit(1);
+		}
+		current = current->next;
+	}
+}
+
+static void	redirect_input(t_file *file_head)
+{
+	t_file	*current;
+	int		fd;
+
 	current = file_head;
 	while (current != NULL)
 	{
@@ -111,19 +75,23 @@ static void	open_files(t_file *file_head, int *fd_list)
 			fd = open(current->file_name, O_RDONLY);
 			if (fd < 0)
 				exit(1);
-			*fd_list = fd;
-			fd_list += 1;
+			if (dup2(fd, 0) < 0)
+				exit(1);
 		}
 		current = current->next;
 	}
 }
 
-static void	close_files(int *fd_list)
+static void	read_out_file(int fd)
 {
-	while (*fd_list != 0)
+	char	buffer[1024];
+	int		read_len;
+
+	read_len = sizeof(buffer);
+	while (read_len == sizeof(buffer))
 	{
-		if (close(*fd_list) != 0)
+		read_len = read(fd, buffer, sizeof(buffer));
+		if (read_len < 0)
 			exit(1);
-		fd_list += 1;
 	}
 }
