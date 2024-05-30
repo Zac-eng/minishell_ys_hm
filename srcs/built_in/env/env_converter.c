@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_command.c                                      :+:      :+:    :+:   */
+/*   env_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 09:55:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/24 17:42:51 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/05/30 19:53:15 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/05/30 19:54:48 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,6 @@
 
 static char	*flatten_tenv(t_env *env);
 static int	get_tenv_len(t_env *env);
-
-void	_env(t_env *env)
-{
-	t_env	*current;
-
-	if (env == NULL)
-		return ;
-	current = env;
-	while (current != NULL)
-	{
-		printf("%s=%s\n", current->key, current->value);
-		current = current->next;
-	}
-}
 
 t_env	*env_into_tenv(char **env)
 {

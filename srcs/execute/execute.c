@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/30 15:22:18 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/30 20:41:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ void	execute(char *line, t_env **env, char **paths)
 	t_file		file1;
 	t_file		file2;
 	t_file		file3;
-	char *cmd1[] = {"echo", "test", NULL};
-	char *cmd2[] = {"wc", "-l", NULL};
+	char *cmd0[] = {"export", "test=test", NULL};
+	_export(&cmd0[0], env);
+	char *cmd1[] = {"export", "test=TEST", NULL};
+	char *cmd2[] = {"env", NULL};
 	parser1.cmd = &cmd1[0];
 	parser1.file = NULL;
-	parser1.next = &parser2;
-	// parser1.next = NULL;
+	// parser1.next = &parser2;
+	parser1.next = NULL;
 	parser1.prev = NULL;
 	parser2.cmd = &cmd2[0];
 	parser2.file = &file1;
@@ -58,6 +60,7 @@ void	execute(char *line, t_env **env, char **paths)
 	while (current != NULL && current->next != NULL)
 		current = current->next;
 	execute_pipe(current, env, paths, 1);
+	_env(*env);
 }
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
