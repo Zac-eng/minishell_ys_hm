@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/30 11:44:28 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:22:18 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 #define WRITE (1)
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out);
-static void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
 static int	connect_pipe(int *pipes, int dup_out, int *original_stdin);
-static int	redirect_output(char *file_path, t_redirect_type method);
 
 void	execute(char *line, t_env **env, char **paths)
 {
@@ -27,13 +25,14 @@ void	execute(char *line, t_env **env, char **paths)
 	if (line == NULL || env == NULL || paths == NULL)
 		exit(1);
 	//instead of using parser, from here
+	// test `echo test | cat > test1.txt < bad.c >> test2.txt`
 	t_parser	parser1;
 	t_parser	parser2;
 	t_file		file1;
 	t_file		file2;
 	t_file		file3;
-	char *cmd1[] = {"echo", NULL};
-	char *cmd2[] = {"ls", NULL};
+	char *cmd1[] = {"echo", "test", NULL};
+	char *cmd2[] = {"wc", "-l", NULL};
 	parser1.cmd = &cmd1[0];
 	parser1.file = NULL;
 	parser1.next = &parser2;
@@ -43,13 +42,13 @@ void	execute(char *line, t_env **env, char **paths)
 	parser2.file = &file1;
 	parser2.next = NULL;
 	parser2.prev = &parser1;
-	file1.file_name = "./test1.txt";
-	file1.type = APPEND;
-	file2.file_name = "./test2.txt";
-	file2.type = OUT_FILE;
+	file1.file_name = "test1.txt";
+	file1.type = OUT_FILE;
+	file2.file_name = "bad.c";
+	file2.type = IN_FILE;
 	file1.next = &file2;
-	file3.file_name = "./test7.txt";
-	file3.type = OUT_FILE;
+	file3.file_name = "README.md";
+	file3.type = IN_FILE;
 	file2.next = &file3;
 	file3.next = NULL;
 	current = &parser1;
@@ -90,33 +89,6 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 	close(pipes[READ]);
 }
 
-static void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
-{
-	t_file	*current_file;
-	int		std_out;
-	int		fd;
-
-	if (cmd == NULL || env == NULL || paths == NULL)
-		return ;
-	if (cmd->file == NULL)
-		return (execute_cmd(cmd->cmd, env, paths));
-	current_file = cmd->file;
-	std_out = dup(1);
-	if (std_out < 0)
-		exit(1);
-	while (current_file != NULL)
-	{
-		fd = redirect_output(current_file->file_name, current_file->type);
-		if (fd < 0)
-			exit(1);
-		execute_cmd(cmd->cmd, env, paths);
-		close(fd);
-		current_file = current_file->next;
-	}
-	if (dup2(std_out, 1) < 0)
-		exit(1);
-}
-
 static int	connect_pipe(int *pipes, int dup_out, int *original_stdin)
 {
 	if (dup_out != 1)
@@ -132,29 +104,4 @@ static int	connect_pipe(int *pipes, int dup_out, int *original_stdin)
 	if (dup2(pipes[READ], 0) < 0)
 		return (-1);
 	return (0);
-}
-
-static int	redirect_output(char *file_path, t_redirect_type method)
-{
-	char	buffer[1024];
-	int		fd;
-	int		read_len;
-
-	if (method == IN_FILE || method == OUT_FILE)
-		unlink(file_path);
-	fd = open(file_path, O_CREAT | O_RDWR, 0666);
-	if (fd < 0)
-		exit(1);
-	if (method == APPEND)
-	{
-		while (read_len == sizeof(buffer))
-		{
-			read_len = read(fd, buffer, sizeof(buffer));
-			if (read_len < 0)
-				exit(1);
-		}
-	}
-	if (dup2(fd, 1) < 0)
-		exit(1);
-	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/23 21:24:58 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:24:25 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include "parser.h"
 # include "../libft/libft.h"
 
 typedef enum e_token_kind
@@ -60,6 +61,7 @@ void	put_error_exit(const char *error);
 void	handle_status(int *status);
 void	execute(char *line, t_env **env, char **paths);
 void	execute_cmd(char **cmd, t_env **env, char **paths);
+void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
 t_token	*lexer(char *line);
 t_env	*get_key_value(char *env_line);
 char	**get_paths(void);
