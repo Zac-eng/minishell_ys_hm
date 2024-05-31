@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/31 13:36:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:49:32 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	free_envvars(t_env *tenv, char **paths);
 
 int	main(int argc, char **argv, char **env)
 {
-	t_env	*tenv;
-	char	**paths;
-	char	*line;
+	t_env		*tenv;
+	char		**paths;
+	char		*line;
 
 	(void)argc, (void)argv;
 	tenv = env_into_tenv(env);

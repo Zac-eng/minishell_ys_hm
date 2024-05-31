@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/05/31 13:44:04 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/05/31 16:24:55 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(EXECUTE_DIR)/execute.c \
 		$(EXECUTE_DIR)/execute_cmd.c \
 		$(EXECUTE_DIR)/execute_redirect.c \
+		$(EXECUTE_DIR)/execute_path.c \
 		$(UTILS_DIR)/handle_status.c \
 		$(UTILS_DIR)/is_equal.c \
 		$(UTILS_DIR)/put_error_exit.c \

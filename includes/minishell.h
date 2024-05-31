@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/31 13:44:25 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:24:16 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	handle_status(int *status);
 void	execute(char *line, t_env **env, char **paths);
 void	execute_cmd(char **cmd, t_env **env, char **paths);
 void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
+int		execute_path(char **cmd, char **env);
 t_token	*lexer(char *line);
 t_env	*get_key_value(char *env_line);
 char	**get_paths(void);
