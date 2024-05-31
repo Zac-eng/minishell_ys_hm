@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/05/30 13:26:02 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/05/31 13:44:04 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,11 @@ BUILTIN_DIR = ./srcs/built_in
 EXECUTE_DIR = ./srcs/execute
 UTILS_DIR = ./srcs/utils
 CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
-SRCS =	$(BUILTIN_DIR)/cd.c \
+SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
+		$(BUILTIN_DIR)/env//env_converter.c \
+		$(BUILTIN_DIR)/env/env.c \
+		$(BUILTIN_DIR)/cd.c \
 		$(BUILTIN_DIR)/echo.c \
-		$(BUILTIN_DIR)/env_command.c \
-		$(BUILTIN_DIR)/env_handler.c \
 		$(BUILTIN_DIR)/export.c \
 		$(BUILTIN_DIR)/pwd.c \
 		$(BUILTIN_DIR)/unset.c \

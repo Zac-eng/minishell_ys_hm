@@ -6,14 +6,14 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:07 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/30 20:30:14 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:42:31 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_env	*find_node(t_env *env_head, char *key);
-// static void		add_env(t_env *env_head, t_env *new_node);
+static void		add_env(t_env *env_head, t_env *new_node);
 static int		rewrite_value(char **before, char *after);
 
 void	_export(char **cmd, t_env **env_head)
@@ -35,7 +35,7 @@ void	_export(char **cmd, t_env **env_head)
 	}
 	target = find_node(*env_head, new_node->key);
 	if (target == NULL)
-		insert_env(*env_head, new_node);
+		add_env(*env_head, new_node);
 	else
 	{
 		if (rewrite_value(&target->value, new_node->value) < 0)
@@ -44,19 +44,22 @@ void	_export(char **cmd, t_env **env_head)
 	}
 }
 
-// static void	add_env(t_env *env_head, t_env *new_node)
-// {
-// 	t_env	*current;
+static void	add_env(t_env *env_head, t_env *new_node)
+{
+	t_env	*current;
+	t_env	*current_next;
 
-// 	if (env_head == NULL || new_node == NULL)
-// 		return ;
-// 	current = env_head;
-// 	if (current == NULL)
-// 		return ;
-// 	while (current->next != NULL)
-// 		current = current->next;
-// 	current->next = new_node;
-// }
+	if (env_head == NULL || new_node == NULL)
+		return ;
+	current = env_head;
+	if (current == NULL)
+		return ;
+	while (current->next != NULL && is_equal(current->next->key, "_") == 0)
+		current = current->next;
+	current_next = current->next;
+	current->next = new_node;
+	new_node->next = current_next;
+}
 
 static t_env	*find_node(t_env *env_head, char *key)
 {
