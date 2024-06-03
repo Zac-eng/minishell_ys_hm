@@ -73,59 +73,74 @@ t_token	*split_red(char **tmp, char *line)
 
 t_token	*split_squote(char **tmp, char *line)
 {
-	int		i;
-	int		a;
+	int		start;
+	int		end;
 	char	*set;
 
-	i = 1;
-	a = 0;
-	i++;
-	while (line[i])
+	start = 1;
+	end = 0;
+	while (line[start])
 	{
-		if (line[i] == '\'')
+		if (line[start] == '\'')
 		{
-			i++;
 			break ;
 		}
-		i++;
+		start++;
 	}
-	set = (char *)malloc(sizeof(char) * (i + 1));
-	while (a <= i)
+	set = (char *)malloc(sizeof(char) * (start));
+	if (set == NULL)
+		ft_error();
+	end = start;
+	start = 0;
+	line++;
+	while (start <= end && *line)
 	{
-		set[a] = *line;
-		a++;
+		if (*line == '\'')
+		{
+			break ;
+		}
+		set[start] = *line;
+		start++;
 		line++;
 	}
-	set[a] = '\0';
+	set[end] = '\0';
 	*tmp = line;
 	return (create_token(set, TK_SQUOTE));
 }
 
 t_token	*split_dquote(char **tmp, char *line)
 {
-	int		i;
-	int		a;
+	int		start;
+	int		end;
 	char	*set;
 
-	i = 1;
-	a = 0;
-	while (line[i])
+	start = 1;
+	end = 0;
+	while (line[start])
 	{
-		if (line[i] == '\"')
+		if (line[start] == '\"')
 		{
-			i++;
 			break ;
 		}
-		i++;
+		start++;
 	}
-	set = (char *)malloc(sizeof(char) * (i + 1));
-	while (a <= i)
+	set = (char *)malloc(sizeof(char) * (start));
+	if (set == NULL)
+		ft_error();
+	end = start;
+	start = 0;
+	line++;
+	while (start <= end && *line)
 	{
-		set[a] = *line;
-		a++;
+		if (*line == '\"')
+		{
+			break ;
+		}
+		set[start] = *line;
+		start++;
 		line++;
 	}
-	set[a] = '\0';
+	set[end] = '\0';
 	*tmp = line;
 	return (create_token(set, TK_DQUOTE));
 }
@@ -149,6 +164,8 @@ t_token	*split_word(char **tmp, char *line)
 	while (line[i] != ' ' && line[i])
 		i++;
 	set = (char *)calloc(sizeof(char), i + 1);
+	if (set == NULL)
+		ft_error();
 	i = 0;
 	while (line[i] != ' ' && line[i])
 	{

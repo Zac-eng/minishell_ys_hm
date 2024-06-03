@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   handle_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 21:00:33 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/23 18:45:39 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/05/13 20:19:08 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/05/19 12:14:37 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t n)
+void	handle_status(int *status)
 {
-	size_t	i;
-
-	i = 0;
-	if (dest == NULL || src == NULL)
-		return (0);
-	while (src[i] && i + 1 < n && n > 0)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (n > 0)
-		dest[i] = '\0';
-	while (src[i])
-		i++;
-	return (i);
+	wait(status);
+	if (*status != 0)
+		exit(1);
 }

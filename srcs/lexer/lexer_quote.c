@@ -38,6 +38,7 @@ void	remove_squote(t_token *token)
 		free(token->str);
 	}
 	token->str = new;
+	printf("squote%s\n",token->str);
 	return ;
 }
 

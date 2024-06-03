@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 21:00:33 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/23 18:45:39 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/05/13 20:21:36 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/05/24 17:33:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t n)
+void	*free_env(t_env *env)
 {
-	size_t	i;
+	t_env	*current;
+	t_env	*for_free;
 
-	i = 0;
-	if (dest == NULL || src == NULL)
-		return (0);
-	while (src[i] && i + 1 < n && n > 0)
+	current = env;
+	while (current != NULL)
 	{
-		dest[i] = src[i];
-		i++;
+		for_free = current;
+		current = current->next;
+		free_node(for_free);
 	}
-	if (n > 0)
-		dest[i] = '\0';
-	while (src[i])
-		i++;
-	return (i);
+	return (NULL);
+}
+
+void	free_node(t_env *node)
+{
+	if (node == NULL)
+		return ;
+	if (node->key != NULL)
+		free(node->key);
+	if (node->value != NULL)
+		free(node->value);
+	free(node);
 }

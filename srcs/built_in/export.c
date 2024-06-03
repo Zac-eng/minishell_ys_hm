@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:07 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/09 19:44:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:42:31 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,18 @@ void	_export(char **cmd, t_env **env_head)
 static void	add_env(t_env *env_head, t_env *new_node)
 {
 	t_env	*current;
+	t_env	*current_next;
 
 	if (env_head == NULL || new_node == NULL)
 		return ;
 	current = env_head;
 	if (current == NULL)
 		return ;
-	while (current->next != NULL)
+	while (current->next != NULL && is_equal(current->next->key, "_") == 0)
 		current = current->next;
+	current_next = current->next;
 	current->next = new_node;
+	new_node->next = current_next;
 }
 
 static t_env	*find_node(t_env *env_head, char *key)
@@ -65,7 +68,8 @@ static t_env	*find_node(t_env *env_head, char *key)
 	if (env_head == NULL || key == NULL)
 		return (NULL);
 	current = env_head;
-	while (is_equal(current->key, key) != 1 && current->next != NULL)
+	while (is_equal(current->key, key) != 1 && \
+		current->next != NULL && is_equal(current->next->key, "_") != 1)
 		current = current->next;
 	if (is_equal(current->key, key) == 1)
 		return (current);
