@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/31 16:30:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:25:36 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	execute_execve(char **cmd, t_env *env, char **paths);
 static int	execute_childp(char *path, char **cmd, char **env);
+static int	execute_path(char *path, char **cmd, char **env);
 static char	*create_path(char *where, char *cmd_name);
 
 void	execute_cmd(char **cmd, t_env **env, char **paths)
@@ -57,7 +58,7 @@ static int	execute_execve(char **cmd, t_env *env, char **paths)
 		index++;
 	}
 	if (status > 0)
-		status = execute_path(cmd, env_str);
+		status = execute_path(cmd[0], cmd, env_str);
 	free_str_list(env_str);
 	return (status);
 }
@@ -87,6 +88,29 @@ static int	execute_childp(char *path, char **cmd, char **env)
 	else
 		wait(&status);
 	free(path_line);
+	return (status);
+}
+
+static int	execute_path(char *path, char **cmd, char **env)
+{
+	int		pid;
+	int		status;
+
+	if (path == NULL || cmd == NULL || env == NULL)
+		return (-1);
+	status = 256;
+	pid = fork();
+	if (pid < 0)
+		exit(1);
+	else if (pid == 0)
+	{
+		signal(SIGINT, sigexit);
+		if (execve(path, cmd, env) == -1)
+			exit(-1);
+		exit(0);
+	}
+	else
+		wait(&status);
 	return (status);
 }
 

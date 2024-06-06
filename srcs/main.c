@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/31 13:49:32 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:43:43 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **env)
 	while (true)
 	{
 		signalctrl();
-		line = readline("> ");
+		line = readline("minishell > ");
 		if (!line)
 			break ;
 		else
@@ -41,6 +41,58 @@ int	main(int argc, char **argv, char **env)
 }
 // __attribute((destructor)) static void destructor() {
 // 	system("leaks -q minishell");
+// }
+
+// int	main(int argc, char **argv, char **env)
+// {
+// 	t_env	*tenv;
+// 	char	*line;
+// 	t_token *lexer_head;
+// 	t_parser *parser_head;
+
+// 	(void)argc;
+// 	(void)argv;
+// 	// signalctrl();
+// 	tenv = env_into_tenv(env);
+// 	while (true)
+// 	{
+// 		line = readline("> ");
+// 		if (!line)
+// 			break ;
+// 		if (line)
+// 		{
+// 			lexer_head = lexer(line);
+// 			parser_head = parser(lexer_head);
+// 			int i =0;
+// 			int a = 0;
+// 			int j = 0;
+// 			while (parser_head->next != NULL)
+// 			{
+// 			parser_head = parser_head->next;
+// 			}
+// 			while (parser_head != NULL)
+// 			{
+// 				printf("parser->pointer:%p\n",parser_head );
+// 				while (parser_head->cmd[i] != NULL)
+// 			{
+// 				printf("cmd:%s\n",parser_head->cmd[i] );
+// 				i++;
+// 			}
+// 			while (parser_head->file != NULL)
+// 			{
+// 				printf("filename:%s\n",parser_head->file->file_name );
+// 				parser_head->file = parser_head->file->next;
+// 			}
+// 			a++;
+// 			i=0;
+// 			parser_head = parser_head->prev;
+// 			}
+// 			add_history(line);
+// 			// execute(line, &tenv);
+// 			free(line);
+// 		}
+// 	}
+// 	exit(0);
 // }
 
 static void	free_envvars(t_env *tenv, char **paths)
