@@ -6,13 +6,11 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:32 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/31 13:43:41 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:00:25 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	remove_env(t_env *previous);
 
 void	_unset(char **cmd, t_env **env)
 {
@@ -35,16 +33,4 @@ void	_unset(char **cmd, t_env **env)
 	if (is_equal(current->next->key, "_") == 0 && \
 									is_equal(current->next->key, cmd[1]) == 1)
 		remove_env(current);
-}
-
-static int	remove_env(t_env *previous)
-{
-	t_env	*for_free;
-
-	if (previous == NULL || previous->next == NULL)
-		return (-1);
-	for_free = previous->next;
-	previous->next = for_free->next;
-	free_node(for_free);
-	return (0);
 }

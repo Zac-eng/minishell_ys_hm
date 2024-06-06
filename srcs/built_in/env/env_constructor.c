@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:28:47 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/30 19:53:12 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:55:20 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_env	*allocate_tenv(char *env_line);
 static int		get_env_len(char *env_line, int *key_value_len);
 
-t_env	*get_key_value(char *env_line)
+t_env	*create_envnode(char *env_line)
 {
 	t_env	*env_node;
 	int		index;

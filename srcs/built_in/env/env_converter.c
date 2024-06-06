@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_handler.c                                      :+:      :+:    :+:   */
+/*   env_converter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:53:15 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/30 19:54:48 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:55:40 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_env	*env_into_tenv(char **env)
 		exit(1);
 	while (env[env_index] != NULL)
 	{
-		env_tmp = get_key_value(env[env_index]);
+		env_tmp = create_envnode(env[env_index]);
 		if (env_tmp == NULL)
 		{
 			free_env(env_head_tail[0]);

@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/06 10:29:23 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/06/06 11:01:11 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ PARSER_DIR = ./srcs/parser
 UTILS_DIR = ./srcs/utils
 SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(BUILTIN_DIR)/env//env_converter.c \
+		$(BUILTIN_DIR)/env//env_handler.c \
 		$(BUILTIN_DIR)/env/env.c \
 		$(BUILTIN_DIR)/cd.c \
 		$(BUILTIN_DIR)/echo.c \
