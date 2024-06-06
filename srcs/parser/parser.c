@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 void	*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
-													t_parser **parser)
+													t_parser **parser, t_env **env)
 {
 	// パーサーがあるかどうか見てる
 	if ((*lexer_tmp)->kind == TK_PIPE)
@@ -28,7 +28,7 @@ void	*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 	}
 	else
 	{
-		if (parser_cmd(lexer_tmp, parser_tmp) == NULL)
+		if (parser_cmd(lexer_tmp, parser_tmp, env) == NULL)
 			return (NULL);
 	}
 	return (parser_tmp);
@@ -48,7 +48,7 @@ t_parser	*parser_node_new(void)
 	return (new);
 }
 
-t_parser	*parser(t_token	*lexer)
+t_parser	*parser(t_token	*lexer, t_env **env)
 {
 	t_token		*lexer_tmp;
 	t_parser	*parser;
@@ -62,7 +62,7 @@ t_parser	*parser(t_token	*lexer)
 	parser_tmp = parser;
 	while (lexer_tmp != NULL)
 	{
-		if (parser_check(&lexer_tmp, &parser_tmp, &parser) == NULL)
+		if (parser_check(&lexer_tmp, &parser_tmp, &parser, env) == NULL)
 			return (NULL);
 		lexer_tmp = lexer_tmp->next;
 	}

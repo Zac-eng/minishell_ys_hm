@@ -23,7 +23,9 @@ t_env	*find_node(t_env *env_head, char *key)
 		current->next != NULL && is_equal(current->next->key, "_") != 1)
 		current = current->next;
 	if (is_equal(current->key, key) == 1)
+	{
 		return (current);
+	}
 	else
 		return (NULL);
 }

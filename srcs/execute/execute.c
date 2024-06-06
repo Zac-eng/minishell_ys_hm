@@ -29,7 +29,7 @@ void	execute(char *line, t_env **env, char **paths)
 	lexer_head = lexer(line);
 	if (lexer_head == NULL)
 		return ;
-	parser_head = parser(lexer_head);
+	parser_head = parser(lexer_head, env);
 	if (parser_head == NULL)
 		return ;
 	current = parser_head;

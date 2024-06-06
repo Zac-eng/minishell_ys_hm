@@ -48,8 +48,8 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(PARSER_DIR)/parser_redirect.c \
 		$(PARSER_DIR)/parser_check.c \
 		./srcs/error.c \
-		./srcs/signalctrl.c \
 		./srcs/main.c \
+		# ./srcs/signalctrl.c \
 
 OBJS = $(SRCS:%.c=%.o)
 LIBDIR = ./libft

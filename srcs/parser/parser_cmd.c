@@ -17,13 +17,33 @@ void ft_exit(void)
 	exit(0);
 }
 
-void	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp)
+bool	parser_env(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 {
+	t_env	*head_env;
+
+	if (!(head_env = find_node(*env, (&(*lexer_tmp)->str[1]))))
+		return (false);
+	(*parser_tmp)->cmd[0] = strdup(head_env->value);
+	return (true);
+}
+
+void	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
+{
+	bool	flag;
+
+	flag = false;
 	(*parser_tmp)->cmd = (char **)calloc(2, sizeof(char *));
 	if ((*parser_tmp)->cmd == NULL)
 		ft_exit();
-	(*parser_tmp)->cmd[0] = strdup((*lexer_tmp)->str);
-
+	if ((*lexer_tmp)->str[0] == '$')
+	{
+		if (parser_env(lexer_tmp, parser_tmp, env))
+			flag = true;
+		else
+			flag = false;
+	}
+	if (flag == false)
+		(*parser_tmp)->cmd[0] = strdup((*lexer_tmp)->str);
 	if ((*parser_tmp)->cmd[0] == NULL)
 		ft_exit();
 	(*parser_tmp)->cmd[1] = NULL;
@@ -68,7 +88,7 @@ void	cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp)
 	free(tmp);
 }
 
-void	*parser_cmd(t_token **lexer_tmp, t_parser **parser_tmp)
+void	*parser_cmd(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 {
 	char	**tmp;
 	int		i;
@@ -77,7 +97,7 @@ void	*parser_cmd(t_token **lexer_tmp, t_parser **parser_tmp)
 	if ((*parser_tmp)->cmd == NULL)
 	{
 
-		cmd_init(lexer_tmp, parser_tmp);
+		cmd_init(lexer_tmp, parser_tmp, env);
 	}
 	else
 	{

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	sigint_no_redisplay(int signum);
+// static void	sigint_no_redisplay(int signum);
 static void	free_envvars(t_env *tenv, char **paths);
 
 int	main(int argc, char **argv, char **env)
@@ -26,13 +26,13 @@ int	main(int argc, char **argv, char **env)
 	paths = get_paths();
 	while (true)
 	{
-		signalctrl();
+		// signalctrl();
 		line = readline("minishell > ");
 		if (!line)
 			break ;
 		else
 		{
-			signal(SIGINT, sigint_no_redisplay);
+			// signal(SIGINT, sigint_no_redisplay);
 			add_history(line);
 			execute(line, &tenv, paths);
 			free(line);
@@ -97,15 +97,15 @@ int	main(int argc, char **argv, char **env)
 // 	exit(0);
 // }
 
-static void	sigint_no_redisplay(int signum)
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-	}
-}
+// static void	sigint_no_redisplay(int signum)
+// {
+// 	if (signum == SIGINT)
+// 	{
+// 		printf("\n");
+// 		rl_replace_line("", 0);
+// 		rl_on_new_line();
+// 	}
+// }
 
 static void	free_envvars(t_env *tenv, char **paths)
 {
