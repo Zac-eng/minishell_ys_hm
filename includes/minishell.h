@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/31 16:24:16 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:59:44 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,27 @@
 
 void	signalctrl(void);
 void	sigexit(int signum);
-void	put_error_exit(const char *error);
-void	handle_status(int *status);
-void	execute(t_parser *current, t_env **env, char **paths);
-void	execute_cmd(char **cmd, t_env **env, char **paths);
-void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
-int		execute_path(char **cmd, char **env);
-t_token	*lexer(char *line);
-t_env	*get_key_value(char *env_line);
 char	**get_paths(void);
-void	free_str_list(char **str_list);
-void	*free_env(t_env *env);
-void	free_node(t_env *node);
 t_env	*env_into_tenv(char **env);
 char	**env_into_list(t_env *env);
+void	execute(char *line, t_env **env, char **paths);
+void	execute_cmd(char **cmd, t_env **env, char **paths);
+void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
 void	_cd(char **cmd);
 void	_echo(char **cmd);
 void	_env(t_env *env);
 void	_export(char **cmd, t_env **env_head);
 void	_pwd(void);
 void	_unset(char **cmd, t_env **env);
+t_env	*create_envnode(char *env_line);
+void	*free_env(t_env *env);
+void	free_node(t_env *node);
+void	free_str_list(char **str_list);
+t_env	*find_node(t_env *env_head, char *key);
+void	push_env(t_env *env_head, t_env *new_node);
+int		remove_env(t_env *previous);
+void	put_error_exit(const char *error);
+void	handle_status(int *status);
 int		is_equal(char *str, char *ref);
 
 #endif

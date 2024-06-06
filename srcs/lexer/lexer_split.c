@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/13 18:20:41 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 09:32:07 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_token	*split_pipe(char **tmp, char *line)
 t_token	*split_red(char **tmp, char *line)
 {
 	char	*set;
-	t_token	*token;
 
 	if (*line == '<')
 	{
@@ -148,9 +147,7 @@ t_token	*split_dquote(char **tmp, char *line)
 t_token	*split_word(char **tmp, char *line)
 {
 	char	*set;
-	t_token	*token;
 	int		i;
-	int		a;
 
 	if (*line == '\'')
 	{

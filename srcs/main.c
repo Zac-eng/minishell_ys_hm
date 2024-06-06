@@ -6,12 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/31 13:49:32 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:41:44 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	sigint_no_redisplay(int signum);
 static void	free_envvars(t_env *tenv, char **paths);
 
 int	main(int argc, char **argv, char **env)
@@ -19,31 +20,30 @@ int	main(int argc, char **argv, char **env)
 	t_env		*tenv;
 	char		**paths;
 	char		*line;
-	t_token *lexer_head;
-	t_parser *parser_head;
 
 	(void)argc, (void)argv;
 	tenv = env_into_tenv(env);
 	paths = get_paths();
 	while (true)
 	{
-		// signalctrl();
-		line = readline("> ");
+		signalctrl();
+		line = readline("minishell > ");
 		if (!line)
 			break ;
 		else
 		{
-			lexer_head = lexer(line);
-			parser_head = parser(lexer_head);
+			signal(SIGINT, sigint_no_redisplay);
 			add_history(line);
-			execute(parser_head, &tenv, paths);
+			execute(line, &tenv, paths);
 			free(line);
 		}
 	}
 	free_envvars(tenv, paths);
 	exit(0);
 }
-
+// __attribute((destructor)) static void destructor() {
+// 	system("leaks -q minishell");
+// }
 
 // int	main(int argc, char **argv, char **env)
 // {
@@ -97,9 +97,15 @@ int	main(int argc, char **argv, char **env)
 // 	exit(0);
 // }
 
-// __attribute((destructor)) static void destructor() {
-// 	system("leaks -q minishell");
-// }
+static void	sigint_no_redisplay(int signum)
+{
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
+}
 
 static void	free_envvars(t_env *tenv, char **paths)
 {

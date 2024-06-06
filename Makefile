@@ -6,21 +6,22 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/05/31 16:24:55 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/06/06 11:01:11 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ./minishell
+NAME = minishell
 CC = cc
 INCLUDES_DIR = ./includes
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
 BUILTIN_DIR = ./srcs/built_in
 EXECUTE_DIR = ./srcs/execute
 LEXER_DIR = ./srcs/lexer
 PARSER_DIR = ./srcs/parser
 UTILS_DIR = ./srcs/utils
-CFLAGS = -I$(INCLUDES_DIR)
 SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(BUILTIN_DIR)/env//env_converter.c \
+		$(BUILTIN_DIR)/env//env_handler.c \
 		$(BUILTIN_DIR)/env/env.c \
 		$(BUILTIN_DIR)/cd.c \
 		$(BUILTIN_DIR)/echo.c \
@@ -30,7 +31,6 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(EXECUTE_DIR)/execute.c \
 		$(EXECUTE_DIR)/execute_cmd.c \
 		$(EXECUTE_DIR)/execute_redirect.c \
-		$(EXECUTE_DIR)/execute_path.c \
 		$(UTILS_DIR)/handle_status.c \
 		$(UTILS_DIR)/is_equal.c \
 		$(UTILS_DIR)/put_error_exit.c \
@@ -47,12 +47,11 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(PARSER_DIR)/parser_pipe.c \
 		$(PARSER_DIR)/parser_redirect.c \
 		$(PARSER_DIR)/parser_check.c \
+		./srcs/error.c \
+		./srcs/signalctrl.c \
 		./srcs/main.c \
-		./srcs/error.c 
-		# ./srcs/signalctrl.c
 
 OBJS = $(SRCS:%.c=%.o)
-
 LIBDIR = ./libft
 LIBFT = $(LIBDIR)/libft.a
 

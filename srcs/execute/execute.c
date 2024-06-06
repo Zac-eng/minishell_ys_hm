@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/31 16:27:22 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:20:58 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,26 @@
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out);
 static int	connect_pipe(int *pipes, int dup_out, int *original_stdin);
 
-void	execute(t_parser *current, t_env **env, char **paths)
+void	execute(char *line, t_env **env, char **paths)
 {
-	if (current == NULL)
+	t_token		*lexer_head;
+	t_parser	*parser_head;
+	t_parser	*current;
+
+	if (line == NULL || env == NULL || paths == NULL)
 		return ;
+	lexer_head = lexer(line);
+	if (lexer_head == NULL)
+		return ;
+	parser_head = parser(lexer_head);
+	if (parser_head == NULL)
+		return ;
+	current = parser_head;
 	while (current != NULL && current->next != NULL)
 		current = current->next;
 	execute_pipe(current, env, paths, 1);
-	// _env(*env);
+	//free_parser here
+	//free_lexer here if necessary
 }
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
