@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 10:25:36 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:21:35 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static int	execute_childp(char *path, char **cmd, char **env)
 		exit(1);
 	else if (pid == 0)
 	{
-		signal(SIGINT, sigexit);
 		if (execve(path_line, cmd, env) == -1)
 			exit(-1);
 		exit(0);
@@ -104,7 +103,6 @@ static int	execute_path(char *path, char **cmd, char **env)
 		exit(1);
 	else if (pid == 0)
 	{
-		signal(SIGINT, sigexit);
 		if (execve(path, cmd, env) == -1)
 			exit(-1);
 		exit(0);

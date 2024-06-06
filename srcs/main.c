@@ -6,12 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/06 10:43:43 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:41:44 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	sigint_no_redisplay(int signum);
 static void	free_envvars(t_env *tenv, char **paths);
 
 int	main(int argc, char **argv, char **env)
@@ -31,6 +32,7 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		else
 		{
+			signal(SIGINT, sigint_no_redisplay);
 			add_history(line);
 			execute(line, &tenv, paths);
 			free(line);
@@ -94,6 +96,16 @@ int	main(int argc, char **argv, char **env)
 // 	}
 // 	exit(0);
 // }
+
+static void	sigint_no_redisplay(int signum)
+{
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+	}
+}
 
 static void	free_envvars(t_env *tenv, char **paths)
 {
