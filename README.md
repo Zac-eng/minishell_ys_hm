@@ -10,3 +10,13 @@ Minishell 42.
 -  unset with no options
 -  env with no options or arguments
 -  exit with no options
+
+# Make Options
+- make
+	-	compile all files required and create executable, "minishell"
+- make clean
+	-	removes unnecessary *.o files not necessary to run program
+- make fclean
+	-	removes everything created by make, including "minishell"
+- make re
+	-	removes everything and compile again.

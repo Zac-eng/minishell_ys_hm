@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   parser_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 21:00:33 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/23 18:45:39 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/05/13 18:12:46 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/06/06 09:32:44 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t n)
+// void	free_parser(t_parser **parser)
+// {
+// 	t_parser	*tmp;
+// 	t_parser	*delete;
+// }
+
+void	*parser_pipe(t_parser **parser_tmp, t_parser **parser)
 {
-	size_t	i;
-
-	i = 0;
-	if (dest == NULL || src == NULL)
-		return (0);
-	while (src[i] && i + 1 < n && n > 0)
+	(void)parser;
+	(*parser_tmp)->next = parser_node_new();
+	if ((*parser_tmp)->next == NULL)
 	{
-		dest[i] = src[i];
-		i++;
+		exit(0);
 	}
-	if (n > 0)
-		dest[i] = '\0';
-	while (src[i])
-		i++;
-	return (i);
+	(*parser_tmp)->next->prev = *parser_tmp;
+	(*parser_tmp) = (*parser_tmp)->next;
+	return (*parser_tmp);
 }

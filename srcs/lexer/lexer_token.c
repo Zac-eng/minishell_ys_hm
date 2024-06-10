@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   lexer_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 21:00:33 by yususato          #+#    #+#             */
-/*   Updated: 2024/05/23 18:45:39 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/05/13 18:20:49 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/06/10 19:53:15 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t n)
+t_token	*create_token(char *line, t_token_kind kind)
 {
-	size_t	i;
+	t_token	*token;
 
-	i = 0;
-	if (dest == NULL || src == NULL)
-		return (0);
-	while (src[i] && i + 1 < n && n > 0)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (n > 0)
-		dest[i] = '\0';
-	while (src[i])
-		i++;
-	return (i);
+	token = calloc(1, sizeof(*token));
+	if (token == NULL)
+		return (NULL);
+	token->str = line;
+	token->kind = kind;
+	token->next = NULL;
+	return (token);
 }
