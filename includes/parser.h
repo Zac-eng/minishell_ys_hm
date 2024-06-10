@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/06 09:30:58 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:44:01 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 // void		token_check(t_token	*lexer);
 void		*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 													t_parser **parser, t_env **env);
-void		ft_error(void);
 t_token		*create_token(char *line, t_token_kind kind);
 
 #endif
