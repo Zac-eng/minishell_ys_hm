@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
+#    By: h.miyazaki <h.miyazaki@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/06 11:01:11 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/06/10 19:40:00 by h.miyazaki       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,8 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(PARSER_DIR)/parser_pipe.c \
 		$(PARSER_DIR)/parser_redirect.c \
 		$(PARSER_DIR)/parser_check.c \
-		./srcs/error.c \
+		./srcs/signalctrl.c \
 		./srcs/main.c \
-		# ./srcs/signalctrl.c \
 
 OBJS = $(SRCS:%.c=%.o)
 LIBDIR = ./libft
