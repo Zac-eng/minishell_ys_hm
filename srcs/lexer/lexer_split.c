@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 09:32:07 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:08:53 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,19 @@ t_token	*split_squote(char **tmp, char *line)
 	while (line[start])
 	{
 		if (line[start] == '\'')
-		{
 			break ;
-		}
 		start++;
 	}
 	set = (char *)malloc(sizeof(char) * (start));
 	if (set == NULL)
-		ft_error();
+		put_error_exit("need to be editted");
 	end = start;
 	start = 0;
 	line++;
 	while (start <= end && *line)
 	{
 		if (*line == '\'')
-		{
 			break ;
-		}
 		set[start] = *line;
 		start++;
 		line++;
@@ -118,23 +114,19 @@ t_token	*split_dquote(char **tmp, char *line)
 	while (line[start])
 	{
 		if (line[start] == '\"')
-		{
 			break ;
-		}
 		start++;
 	}
 	set = (char *)malloc(sizeof(char) * (start));
 	if (set == NULL)
-		ft_error();
+		put_error_exit("need to be editted");
 	end = start;
 	start = 0;
 	line++;
 	while (start <= end && *line)
 	{
 		if (*line == '\"')
-		{
 			break ;
-		}
 		set[start] = *line;
 		start++;
 		line++;
@@ -150,19 +142,15 @@ t_token	*split_word(char **tmp, char *line)
 	int		i;
 
 	if (*line == '\'')
-	{
 		return (split_squote(tmp, line));
-	}
 	else if (*line == '\"')
-	{
 		return (split_dquote(tmp, line));
-	}
 	i = 0;
 	while (line[i] != ' ' && line[i])
 		i++;
 	set = (char *)calloc(sizeof(char), i + 1);
 	if (set == NULL)
-		ft_error();
+		put_error_exit("need to be editted");
 	i = 0;
 	while (line[i] != ' ' && line[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 11:20:58 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:07:16 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	execute(char *line, t_env **env, char **paths)
 	lexer_head = lexer(line);
 	if (lexer_head == NULL)
 		return ;
-	parser_head = parser(lexer_head);
+	parser_head = parser(lexer_head, env);
 	if (parser_head == NULL)
 		return ;
 	current = parser_head;

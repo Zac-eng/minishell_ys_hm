@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:51 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/13 18:16:44 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:54:29 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	file_init(t_file **file, char *file_name, t_token_kind kind, \
 		exit(1);
 	(*file)->next = NULL;
 	(*file)->file_name = strdup(file_name);
-	if (kind ==TK_DLESS && is_quote(next_kind) == true)
+	if (kind == TK_DLESS && is_quote(next_kind) == true)
 		(*file)->type = QUOTE_HEREDOC;
-	else if (kind ==TK_DLESS)
+	else if (kind == TK_DLESS)
 		(*file)->type = HEREDOC;
 	else if (kind == TK_LESS)
 		(*file)->type = IN_FILE;
@@ -44,9 +44,9 @@ void	file_add(t_file **file, char *file_name, t_token_kind kind, \
 	(*file) = (*file)->next;
 	(*file)->next = NULL;
 	(*file)->file_name = strdup(file_name);
-	if (kind ==TK_DLESS && is_quote(next_kind) == true)
+	if (kind == TK_DLESS && is_quote(next_kind) == true)
 		(*file)->type = QUOTE_HEREDOC;
-	else if (kind ==TK_DLESS)
+	else if (kind == TK_DLESS)
 		(*file)->type = HEREDOC;
 	else if (kind == TK_LESS)
 		(*file)->type = IN_FILE;
