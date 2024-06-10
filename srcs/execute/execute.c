@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 20:07:16 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:20:53 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	execute(char *line, t_env **env, char **paths)
 	while (current != NULL && current->next != NULL)
 		current = current->next;
 	execute_pipe(current, env, paths, 1);
-	//free_parser here
-	//free_lexer here if necessary
+	free_parser(parser_head);
 }
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)

@@ -6,13 +6,12 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/10 20:07:20 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:19:59 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
 
 typedef enum e_token_kind
 {
@@ -95,5 +94,6 @@ void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 void		*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 												t_parser **parser, t_env **env);
 t_token		*create_token(char *line, t_token_kind kind);
+void		free_parser(t_parser *parser_head);
 
 #endif
