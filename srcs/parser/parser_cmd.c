@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:18 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 20:00:01 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/13 23:12:31 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 	(*parser_tmp)->cmd = (char **)calloc(2, sizeof(char *));
 	if ((*parser_tmp)->cmd == NULL)
 		exit(0);
-	if ((*lexer_tmp)->str[0] == '$')
+	if ((*parser_tmp)->cmd[0] == '$')
 	{
 		if (parser_env(lexer_tmp, parser_tmp, env))
 			flag = true;
