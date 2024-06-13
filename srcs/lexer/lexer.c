@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:40:20 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/10 19:47:48 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:05:27 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*lexer(char *line)
 	t_token	*token;
 
 	lexer = NULL;
-	while (*line != '\0' && line)
+	while (line && *line != '\0')
 	{
 		if (split_space(&line, line))
 			continue ;

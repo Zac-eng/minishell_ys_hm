@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 11:21:35 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:27:47 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	execute_cmd(char **cmd, t_env **env, char **paths)
 	if (is_equal(cmd[0], "echo") == 1)
 		return (_echo(cmd));
 	else if (is_equal(cmd[0], "cd") == 1)
-		return (_cd(cmd));
+		return (_cd(cmd, *env));
 	else if (is_equal(cmd[0], "pwd") == 1)
 		return (_pwd());
 	else if (is_equal(cmd[0], "export") == 1)

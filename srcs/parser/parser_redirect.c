@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:51 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 19:54:29 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:14:48 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	file_add(t_file **file, char *file_name, t_token_kind kind, \
 		exit(1);
 	(*file) = (*file)->next;
 	(*file)->next = NULL;
-	(*file)->file_name = strdup(file_name);
+	(*file)->file_name = ft_strdup(file_name);
 	if (kind == TK_DLESS && is_quote(next_kind) == true)
 		(*file)->type = QUOTE_HEREDOC;
 	else if (kind == TK_DLESS)
@@ -80,13 +80,9 @@ void	parser_input(t_token **lexer_tmp, t_parser **parser_tmp)
 void	*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp)
 {
 	if ((*lexer_tmp)->kind == TK_LESS || (*lexer_tmp)->kind == TK_DLESS)
-	{
 		parser_output(lexer_tmp, parser_tmp);
-	}
 	else if ((*lexer_tmp)->kind == TK_GREAT || (*lexer_tmp)->kind == TK_DGREAT)
-	{
 		parser_input(lexer_tmp, parser_tmp);
-	}
 	*lexer_tmp = (*lexer_tmp)->next;
 	return (parser_tmp);
 }

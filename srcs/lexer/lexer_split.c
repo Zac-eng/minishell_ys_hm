@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 19:46:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:37:14 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,105 +35,29 @@ t_token	*split_pipe(char **tmp, char *line)
 
 t_token	*split_red(char **tmp, char *line)
 {
-	char	*set;
-
 	if (*line == '<')
 	{
+		*tmp += 1;
 		if (line[1] == '<')
 		{
-			set = strdup("<<");
-			*tmp = &line[2];
-			return (create_token(set, TK_DLESS));
+			*tmp += 1;
+			return (create_token(ft_strdup("<<"), TK_DLESS));
 		}
 		else
-		{
-			set = strdup("<");
-			*tmp = &line[1];
-			return (create_token(set, TK_LESS));
-		}
+			return (create_token(strdup("<"), TK_LESS));
 	}
 	else if (*line == '>')
 	{
+		*tmp += 1;
 		if (line[1] == '>')
 		{
-			set = strdup(">>");
-			*tmp = &line[2];
-			return (create_token(set, TK_DGREAT));
+			*tmp += 1;
+			return (create_token(strdup(">>"), TK_DGREAT));
 		}
 		else
-		{
-			set = strdup(">");
-			*tmp = &line[1];
-			return (create_token(set, TK_GREAT));
-		}
+			return (create_token(strdup(">"), TK_GREAT));
 	}
 	exit(0);
-}
-
-t_token	*split_squote(char **tmp, char *line)
-{
-	int		start;
-	int		end;
-	char	*set;
-
-	start = 1;
-	end = 0;
-	while (line[start])
-	{
-		if (line[start] == '\'')
-			break ;
-		start++;
-	}
-	set = (char *)malloc(sizeof(char) * (start));
-	if (set == NULL)
-		put_error_exit("need to be editted");
-	end = start;
-	start = 0;
-	line++;
-	while (start <= end && *line)
-	{
-		if (*line == '\'')
-			break ;
-		set[start] = *line;
-		start++;
-		line++;
-	}
-	set[end] = '\0';
-	*tmp = line;
-	return (create_token(set, TK_SQUOTE));
-}
-
-t_token	*split_dquote(char **tmp, char *line)
-{
-	int		start;
-	int		end;
-	char	*set;
-
-	start = 1;
-	end = 0;
-	while (line[start])
-	{
-		if (line[start] == '\"')
-			break ;
-		start++;
-	}
-	set = (char *)malloc(sizeof(char) * (start));
-	if (set == NULL)
-		put_error_exit("need to be editted");
-	end = start;
-	start = 0;
-	line++;
-	while (start <= end && *line)
-	{
-		if (*line == '\"')
-			break ;
-		set[start] = *line;
-		start++;
-		line++;
-	}
-	set[end] = '\0';
-	*tmp = line;
-	return (create_token(set, TK_DQUOTE));
 }
 
 t_token	*split_word(char **tmp, char *line)

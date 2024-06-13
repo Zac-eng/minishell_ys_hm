@@ -6,12 +6,11 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:19:28 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 19:45:07 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:13:01 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	remove_squote(t_token *token)
 {
@@ -22,23 +21,22 @@ void	remove_squote(t_token *token)
 	if (token->str[0] != '\'' || token == NULL)
 		return ;
 	tmp = token->str;
-	i = strlen(token->str);
-	new = calloc(i-2, sizeof(char));
+	i = ft_strlen(token->str);
+	new = ft_calloc(i - 2, sizeof(char));
 	tmp++;
 	i = 0;
-	while (tmp[i]  != '\'' && tmp[i])
+	while (tmp[i] != '\'' && tmp[i])
 	{
 		new[i] = tmp[i];
 		i++;
 	}
-
 	if (*tmp == '\0')
 	{
 		free(token->str);
 		put_error_exit("need to be editted");
 	}
 	token->str = new;
-	printf("squote%s\n",token->str);
+	printf("squote%s\n", token->str);
 	return ;
 }
 
@@ -51,11 +49,11 @@ void	remove_dquote(t_token *token)
 	if (token->str[0] != '\"' || token == NULL)
 		return ;
 	tmp = token->str;
-	i = strlen(token->str);
-	new = calloc(i-2, sizeof(char));
+	i = ft_strlen(token->str);
+	new = ft_calloc(i - 2, sizeof(char));
 	tmp++;
 	i = 0;
-	while (tmp[i]  != '\"' && tmp[i])
+	while (tmp[i] != '\"' && tmp[i])
 	{
 		new[i] = tmp[i];
 		i++;

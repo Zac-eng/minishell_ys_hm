@@ -1,39 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_env.c                                         :+:      :+:    :+:   */
+/*   free_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 20:21:36 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/24 17:33:51 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/06/10 20:16:45 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/06/10 20:20:29 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*free_env(t_env *env)
+void	free_parser(t_parser *parser_head)
 {
-	t_env	*current;
-	t_env	*for_free;
+	t_parser	*current;
+	t_parser	*tmp;
 
-	current = env;
+	current = parser_head;
 	while (current != NULL)
 	{
-		for_free = current;
+		tmp = current;
 		current = current->next;
-		free_node(for_free);
+		free_str_list(tmp->cmd);
+		if (tmp->file != NULL)
+			free(tmp->file);
+		free(tmp);
 	}
-	return (NULL);
-}
-
-void	free_node(t_env *node)
-{
-	if (node == NULL)
-		return ;
-	if (node->key != NULL)
-		free(node->key);
-	if (node->value != NULL)
-		free(node->value);
-	free(node);
 }

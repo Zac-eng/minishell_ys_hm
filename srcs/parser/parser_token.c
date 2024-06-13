@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:17:01 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 19:54:09 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:14:06 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	token_check(t_token	*lexer)
 	{
 		if (start_check(tmp) && can_connect(tmp->next))
 		{
-			strjoin(tmp->str, tmp->next->str);
+			ft_strjoin(tmp->str, tmp->next->str);
 			node_delete(tmp, tmp->next);
 		}
 		else

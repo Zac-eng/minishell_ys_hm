@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 11:20:58 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:06:37 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define WRITE (1)
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out);
-static int	connect_pipe(int *pipes, int dup_out, int *original_stdin);
+static int	control_stream(t_parser *cmd, int *pipes, int *stdin, int dup_out);
 
 void	execute(char *line, t_env **env, char **paths)
 {
@@ -24,7 +24,7 @@ void	execute(char *line, t_env **env, char **paths)
 	t_parser	*parser_head;
 	t_parser	*current;
 
-	if (line == NULL || env == NULL || paths == NULL)
+	if (line == NULL || env == NULL)
 		return ;
 	lexer_head = lexer(line);
 	if (lexer_head == NULL)
@@ -36,21 +36,18 @@ void	execute(char *line, t_env **env, char **paths)
 	while (current != NULL && current->next != NULL)
 		current = current->next;
 	execute_pipe(current, env, paths, 1);
-	//free_parser here
-	//free_lexer here if necessary
+	free_parser(parser_head);
 }
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 {
 	int		pipes[2];
-	int		pid;
 	int		original_stdin;
+	int		pid;
 	int		status;
 
-	if (cmd == NULL || env == NULL || paths == NULL)
+	if (control_stream(cmd, &pipes[0], &original_stdin, dup_out) < 0)
 		return ;
-	if (connect_pipe(&pipes[0], dup_out, &original_stdin) != 0)
-		exit(1);
 	if (cmd->prev != NULL)
 	{
 		pid = fork();
@@ -58,6 +55,8 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 			put_error_exit("failed to fork");
 		else if (pid == 0)
 		{
+			if (dup2(pipes[WRITE], 1) < 0)
+				exit(1);
 			execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
 			exit(0);
 		}
@@ -65,23 +64,30 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 			handle_status(&status);
 	}
 	execute_redirect(cmd, env, paths);
-	dup2(original_stdin, 0);
-	close(pipes[READ]);
+	if (dup2(original_stdin, 0) < 0)
+		exit(1);
 }
 
-static int	connect_pipe(int *pipes, int dup_out, int *original_stdin)
+static int	control_stream(t_parser *cmd, int *pipes, int *stdin, int dup_out)
 {
+	if (cmd == NULL || pipes == NULL || stdin == NULL)
+		return (-1);
+	*stdin = dup(0);
+	if (*stdin < 0)
+		exit(1);
+	if (pipe(pipes) < 0)
+		exit(1);
 	if (dup_out != 1)
 	{
 		if (dup2(dup_out, 1) < 0)
-			return (-1);
+			exit(1);
 	}
-	if (pipe(pipes) != 0)
-		return (-1);
-	*original_stdin = dup(0);
-	if (*original_stdin < 0)
-		return (-1);
-	if (dup2(pipes[READ], 0) < 0)
-		return (-1);
+	if (cmd->prev != NULL)
+	{
+		if (dup2(pipes[READ], 0) < 0)
+			exit(1);
+	}
+	else
+		close(pipes[READ]);
 	return (0);
 }

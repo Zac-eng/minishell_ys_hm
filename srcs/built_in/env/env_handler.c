@@ -6,11 +6,27 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:50:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 10:52:09 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/13 09:34:32 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*_getenv(t_env *env_head, char *key)
+{
+	t_env	*env_node;
+	char	*env_line;
+
+	if (env_head == NULL || key == NULL)
+		return (NULL);
+	env_node = find_node(env_head, key);
+	if (env_node == NULL || env_node->value == NULL)
+		return (NULL);
+	env_line = ft_strdup(env_node->value);
+	if (env_line == NULL)
+		exit(1);
+	return (env_line);
+}
 
 t_env	*find_node(t_env *env_head, char *key)
 {
@@ -23,9 +39,7 @@ t_env	*find_node(t_env *env_head, char *key)
 		current->next != NULL && is_equal(current->next->key, "_") != 1)
 		current = current->next;
 	if (is_equal(current->key, key) == 1)
-	{
 		return (current);
-	}
 	else
 		return (NULL);
 }

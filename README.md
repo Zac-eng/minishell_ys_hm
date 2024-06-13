@@ -20,3 +20,7 @@ Minishell 42.
 	-	removes everything created by make, including "minishell"
 - make re
 	-	removes everything and compile again.
+
+# general knowledge
+- PATH_MAX
+	-	in Mac in 42 Tokyo (Mac OS Mojave), the maximum length of a file or directory is 255, and the total pathline should be less than 1024.(PATH_MAX)
