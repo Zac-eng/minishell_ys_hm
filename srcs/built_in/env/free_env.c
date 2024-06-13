@@ -6,17 +6,19 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:21:36 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/24 17:33:51 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/13 08:54:57 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*free_env(t_env *env)
+void	free_env(t_env *env)
 {
 	t_env	*current;
 	t_env	*for_free;
 
+	if (env == NULL)
+		return ;
 	current = env;
 	while (current != NULL)
 	{
@@ -24,7 +26,7 @@ void	*free_env(t_env *env)
 		current = current->next;
 		free_node(for_free);
 	}
-	return (NULL);
+	return ;
 }
 
 void	free_node(t_env *node)

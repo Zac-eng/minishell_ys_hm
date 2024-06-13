@@ -6,14 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/10 20:07:21 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:26:04 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	sigint_no_redisplay(int signum);
-static void	free_envvars(t_env *tenv, char **paths);
 
 int	main(int argc, char **argv, char **env)
 {
@@ -23,7 +22,6 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc, (void)argv;
 	tenv = env_into_tenv(env);
-	paths = get_paths();
 	while (true)
 	{
 		signalctrl();
@@ -34,11 +32,13 @@ int	main(int argc, char **argv, char **env)
 		{
 			signal(SIGINT, sigint_no_redisplay);
 			add_history(line);
+			paths = get_paths(tenv);
 			execute(line, &tenv, paths);
+			free_str_list(paths);
 			free(line);
 		}
 	}
-	free_envvars(tenv, paths);
+	free_env(tenv);
 	exit(0);
 }
 // __attribute((destructor)) static void destructor() {
@@ -53,10 +53,4 @@ static void	sigint_no_redisplay(int signum)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
-}
-
-static void	free_envvars(t_env *tenv, char **paths)
-{
-	free_env(tenv);
-	free_str_list(paths);
 }
