@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/13 13:02:52 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:21:11 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ static void	sigint_no_redisplay(int signum)
 	}
 }
 
-
 int	heredoc(t_file *file, t_env **env)
 {
 	int		fd;
-	char	*line;
 
 	fd = open(HEREDOC_FILE, O_CREAT, 0644);
 	close(fd);
