@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:49 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 19:53:15 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:23:01 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ t_token	*create_token(char *line, t_token_kind kind)
 {
 	t_token	*token;
 
-	token = calloc(1, sizeof(*token));
+	if (line == NULL)
+		return (NULL);
+	token = ft_calloc(1, sizeof(t_token));
 	if (token == NULL)
 		return (NULL);
 	token->str = line;

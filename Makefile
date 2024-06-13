@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/13 08:58:42 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/06/13 11:36:32 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(LEXER_DIR)/lexer_check.c \
 		$(LEXER_DIR)/lexer_quote.c \
 		$(LEXER_DIR)/lexer_split.c \
+		$(LEXER_DIR)/lexer_split_quote.c \
 		$(LEXER_DIR)/lexer_token.c \
 		$(PARSER_DIR)/parser.c \
 		$(PARSER_DIR)/parser_cmd.c \
