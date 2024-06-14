@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/13 23:09:14 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:46:48 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ char	*env_heredoc(char *line, t_file *file, t_env **env, int *i)
 	before = ft_substr(line, 0, *i);
 	if (!before)
 		return (NULL);
-		
 	while (ft_isalnum(line[*i + j]) || line[*i + j] == '_')
 		j++;
 	after = ft_substr(line, *i + j, strlen(line) - (*i + j));
@@ -66,9 +65,6 @@ char	*env_heredoc(char *line, t_file *file, t_env **env, int *i)
 	if (!head_env)
 		return (line);
 	env_str = strdup(head_env->value);
-	printf("env_str%s\n",env_str);
-	printf("j:%d",j);
-	printf("aa\n");
 	*i = *i + j;
 	return (heredoc_join(before, after, env_str, i));
 }
@@ -90,7 +86,6 @@ void	write_heredoc(char *line, t_file *file, t_env **env, int fd)
 		{
 			tmp = i;
 			new = env_heredoc(line, file, env, &i);
-			printf("new:%s\n",new);
 			j = i;
 			i = tmp;
 		}
@@ -101,8 +96,6 @@ void	write_heredoc(char *line, t_file *file, t_env **env, int fd)
 		i++;
 		j++;
 	}
-			printf("new2:%s\n",new);
-	printf("i:%d,j:%d\n",i,j);
 	write(fd, new, strlen(new));
 	write(fd, "\n", 1);
 	return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 10:27:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:15:26 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	execute_execve(char **cmd, t_env *env, char **paths)
 
 	if (cmd == NULL || env == NULL || paths == NULL)
 		exit(1);
+		printf("%")
 	index = 0;
 	status = 256;
 	env_str = env_into_list(env);

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 22:52:30 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:55:23 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,7 @@ char	*heredoc_join(char *before, char *after, char *env_str, int *i);
 char	*env_heredoc(char *line, t_file *file, t_env **env, int *i);
 void	write_heredoc(char *line, t_file *file, t_env **env, int fd);
 void	read_heredoc(t_file *file, t_env **env);
+int		quote_heredoc(t_file *file, t_env **env);
+void	quote_read_heredoc(t_file *file, t_env **env);
+
 #endif
