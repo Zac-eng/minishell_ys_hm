@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 10:27:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/15 09:30:21 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execute_cmd(char **cmd, t_env **env, char **paths)
 		return (_env(*env));
 	else if (is_equal(cmd[0], "exit") == 1)
 		return (exit(1));
-	if (execute_execve(cmd, *env, paths) == 256)
+	if (execute_execve(cmd, *env, paths) == 1)
 		printf("minishell: command not found: %s\n", cmd[0]);
 }
 
@@ -45,10 +45,10 @@ static int	execute_execve(char **cmd, t_env *env, char **paths)
 	char	**env_str;
 	int		status;
 
-	if (cmd == NULL || env == NULL || paths == NULL)
+	if (cmd == NULL || env == NULL)
 		exit(1);
 	index = 0;
-	status = 256;
+	status = 1;
 	env_str = env_into_list(env);
 	if (env_str == NULL)
 		exit(1);
@@ -65,7 +65,7 @@ static int	execute_execve(char **cmd, t_env *env, char **paths)
 
 static int	execute_childp(char *path, char **cmd, char **env)
 {
-	int		pid;
+	pid_t	pid;
 	int		status;
 	char	*path_line;
 
@@ -81,7 +81,7 @@ static int	execute_childp(char *path, char **cmd, char **env)
 	else if (pid == 0)
 	{
 		if (execve(path_line, cmd, env) == -1)
-			exit(-1);
+			exit(1);
 		exit(0);
 	}
 	else
@@ -92,7 +92,7 @@ static int	execute_childp(char *path, char **cmd, char **env)
 
 static int	execute_path(char *path, char **cmd, char **env)
 {
-	int		pid;
+	pid_t	pid;
 	int		status;
 
 	if (path == NULL || cmd == NULL || env == NULL)

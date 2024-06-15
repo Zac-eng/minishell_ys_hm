@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 10:01:53 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/15 10:31:49 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include <sys/stat.h>
 # include "parser.h"
 # include "../libft/libft.h"
+
+extern volatile sig_atomic_t	g_status;
 
 void	signalctrl(void);
 void	sigexit(int signum);

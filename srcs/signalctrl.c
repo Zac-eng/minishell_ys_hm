@@ -6,13 +6,11 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 11:26:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 11:41:10 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/15 10:41:59 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-volatile sig_atomic_t	g_status = -1;
 
 static void	sigint_redisplay(int signum);
 static void	sigquit_handler(int signum);
@@ -38,6 +36,5 @@ static void	sigint_redisplay(int signum)
 
 static void	sigquit_handler(int signum)
 {
-	if (signum == SIGQUIT)
-		rl_redisplay();
+	(void)signum;
 }

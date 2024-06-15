@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 23:06:33 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/15 10:48:46 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	execute(char *line, t_env **env, char **paths)
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 {
+	pid_t	pid;
 	int		pipes[2];
 	int		original_io[2];
-	int		pid;
 	int		status;
 
 	if (control_stream(cmd, &pipes[0], &original_io[READ], dup_out) < 0)
@@ -58,19 +58,14 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 		{
 			execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
 			printf("finished\n");
-			close(1);
+			write(1, &eof, 1);
 			exit(0);
 		}
-		else
-		{
-			if (dup2(pipes[READ], 0) < 0)
-				exit(1);
-			execute_redirect(cmd, env, paths);
-			handle_status(&status);
-		}
+		if (dup2(pipes[READ], 0) < 0)
+			exit(1);
 	}
-	else
-		execute_redirect(cmd, env, paths);
+	execute_redirect(cmd, env, paths);
+	handle_status(&status);
 	get_back_io(&original_io[READ]);
 }
 
