@@ -6,14 +6,14 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/16 18:00:56 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/06/16 18:44:45 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 INCLUDES_DIR = ./includes
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
+CFLAGS = -I$(INCLUDES_DIR)
 BUILTIN_DIR = ./srcs/built_in
 EXECUTE_DIR = ./srcs/execute
 LEXER_DIR = ./srcs/lexer
@@ -33,6 +33,8 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(EXECUTE_DIR)/execute_cmd.c \
 		$(EXECUTE_DIR)/execute_envpath.c \
 		$(EXECUTE_DIR)/execute_redirect.c \
+		$(EXECUTE_DIR)/heredoc.c \
+		$(EXECUTE_DIR)/quote_heredoc.c \
 		$(UTILS_DIR)/handle_status.c \
 		$(UTILS_DIR)/is_equal.c \
 		$(UTILS_DIR)/put_error.c \

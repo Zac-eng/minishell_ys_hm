@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 18:00:41 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:44:48 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,12 @@ void	put_error(t_code error_code, char *insert);
 void	put_error_exit(t_code error_code);
 void	handle_status(void);
 int		is_equal(char *str, char *ref);
+int		heredoc(t_file *file, t_env **env);
+char	*heredoc_join(char *before, char *after, char *env_str, int *i);
+char	*env_heredoc(char *line, t_file *file, t_env **env, int *i);
+void	write_heredoc(char *line, t_file *file, t_env **env, int fd);
+void	read_heredoc(t_file *file, t_env **env);
+int		quote_heredoc(t_file *file, t_env **env);
+void	quote_read_heredoc(t_file *file, t_env **env);
 
 #endif
