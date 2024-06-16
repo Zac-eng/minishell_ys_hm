@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:12:37 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 21:23:13 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:30:16 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_token	*split_squote(char **tmp, char *line)
 
 	start = 0;
 	end = 0;
-	printf("%s\n", line);
 	while (line[start])
 	{
 		if (line[start] == '\'')

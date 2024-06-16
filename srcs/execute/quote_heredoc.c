@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 19:48:42 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/14 21:06:22 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:30:09 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	quote_heredoc(t_file *file, t_env **env)
 	int		fd;
 
 	fd = open(HEREDOC_FILE, O_CREAT, 0644);
-	printf("%d\n", fd);
 	close(fd);
 	quote_read_heredoc(file, env);
 	fd = open(HEREDOC_FILE, O_RDONLY);
@@ -35,7 +34,6 @@ void	quote_read_heredoc(t_file *file, t_env **env)
 		fd = open(HEREDOC_FILE, O_WRONLY | O_APPEND, 0644);
 		if (fd == -1)
 			exit(1);
-			printf("line1:%s, filename1:%s",line,file->file_name);
 		line = readline("> ");
 		if (!line)
 			break ;
@@ -49,7 +47,6 @@ void	quote_read_heredoc(t_file *file, t_env **env)
 			// free_close(line, fd);
 			break ;
 		}
-		printf("line:%s, filename:%s",line, file->file_name);
 		write(fd, line, strlen(line));
 		write(fd, "\n", 1);
 		close(fd);

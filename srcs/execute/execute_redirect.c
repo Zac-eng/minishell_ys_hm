@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/14 20:15:54 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:29:39 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static void	redirect_input(t_file *file_head, t_env **env)
 		else if (current->type == QUOTE_HEREDOC)
 		{
 			fd = quote_heredoc(file_head, env);
-		printf("aa\n");
 			if (fd < 0)
 				exit(1);
 			if (dup2(fd, 0) < 0)

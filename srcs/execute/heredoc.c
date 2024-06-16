@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/14 19:46:48 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:29:52 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	heredoc(t_file *file, t_env **env)
 	int		fd;
 
 	fd = open(HEREDOC_FILE, O_CREAT, 0644);
-	printf("%d\n", fd);
 	close(fd);
 	read_heredoc(file, env);
 	fd = open(HEREDOC_FILE, O_RDONLY);
@@ -30,7 +29,6 @@ char	*heredoc_join(char *before, char *after, char *env_str, int *i)
 	char	*new;
 	char	*tmp;
 
-	printf("i:%d\n", *i);
 	new = ft_strjoin(before, env_str);
 	if (!new)
 		exit(1);
