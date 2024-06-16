@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 17:37:39 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 22:01:38 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,18 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 			put_error_exit(FORK_ERROR);
 		else if (pid == 0)
 		{
+			close(pipes[READ]);
 			execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
-			printf("finished\n");
 			exit(0);
 		}
+		close(pipes[WRITE]);
 		if (dup2(pipes[READ], 0) < 0)
 			exit(1);
+		execute_redirect(cmd, env, paths);
+		handle_status(pid);
 	}
-	execute_redirect(cmd, env, paths);
-	handle_status();
+	else
+		execute_redirect(cmd, env, paths);
 	get_back_io(&original_io[READ]);
 }
 
@@ -84,7 +87,10 @@ static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
 			exit(1);
 	}
 	if (cmd->prev == NULL)
+	{
 		close(pipes[READ]);
+		close(pipes[WRITE]);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/16 14:52:39 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 20:22:27 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int	main(int argc, char **argv, char **env)
 			break ;
 		else
 		{
+			if (is_equal(line, "$?") == 1)
+			{
+				printf("%d\n", g_status);
+				continue ;
+			}
 			signal(SIGINT, sigint_no_redisplay);
 			add_history(line);
 			paths = get_paths(tenv);
@@ -55,5 +60,5 @@ static void	sigint_no_redisplay(int signum)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
-	g_status = 1;
+	g_status = 130;
 }
