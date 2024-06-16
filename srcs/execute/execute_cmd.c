@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 18:44:50 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 19:11:57 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	execute_cmd(char **cmd, t_env **env, char **paths)
 	else if (is_equal(cmd[0], "env") == 1)
 		return (_env(*env));
 	else if (is_equal(cmd[0], "exit") == 1)
-		return (exit(0));
+		return (minishell_exit(cmd));
 	else
 		execute_execve(cmd, *env, paths);
 }
