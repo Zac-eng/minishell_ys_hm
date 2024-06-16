@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/10 20:19:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:16:49 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_parser	*parser(t_token	*lexer, t_env **env);
 bool		is_redirect(t_token *lexer_tmp);
 bool		is_quote(t_token_kind kind);
 void		cmd_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env);
-void		cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp);
+void		cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp, t_env **env);
 void		*parser_cmd(t_token **lexertmp, t_parser **parsertmp, t_env **env);
 void		*parser_pipe(t_parser **parser_tmp, t_parser **parser);
 t_parser	*parser_node_new(void);
