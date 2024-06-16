@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
+#    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/14 20:06:06 by yususato         ###   ########.fr        #
+#    Updated: 2024/06/16 18:44:45 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,16 +31,18 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(BUILTIN_DIR)/unset.c \
 		$(EXECUTE_DIR)/execute.c \
 		$(EXECUTE_DIR)/execute_cmd.c \
+		$(EXECUTE_DIR)/execute_envpath.c \
 		$(EXECUTE_DIR)/execute_redirect.c \
 		$(EXECUTE_DIR)/heredoc.c \
 		$(EXECUTE_DIR)/quote_heredoc.c \
 		$(UTILS_DIR)/handle_status.c \
 		$(UTILS_DIR)/is_equal.c \
-		$(UTILS_DIR)/put_error_exit.c \
+		$(UTILS_DIR)/put_error.c \
 		$(UTILS_DIR)/sigexit.c \
 		$(UTILS_DIR)/paths.c \
 		$(UTILS_DIR)/free_str_list.c \
 		$(LEXER_DIR)/lexer.c \
+		$(LEXER_DIR)/free_lexer.c \
 		$(LEXER_DIR)/lexer_check.c \
 		$(LEXER_DIR)/lexer_quote.c \
 		$(LEXER_DIR)/lexer_split.c \
