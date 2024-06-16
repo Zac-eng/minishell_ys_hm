@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 22:03:11 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 22:19:22 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	execute_path(char *path, char **cmd, char **env)
 		if (execve(path, cmd, env) == -1)
 		{
 			put_error(NO_FILE_ERROR, cmd[0]);
+			printf("%d\n", g_status);
 			exit(g_status);
 		}
 	}
