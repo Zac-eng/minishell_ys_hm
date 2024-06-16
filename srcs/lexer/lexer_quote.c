@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:19:28 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 20:13:01 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 17:02:04 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ void	remove_squote(t_token *token)
 	if (*tmp == '\0')
 	{
 		free(token->str);
-		put_error_exit("need to be editted");
+		put_error(PARSE_ERROR, tmp);
 	}
 	token->str = new;
-	printf("squote%s\n", token->str);
 	return ;
 }
 
@@ -61,7 +60,7 @@ void	remove_dquote(t_token *token)
 	if (*tmp == '\0')
 	{
 		free(token->str);
-		put_error_exit("need to be editted");
+		put_error(PARSE_ERROR, tmp);
 	}
 	token->str = new;
 	return ;

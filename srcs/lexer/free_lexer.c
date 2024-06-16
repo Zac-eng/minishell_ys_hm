@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_error_exit.c                                   :+:      :+:    :+:   */
+/*   free_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/19 13:06:40 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/06/16 13:59:22 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/06/16 14:55:54 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	put_error_exit(const char *error)
+void	free_lexer(t_token *lexer_head)
 {
-	perror(error);
-	exit(1);
+	t_token	*current;
+	t_token	*tmp;
+
+	current = lexer_head;
+	while (current != NULL)
+	{
+		tmp = current;
+		current = current->next;
+		if (tmp->str != NULL)
+			free(tmp->str);
+		free(tmp);
+	}
 }

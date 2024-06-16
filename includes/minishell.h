@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 10:01:53 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 18:00:41 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include "parser.h"
 # include "../libft/libft.h"
 
+extern volatile sig_atomic_t	g_status;
+
 void	signalctrl(void);
 void	sigexit(int signum);
 char	**get_paths(t_env *env);
@@ -36,12 +38,13 @@ t_env	*env_into_tenv(char **env);
 char	**env_into_list(t_env *env);
 void	execute(char *line, t_env **env, char **paths);
 void	execute_cmd(char **cmd, t_env **env, char **paths);
+void	execute_envpath(char **paths, char **cmd, char **env);
 void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
 void	_cd(char **cmd, t_env *env);
 void	_echo(char **cmd);
 void	_env(t_env *env);
 void	_export(char **cmd, t_env **env_head);
-void	_pwd(void);
+void	_pwd(char **cmd);
 void	_unset(char **cmd, t_env **env);
 t_env	*create_envnode(char *env_line);
 void	free_env(t_env *env);
@@ -51,8 +54,9 @@ t_env	*find_node(t_env *env_head, char *key);
 void	push_env(t_env *env_head, t_env *new_node);
 int		remove_env(t_env *previous);
 char	*_getenv(t_env *env_head, char *key);
-void	put_error_exit(const char *error);
-void	handle_status(int *status);
+void	put_error(t_code error_code, char *insert);
+void	put_error_exit(t_code error_code);
+void	handle_status(void);
 int		is_equal(char *str, char *ref);
 
 #endif

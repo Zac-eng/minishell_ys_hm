@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/10 20:19:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 17:59:46 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ typedef enum e_token_kind
 	TK_GREAT,
 	TK_DGREAT
 }	t_token_kind;
-
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
 
 typedef struct s_token
 {
@@ -64,6 +57,23 @@ typedef struct s_parser
 	struct s_parser		*prev;
 }	t_parser;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef enum e_code
+{
+	RUN_ERROR = 1,
+	FILE_ERROR = 1,
+	NOT_FOUND_ERROR = 127,
+	NO_FILE_ERROR = 127,
+	FORK_ERROR = 149,
+	PARSE_ERROR = 258,
+}	t_code;
+
 bool		check_word(char	*line);
 void		remove_squote(t_token *token);
 void		remove_dquote(t_token *token);
@@ -75,7 +85,9 @@ t_token		*split_squote(char **tmp, char *line);
 t_token		*split_dquote(char **tmp, char *line);
 t_token		*split_word(char **tmp, char *line);
 t_token		*lexer(char *line);
+void		free_lexer(t_token *lexer_head);
 t_parser	*parser(t_token	*lexer, t_env **env);
+void		free_parser(t_parser *parser_head);
 bool		is_redirect(t_token *lexer_tmp);
 bool		is_quote(t_token_kind kind);
 void		cmd_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env);
@@ -94,6 +106,5 @@ void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 void		*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 												t_parser **parser, t_env **env);
 t_token		*create_token(char *line, t_token_kind kind);
-void		free_parser(t_parser *parser_head);
 
 #endif

@@ -6,13 +6,15 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/13 10:26:04 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:52:39 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	sigint_no_redisplay(int signum);
+
+volatile sig_atomic_t	g_status = 0;
 
 int	main(int argc, char **argv, char **env)
 {
@@ -39,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 		}
 	}
 	free_env(tenv);
-	exit(0);
+	exit(g_status);
 }
 // __attribute((destructor)) static void destructor() {
 // 	system("leaks -q minishell");
@@ -53,4 +55,5 @@ static void	sigint_no_redisplay(int signum)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
+	g_status = 1;
 }
