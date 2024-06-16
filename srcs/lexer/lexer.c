@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:40:20 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/16 14:55:36 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:38:46 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ t_token	*lexer(char *line)
 static void	lexer_error(t_token *lexer_head, char current)
 {
 	free_lexer(lexer_head);
-	printf("minishell: syntax error near unexpected token `%c'\n", current);
-	g_status = PARSE_ERROR;
+	put_error(PARSE_ERROR, &current);
 }

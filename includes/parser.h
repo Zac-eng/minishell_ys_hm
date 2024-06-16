@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/16 14:39:50 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 17:59:46 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,15 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef enum e_status
+typedef enum e_code
 {
 	RUN_ERROR = 1,
+	FILE_ERROR = 1,
 	NOT_FOUND_ERROR = 127,
+	NO_FILE_ERROR = 127,
+	FORK_ERROR = 149,
 	PARSE_ERROR = 258,
-}	t_status;
+}	t_code;
 
 bool		check_word(char	*line);
 void		remove_squote(t_token *token);

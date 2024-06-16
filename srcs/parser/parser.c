@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:18:10 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 15:00:51 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 16:39:10 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,5 @@ static void	parser_error(t_parser *parser_head, char *current_str)
 		current = '\0';
 	else
 		current = *current_str;
-	printf("minishell: syntax error near unexpected token `%c'\n", current);
-	g_status = PARSE_ERROR;
+	put_error(PARSE_ERROR, &current);
 }

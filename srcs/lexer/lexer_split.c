@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 11:37:14 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 17:02:31 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_token	*split_word(char **tmp, char *line)
 		i++;
 	set = (char *)calloc(sizeof(char), i + 1);
 	if (set == NULL)
-		put_error_exit("need to be editted");
+		put_error(PARSE_ERROR, &line[i]);
 	i = 0;
 	while (line[i] != ' ' && line[i])
 	{
