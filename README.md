@@ -24,3 +24,7 @@ Minishell 42.
 # general knowledge
 - PATH_MAX
 	-	in Mac in 42 Tokyo (Mac OS Mojave), the maximum length of a file or directory is 255, and the total pathline should be less than 1024.(PATH_MAX)
+- status number
+	-	command not found: 127
+	-	parse error: 258
+	-	failed to execute command: 1

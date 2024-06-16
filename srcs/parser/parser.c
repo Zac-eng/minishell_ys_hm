@@ -6,11 +6,36 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:18:10 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 19:59:01 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 15:00:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	parser_error(t_parser *parser_head, char *current_str);
+
+t_parser	*parser(t_token	*lexer, t_env **env)
+{
+	t_token		*lexer_tmp;
+	t_parser	*parser;
+	t_parser	*parser_tmp;
+
+	if (lexer == NULL)
+		return (NULL);
+	lexer_tmp = lexer;
+	// token_check(lexer);
+	parser = parser_node_new();
+	if (parser == NULL)
+		return (NULL);
+	parser_tmp = parser;
+	while (lexer_tmp != NULL)
+	{
+		if (parser_check(&lexer_tmp, &parser_tmp, &parser, env) == NULL)
+			return (parser_error(parser, lexer_tmp->str), NULL);
+		lexer_tmp = lexer_tmp->next;
+	}
+	return (parser);
+}
 
 void	*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 											t_parser **parser, t_env **env)
@@ -47,23 +72,15 @@ t_parser	*parser_node_new(void)
 	return (new);
 }
 
-t_parser	*parser(t_token	*lexer, t_env **env)
+static void	parser_error(t_parser *parser_head, char *current_str)
 {
-	t_token		*lexer_tmp;
-	t_parser	*parser;
-	t_parser	*parser_tmp;
+	char	current;
 
-	lexer_tmp = lexer;
-	// token_check(lexer);
-	parser = parser_node_new();
-	if (parser == NULL)
-		return (NULL);
-	parser_tmp = parser;
-	while (lexer_tmp != NULL)
-	{
-		if (parser_check(&lexer_tmp, &parser_tmp, &parser, env) == NULL)
-			return (NULL);
-		lexer_tmp = lexer_tmp->next;
-	}
-	return (parser);
+	free_parser(parser_head);
+	if (current_str == NULL)
+		current = '\0';
+	else
+		current = *current_str;
+	printf("minishell: syntax error near unexpected token `%c'\n", current);
+	g_status = PARSE_ERROR;
 }

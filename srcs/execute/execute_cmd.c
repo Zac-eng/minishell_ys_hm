@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/15 09:30:21 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:13:40 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*create_path(char *where, char *cmd_name);
 
 void	execute_cmd(char **cmd, t_env **env, char **paths)
 {
-	if (cmd == NULL || env == NULL || paths == NULL)
+	if (cmd == NULL || env == NULL)
 		return ;
 	if (is_equal(cmd[0], "echo") == 1)
 		return (_echo(cmd));
@@ -34,7 +34,7 @@ void	execute_cmd(char **cmd, t_env **env, char **paths)
 	else if (is_equal(cmd[0], "env") == 1)
 		return (_env(*env));
 	else if (is_equal(cmd[0], "exit") == 1)
-		return (exit(1));
+		return (exit(0));
 	if (execute_execve(cmd, *env, paths) == 1)
 		printf("minishell: command not found: %s\n", cmd[0]);
 }

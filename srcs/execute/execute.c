@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/15 10:48:46 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 14:35:27 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	execute(char *line, t_env **env, char **paths)
 	if (lexer_head == NULL)
 		return ;
 	parser_head = parser(lexer_head, env);
+	free_lexer(lexer_head);
 	if (parser_head == NULL)
 		return ;
 	current = parser_head;
@@ -58,7 +59,6 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 		{
 			execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
 			printf("finished\n");
-			write(1, &eof, 1);
 			exit(0);
 		}
 		if (dup2(pipes[READ], 0) < 0)
