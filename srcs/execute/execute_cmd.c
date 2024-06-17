@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 18:44:50 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 22:19:22 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	execute_cmd(char **cmd, t_env **env, char **paths)
 	else if (is_equal(cmd[0], "env") == 1)
 		return (_env(*env));
 	else if (is_equal(cmd[0], "exit") == 1)
-		return (exit(0));
+		return (minishell_exit(cmd));
 	else
 		execute_execve(cmd, *env, paths);
 }
@@ -51,7 +51,6 @@ static void	execute_execve(char **cmd, t_env *env, char **paths)
 	else
 		execute_path(cmd[0], cmd, env_str);
 	free_str_list(env_str);
-	return ;
 }
 
 static void	execute_path(char *path, char **cmd, char **env)
@@ -68,11 +67,9 @@ static void	execute_path(char *path, char **cmd, char **env)
 		if (execve(path, cmd, env) == -1)
 		{
 			put_error(NO_FILE_ERROR, cmd[0]);
+			printf("%d\n", g_status);
 			exit(g_status);
 		}
 	}
-	else
-		handle_status();
+	handle_status(pid);
 }
-
-

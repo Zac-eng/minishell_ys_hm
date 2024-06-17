@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/16 14:52:39 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 22:41:11 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ static void	sigint_no_redisplay(int signum)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
-	g_status = 1;
+	g_status = 130;
 }

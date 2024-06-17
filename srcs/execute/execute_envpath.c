@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 17:24:58 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 18:12:28 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/16 22:01:25 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	execute_envpath(char **paths, char **cmd, char **env)
 			index++;
 		}
 		put_error(NOT_FOUND_ERROR, cmd[0]);
-		exit(g_status);
+		exit(NOT_FOUND_ERROR);
 	}
-	handle_status();
+	handle_status(pid);
 }
 
 static char	*create_path(char *where, char *cmd_name)

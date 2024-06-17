@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 18:29:39 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/16 22:22:25 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	int		std_in;
 	int		std_out;
 
-	if (cmd == NULL || env == NULL || paths == NULL)
+	if (cmd == NULL || env == NULL)
 		return ;
 	if (cmd->file == NULL)
 		return (execute_cmd(cmd->cmd, env, paths));
