@@ -6,12 +6,11 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 19:48:42 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/16 18:30:09 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/17 21:01:14 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-# define HEREDOC_FILE "srcs/execute/tmp/heredoc"
 
 int	quote_heredoc(t_file *file, t_env **env)
 {

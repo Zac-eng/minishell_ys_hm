@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/17 20:00:26 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/17 20:58:21 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	int		std_in;
 	int		std_out;
 
-	if (cmd == NULL || env == NULL || paths == NULL)
+	if (cmd == NULL || env == NULL)
 		return ;
 	if (cmd->file == NULL)
 		return (execute_cmd(cmd->cmd, env, paths));

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/17 20:27:34 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/17 20:58:36 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ static void	sigint_no_redisplay(int signum)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
-	g_status = 1;
+	g_status = 130;
 }

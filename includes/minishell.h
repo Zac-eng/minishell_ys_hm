@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/17 19:39:39 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/17 20:59:46 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@
 # include "parser.h"
 # include "../libft/libft.h"
 
-#define HEREDOC_FILE "/tmp/.heredoc"
+# ifndef HEREDOC_FILE
+#  define HEREDOC_FILE "/tmp/.heredoc"
+# endif
 
 extern volatile sig_atomic_t	g_status;
 
@@ -48,6 +50,7 @@ void	_env(t_env *env);
 void	_export(char **cmd, t_env **env_head);
 void	_pwd(char **cmd);
 void	_unset(char **cmd, t_env **env);
+void	minishell_exit(char **cmd);
 t_env	*create_envnode(char *env_line);
 void	free_env(t_env *env);
 void	free_node(t_env *node);
@@ -58,7 +61,7 @@ int		remove_env(t_env *previous);
 char	*_getenv(t_env *env_head, char *key);
 void	put_error(t_code error_code, char *insert);
 void	put_error_exit(t_code error_code);
-void	handle_status(void);
+void	handle_status(pid_t pid_to_wait);
 int		is_equal(char *str, char *ref);
 int		heredoc(t_file *file, t_env **env);
 char	*heredoc_join(char *before, char *after, char *env_str, int *i);

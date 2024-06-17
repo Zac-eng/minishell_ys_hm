@@ -6,7 +6,7 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/17 18:20:02 by yususato         ###   ########.fr        #
+#    Updated: 2024/06/17 20:58:30 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(BUILTIN_DIR)/export.c \
 		$(BUILTIN_DIR)/pwd.c \
 		$(BUILTIN_DIR)/unset.c \
+		$(BUILTIN_DIR)/exit.c \
 		$(EXECUTE_DIR)/execute.c \
 		$(EXECUTE_DIR)/execute_cmd.c \
 		$(EXECUTE_DIR)/execute_envpath.c \
