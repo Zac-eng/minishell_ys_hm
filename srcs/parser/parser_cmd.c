@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:18 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 17:18:15 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/17 20:55:55 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ bool	parser_env_add(t_token **lexer_tmp, char **tmp, t_env **env, int i)
 	return (true);
 }
 
+bool	env_question_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
+{
+	(*parser_tmp)->cmd[0] = ft_itoa(g_status);
+	if ((*parser_tmp)->cmd[0] == NULL)
+		return (false);
+	return (true);
+}
+
+bool	env_question_add(t_token **lexer_tmp, char **tmp, t_env **env, int i)
+{
+	tmp[i] = ft_itoa(g_status);
+	if (tmp[i] == NULL)
+		return (false);
+	return (true);
+}
+
 void	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 {
 	bool	flag;
@@ -44,7 +60,11 @@ void	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 		exit(0);
 	if ((*lexer_tmp)->str[0] == '$')
 	{
-		if (parser_env_init(lexer_tmp, parser_tmp, env))
+		if ((*lexer_tmp)->str[1] && (*lexer_tmp)->str[1] == '?')
+		{
+			flag = env_question_init(lexer_tmp, parser_tmp, env);
+		}
+		else if (parser_env_init(lexer_tmp, parser_tmp, env))
 			flag = true;
 		else
 			flag = false;
@@ -85,7 +105,11 @@ void	cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp, t_env **env
 	}
 	if ((*lexer_tmp)->str[0] == '$')
 	{
-		if (parser_env_add(lexer_tmp, tmp, env, i))
+		if ((*lexer_tmp)->str[1] && (*lexer_tmp)->str[1] == '?')
+		{
+			flag = env_question_add(lexer_tmp, tmp, env, i);
+		}
+		else if (parser_env_add(lexer_tmp, tmp, env, i))
 			flag = true;
 		else
 			flag = false;

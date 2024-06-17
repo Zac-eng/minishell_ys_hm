@@ -6,22 +6,54 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/16 18:29:52 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/17 20:00:17 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-# define HEREDOC_FILE "srcs/execute/tmp/heredoc"
 
 int	heredoc(t_file *file, t_env **env)
 {
 	int		fd;
+	char	*new_file;
 
-	fd = open(HEREDOC_FILE, O_CREAT, 0644);
-	close(fd);
-	read_heredoc(file, env);
-	fd = open(HEREDOC_FILE, O_RDONLY);
+	new_file = create_file();
+	read_heredoc(file, env, new_file);
+	fd = open(new_file, O_RDONLY);
 	return (fd);
+}
+
+char	*create_file(void)
+{
+	int		i;
+	int		fd;
+	char	*new;
+	char	*tmp;
+
+	fd = 0;
+	i = 0;
+	tmp = ft_itoa(i);
+	new = ft_strjoin(HEREDOC_FILE, tmp);
+	if (new == NULL)
+		exit(1);
+	free(tmp);
+	if (new == NULL)
+		exit(1);
+	while (!access(new, F_OK))
+	{
+		i++;
+		free(new);
+		tmp = ft_itoa(i);
+		if (tmp == NULL)
+			exit(1);
+		new = ft_strjoin(HEREDOC_FILE, tmp);
+		if (new == NULL)
+			exit(1);
+		free(tmp);
+	}
+	fd = open(new, O_CREAT, 0644);
+	close(fd);
+	return (new);
 }
 
 char	*heredoc_join(char *before, char *after, char *env_str, int *i)
@@ -80,9 +112,10 @@ void	write_heredoc(char *line, t_file *file, t_env **env, int fd)
 	new = strdup(line);
 	while (line[i])
 	{
-		if (line[i++] == '$')
+		if (line[i] == '$')
 		{
 			tmp = i;
+			i++;
 			new = env_heredoc(line, file, env, &i);
 			j = i;
 			i = tmp;
@@ -94,19 +127,20 @@ void	write_heredoc(char *line, t_file *file, t_env **env, int fd)
 		i++;
 		j++;
 	}
+	new[j] = line[i];
 	write(fd, new, strlen(new));
 	write(fd, "\n", 1);
 	return ;
 }
 
-void	read_heredoc(t_file *file, t_env **env)
+void	read_heredoc(t_file *file, t_env **env, char *new_file)
 {
 	int		fd;
 	char	*line;
 
 	while (true)
 	{
-		fd = open(HEREDOC_FILE, O_WRONLY | O_APPEND, 0644);
+		fd = open(new_file, O_WRONLY | O_APPEND, 0644);
 		if (fd == -1)
 			exit(1);
 		line = readline("> ");
