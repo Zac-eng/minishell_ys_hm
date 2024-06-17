@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:32 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 11:00:25 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/17 19:56:16 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	_unset(char **cmd, t_env **env)
 {
 	t_env	*current;
 
+	g_status = 0;
 	if (env == NULL || *env == NULL || cmd == NULL || cmd[0] == NULL)
 		return ;
 	if (cmd[1] == NULL)
