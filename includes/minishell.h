@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/17 20:59:46 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:54:00 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 extern volatile sig_atomic_t	g_status;
 
 void	signalctrl(void);
-void	sigexit(int signum);
 char	**get_paths(t_env *env);
 t_env	*env_into_tenv(char **env);
 char	**env_into_list(t_env *env);
@@ -62,6 +61,7 @@ char	*_getenv(t_env *env_head, char *key);
 void	put_error(t_code error_code, char *insert);
 void	put_error_exit(t_code error_code);
 void	handle_status(pid_t pid_to_wait);
+pid_t	safe_fork(void);
 int		is_equal(char *str, char *ref);
 int		heredoc(t_file *file, t_env **env);
 char	*heredoc_join(char *before, char *after, char *env_str, int *i);

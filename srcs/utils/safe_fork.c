@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sigexit.c                                          :+:      :+:    :+:   */
+/*   safe_fork.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/19 12:15:13 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/30 19:10:35 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/06/18 08:52:45 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/06/18 08:53:36 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sigexit(int signum)
+pid_t	safe_fork(void)
 {
-	(void)signum;
-	exit(0);
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+		put_error_exit(FORK_ERROR);
+	return (pid);
 }

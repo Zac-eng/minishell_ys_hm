@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 17:24:58 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 22:01:25 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:56:12 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ void	execute_envpath(char **paths, char **cmd, char **env)
 		return (put_error(NO_FILE_ERROR, cmd[0]));
 	index = 0;
 	status = -1;
-	pid = fork();
-	if (pid < 0)
-		put_error_exit(FORK_ERROR);
-	else if (pid == 0)
+	pid = safe_fork();
+	if (pid == 0)
 	{
 		while (paths[index] != NULL && status == -1)
 		{
@@ -49,10 +47,8 @@ static char	*create_path(char *where, char *cmd_name)
 
 	path_tmp = ft_strjoin(where, "/");
 	if (path_tmp == NULL)
-		exit(1);
+		return (NULL);
 	path = ft_strjoin(path_tmp, cmd_name);
 	free(path_tmp);
-	if (path == NULL)
-		exit(1);
 	return (path);
 }

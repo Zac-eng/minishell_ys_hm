@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/17 20:58:36 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/18 09:43:05 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	main(int argc, char **argv, char **env)
 	while (true)
 	{
 		signalctrl();
-		line = readline("minishell > ");
+		line = readline("minishell$ ");
 		if (!line)
-			break ;
+			minishell_exit(NULL);
 		else
 		{
 			signal(SIGINT, sigint_no_redisplay);
@@ -52,7 +52,6 @@ static void	sigint_no_redisplay(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
