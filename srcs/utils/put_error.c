@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 18:15:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/17 22:07:30 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	put_error(t_code error_code, char *insert)
 {
 	if (error_code == FILE_ERROR)
-		printf("Too many open files\n");
+		printf("%s: Too many open files\n", insert);
 	else if (error_code == NOT_FOUND_ERROR)
 		printf("minishell: %s: command not found\n", insert);
 	else if (error_code == NO_FILE_ERROR)

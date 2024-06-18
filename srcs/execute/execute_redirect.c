@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/17 20:58:21 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:18:16 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	redirect_output(t_file *file_head);
-static void	redirect_input(t_file *file_head, t_env **env);
+static void	redirect_output(t_file *file_head, char *cmd);
+static void	redirect_input(t_file *file_head, t_env **env, char *cmd);
 static void	read_out_file(int fd);
+static int	redirect(t_file *file, t_env **env);
 
 void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 {
@@ -28,17 +29,17 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	std_in = dup(0);
 	std_out = dup(1);
 	if (std_in < 0 || std_out < 0)
-		exit(1);
-	redirect_input(cmd->file, env);
-	redirect_output(cmd->file);
+		return (put_error(FILE_ERROR, cmd->cmd[0]));
+	redirect_input(cmd->file, env, cmd->cmd[0]);
+	redirect_output(cmd->file, cmd->cmd[0]);
 	execute_cmd(cmd->cmd, env, paths);
 	if (dup2(std_in, 0) < 0)
-		exit(1);
+		return (exit(1));
 	if (dup2(std_out, 1) < 0)
-		exit(1);
+		return (exit(1));
 }
 
-static void	redirect_output(t_file *file_head)
+static void	redirect_output(t_file *file_head, char *cmd)
 {
 	t_file	*current;
 	int		fd;
@@ -52,17 +53,17 @@ static void	redirect_output(t_file *file_head)
 				unlink(current->file_name);
 			fd = open(current->file_name, O_CREAT | O_RDWR, 0666);
 			if (fd < 0)
-				exit(1);
+				return (put_error(FILE_ERROR, cmd));
 			if (current->type == APPEND)
 				read_out_file(fd);
 			if (dup2(fd, 1) < 0)
-				exit(1);
+				return (exit(1));
 		}
 		current = current->next;
 	}
 }
 
-static void	redirect_input(t_file *file_head, t_env **env)
+static void	redirect_input(t_file *file_head, t_env **env, char *cmd)
 {
 	t_file	*current;
 	int		fd;
@@ -70,30 +71,8 @@ static void	redirect_input(t_file *file_head, t_env **env)
 	current = file_head;
 	while (current != NULL)
 	{
-		if (current->type == IN_FILE)
-		{
-			fd = open(current->file_name, O_RDONLY);
-			if (fd < 0)
-				exit(1);
-			if (dup2(fd, 0) < 0)
-				exit(1);
-		}
-		else if (current->type == HEREDOC)
-		{
-			fd = heredoc(file_head, env);
-			if (fd < 0)
-				exit(1);
-			if (dup2(fd, 0) < 0)
-				exit(1);
-		}
-		else if (current->type == QUOTE_HEREDOC)
-		{
-			fd = quote_heredoc(file_head, env);
-			if (fd < 0)
-				exit(1);
-			if (dup2(fd, 0) < 0)
-				exit(1);
-		}
+		if (redirect(current, env) < 0)
+			return (put_error(FILE_ERROR, cmd));
 		current = current->next;
 	}
 }
@@ -104,10 +83,41 @@ static void	read_out_file(int fd)
 	int		read_len;
 
 	read_len = sizeof(buffer);
-	while (read_len == sizeof(buffer))
+	while (read_len == sizeof(buffer) && read_len >= 0)
 	{
 		read_len = read(fd, buffer, sizeof(buffer));
 		if (read_len < 0)
+			return ;
+	}
+}
+
+static int	redirect(t_file *file, t_env **env)
+{
+	int	fd;
+
+	if (file->type == IN_FILE)
+	{
+		fd = open(file->file_name, O_RDONLY);
+		if (fd < 0)
+			return (-1);
+		if (dup2(fd, 0) < 0)
 			exit(1);
 	}
+	else if (file->type == HEREDOC)
+	{
+		fd = heredoc(file, env);
+		if (fd < 0)
+			return (-1);
+		if (dup2(fd, 0) < 0)
+			exit(1);
+	}
+	else if (file->type == QUOTE_HEREDOC)
+	{
+		fd = quote_heredoc(file, env);
+		if (fd < 0)
+			return (-1);
+		if (dup2(fd, 0) < 0)
+			exit(1);
+	}
+	return (0);
 }

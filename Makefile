@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
+#    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/17 20:58:30 by yususato         ###   ########.fr        #
+#    Updated: 2024/06/18 08:54:21 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,9 +40,9 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(UTILS_DIR)/handle_status.c \
 		$(UTILS_DIR)/is_equal.c \
 		$(UTILS_DIR)/put_error.c \
-		$(UTILS_DIR)/sigexit.c \
 		$(UTILS_DIR)/paths.c \
 		$(UTILS_DIR)/free_str_list.c \
+		$(UTILS_DIR)/safe_fork.c \
 		$(LEXER_DIR)/lexer.c \
 		$(LEXER_DIR)/free_lexer.c \
 		$(LEXER_DIR)/lexer_check.c \

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 22:40:53 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:55:37 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 		return ;
 	if (cmd->prev != NULL)
 	{
-		pid = fork();
-		if (pid < 0)
-			put_error_exit(FORK_ERROR);
-		else if (pid == 0)
+		pid = safe_fork();
+		if (pid == 0)
 		{
 			close(pipes[READ]);
 			execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
@@ -79,12 +77,12 @@ static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
 	io[WRITE] = dup(1);
 	if (io[READ] < 0 || io[WRITE] < 0)
 	{
-		put_error(FILE_ERROR, NULL);
+		put_error(FILE_ERROR, cmd->cmd[0]);
 		return (-1);
 	}
 	if (pipe(pipes) < 0)
 	{
-		put_error(FILE_ERROR, NULL);
+		put_error(FILE_ERROR, cmd->cmd[0]);
 		return (-1);
 	}
 	if (dup_out != 1)

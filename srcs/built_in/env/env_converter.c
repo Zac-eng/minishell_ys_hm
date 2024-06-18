@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:53:15 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/15 10:27:04 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:03:18 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ t_env	*env_into_tenv(char **env)
 	env_head_tail[0] = NULL;
 	env_head_tail[1] = NULL;
 	if (env == NULL)
-		exit(1);
+		return (NULL);
 	while (env[env_index] != NULL)
 	{
 		env_tmp = create_envnode(env[env_index]);
 		if (env_tmp == NULL)
 		{
 			free_env(env_head_tail[0]);
-			exit(1);
+			return (NULL);
 		}
 		if (env_head_tail[0] == NULL)
 			env_head_tail[0] = env_tmp;
@@ -65,7 +65,7 @@ char	**env_into_list(t_env *env)
 	{
 		env_list[index] = flatten_tenv(current);
 		if (env_list[index] == NULL)
-			exit(1);
+			return (free_str_list(env_list), NULL);
 		current = current->next;
 		index++;
 	}
@@ -76,17 +76,19 @@ char	**env_into_list(t_env *env)
 static char	*flatten_tenv(t_env *env)
 {
 	char	*line;
-	int		len;
+	int		lens[2];
+	int		index;
 
-	len = 0;
-	len += ft_strlen(env->key);
-	len += ft_strlen(env->value);
-	line = (char *)malloc(sizeof(char) * (len + 1));
+	index = 0;
+	lens[0] = ft_strlen(env->key);
+	lens[1] = ft_strlen(env->value);
+	line = (char *)malloc(sizeof(char) * (lens[0] + lens[1] + 2));
 	if (line == NULL)
 		return (NULL);
-	ft_strlcpy(line, env->key, ft_strlen(env->key));
-	ft_strlcpy(line, env->value, ft_strlen(env->value));
-	line[len] = '\0';
+	index += ft_strlcpy(&line[index], env->key, lens[0] + 1);
+	line[index] = '=';
+	index++;
+	index += ft_strlcpy(&line[index], env->value, lens[1] + 1);
 	return (line);
 }
 

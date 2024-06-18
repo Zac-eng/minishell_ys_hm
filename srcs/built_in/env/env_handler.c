@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:50:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 09:34:32 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/17 22:02:30 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*_getenv(t_env *env_head, char *key)
 		return (NULL);
 	env_line = ft_strdup(env_node->value);
 	if (env_line == NULL)
-		exit(1);
+		return (NULL);
 	return (env_line);
 }
 
