@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/18 11:48:41 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:22:07 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,11 @@ int	main(int argc, char **argv, char **env)
 
 static void	sigint_no_redisplay(int signum)
 {
+	int	status;
+
 	if (signum == SIGINT)
 	{
-		printf("\n");
-		rl_replace_line("", 0);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 	}
 }
