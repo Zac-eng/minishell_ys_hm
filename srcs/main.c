@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/18 09:43:05 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:48:41 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	sigint_no_redisplay(int signum);
 
-volatile sig_atomic_t	g_status = 0;
+volatile sig_atomic_t	g_flag = 0;
 
 int	main(int argc, char **argv, char **env)
 {
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **env)
 		}
 	}
 	free_env(tenv);
-	exit(g_status);
+	exit(g_flag);
 }
 // __attribute((destructor)) static void destructor() {
 // 	system("leaks -q minishell");
@@ -52,8 +52,8 @@ static void	sigint_no_redisplay(int signum)
 {
 	if (signum == SIGINT)
 	{
+		printf("\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
-	g_status = 130;
 }

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 17:16:38 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/17 19:54:33 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:36:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ void	_pwd(char **cmd)
 	else if (cmd[1] != NULL)
 	{
 		printf("pwd: too many arguments\n");
-		g_status = RUN_ERROR;
+		g_flag = RUN_ERROR;
 		return ;
 	}
 	if (getcwd(path, sizeof(path)) != NULL)
 	{
 		printf("%s\n", path);
-		g_status = 0;
+		g_flag = 0;
 	}
 	else
 	{
 		printf("pwd: getcwd failed\n");
-		g_status = RUN_ERROR;
+		g_flag = RUN_ERROR;
 	}
 	return ;
 }

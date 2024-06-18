@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 11:26:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/15 10:41:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:12:42 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	sigint_redisplay(int signum)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	g_status = 1;
+	g_flag = 1;
 }
 
 static void	sigquit_handler(int signum)

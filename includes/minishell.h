@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/18 08:54:00 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:36:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 #  define HEREDOC_FILE "/tmp/.heredoc"
 # endif
 
-extern volatile sig_atomic_t	g_status;
+extern volatile sig_atomic_t	g_flag;
 
 void	signalctrl(void);
 char	**get_paths(t_env *env);
