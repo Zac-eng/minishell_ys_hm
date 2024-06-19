@@ -6,13 +6,13 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/17 20:00:17 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/19 23:39:34 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc(t_file *file, t_env **env)
+void	heredoc(t_file *file, t_env **env)
 {
 	int		fd;
 	char	*new_file;
@@ -20,7 +20,9 @@ int	heredoc(t_file *file, t_env **env)
 	new_file = create_file();
 	read_heredoc(file, env, new_file);
 	fd = open(new_file, O_RDONLY);
-	return (fd);
+	close(fd);
+	filename_change(&file, new_file);
+	return ;
 }
 
 char	*create_file(void)
@@ -131,6 +133,13 @@ void	write_heredoc(char *line, t_file *file, t_env **env, int fd)
 	write(fd, new, strlen(new));
 	write(fd, "\n", 1);
 	return ;
+}
+
+
+void	free_close(char *line, int fd)
+{
+	free(line);
+	close(fd);
 }
 
 void	read_heredoc(t_file *file, t_env **env, char *new_file)

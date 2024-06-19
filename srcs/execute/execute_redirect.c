@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/18 08:18:16 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/19 23:29:08 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,69 @@ static void	redirect_output(t_file *file_head, char *cmd);
 static void	redirect_input(t_file *file_head, t_env **env, char *cmd);
 static void	read_out_file(int fd);
 static int	redirect(t_file *file, t_env **env);
+
+char	*create_file(void)
+{
+	int		i;
+	int		fd;
+	char	*new;
+	char	*tmp;
+
+	fd = 0;
+	i = 0;
+	tmp = ft_itoa(i);
+	new = ft_strjoin(HEREDOC_FILE, tmp);
+	if (new == NULL)
+		exit(1);
+	free(tmp);
+	if (new == NULL)
+		exit(1);
+	while (!access(new, F_OK))
+	{
+		i++;
+		free(new);
+		tmp = ft_itoa(i);
+		if (tmp == NULL)
+			exit(1);
+		new = ft_strjoin(HEREDOC_FILE, tmp);
+		if (new == NULL)
+			exit(1);
+		free(tmp);
+	}
+	fd = open(new, O_CREAT, 0644);
+	close(fd);
+	return (new);
+}
+
+int	heredoc_open(t_file *file, t_env **env)
+{
+	int	fd;
+
+	fd = heredoc_file_open()
+}
+
+void	heredoc_loop(t_file *file, t_env **env)
+{
+	int		fd;
+	t_file	*current;
+
+	current = file;
+	while (current != NULL)
+	{
+		if (current->type == HEREDOC)
+		{
+			fd = heredoc(current, env);
+			if (fd < 0)
+				return (-1);
+		}
+		else if (current->type == QUOTE_HEREDOC)
+		{
+			fd = quote_heredoc(current, env);
+			if (fd < 0)
+				return (-1);
+		}
+	}
+}
 
 void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 {
@@ -30,6 +93,7 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	std_out = dup(1);
 	if (std_in < 0 || std_out < 0)
 		return (put_error(FILE_ERROR, cmd->cmd[0]));
+	heredoc_loop(cmd->file, env);
 	redirect_input(cmd->file, env, cmd->cmd[0]);
 	redirect_output(cmd->file, cmd->cmd[0]);
 	execute_cmd(cmd->cmd, env, paths);
@@ -105,7 +169,7 @@ static int	redirect(t_file *file, t_env **env)
 	}
 	else if (file->type == HEREDOC)
 	{
-		fd = heredoc(file, env);
+		fd = heredoc_open(file, env);
 		if (fd < 0)
 			return (-1);
 		if (dup2(fd, 0) < 0)
@@ -113,7 +177,7 @@ static int	redirect(t_file *file, t_env **env)
 	}
 	else if (file->type == QUOTE_HEREDOC)
 	{
-		fd = quote_heredoc(file, env);
+		fd = quote_heredoc_open(file, env);
 		if (fd < 0)
 			return (-1);
 		if (dup2(fd, 0) < 0)
