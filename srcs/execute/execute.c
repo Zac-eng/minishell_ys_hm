@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/18 08:55:37 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:24:43 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	execute(char *line, t_env **env, char **paths)
 		return ;
 	current = parser_head;
 	while (current != NULL && current->next != NULL)
+	{
 		current = current->next;
+	}
 	execute_pipe(current, env, paths, 1);
 	free_parser(parser_head);
 }
