@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/06/18 09:06:25 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:36:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	_cd(char **cmd, t_env *env)
 		if (home == NULL)
 		{
 			printf("minishell: cd: HOME not set\n");
-			g_status = RUN_ERROR;
+			g_flag = RUN_ERROR;
 			return ;
 		}
 		destination = home;
@@ -34,9 +34,9 @@ void	_cd(char **cmd, t_env *env)
 	if (chdir(destination) != 0)
 	{
 		printf("minishell: cd: no such file or directory: %s\n", destination);
-		g_status = RUN_ERROR;
+		g_flag = RUN_ERROR;
 	}
 	else
-		g_status = 0;
+		g_flag = 0;
 	free(home);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:18 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/17 20:55:55 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:36:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	parser_env_add(t_token **lexer_tmp, char **tmp, t_env **env, int i)
 
 bool	env_question_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 {
-	(*parser_tmp)->cmd[0] = ft_itoa(g_status);
+	(*parser_tmp)->cmd[0] = ft_itoa(g_flag);
 	if ((*parser_tmp)->cmd[0] == NULL)
 		return (false);
 	return (true);
@@ -44,7 +44,7 @@ bool	env_question_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 
 bool	env_question_add(t_token **lexer_tmp, char **tmp, t_env **env, int i)
 {
-	tmp[i] = ft_itoa(g_status);
+	tmp[i] = ft_itoa(g_flag);
 	if (tmp[i] == NULL)
 		return (false);
 	return (true);
