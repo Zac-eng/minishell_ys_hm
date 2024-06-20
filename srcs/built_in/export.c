@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:07 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/18 10:36:28 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/20 10:43:13 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	_export(char **cmd, t_env **env_head)
 	if (cmd == NULL || env_head == NULL)
 		return ;
 	if (cmd[1] == NULL)
-		return (_env(*env_head));
+		return (_env(*env_head, true));
 	new_node = create_envnode(cmd[1]);
 	if (new_node == NULL)
 		return ;
