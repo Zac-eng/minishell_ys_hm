@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/19 23:29:08 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/20 21:03:00 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,45 +17,41 @@ static void	redirect_input(t_file *file_head, t_env **env, char *cmd);
 static void	read_out_file(int fd);
 static int	redirect(t_file *file, t_env **env);
 
-char	*create_file(void)
-{
-	int		i;
-	int		fd;
-	char	*new;
-	char	*tmp;
+g_signal = SIGINT;
 
-	fd = 0;
-	i = 0;
-	tmp = ft_itoa(i);
-	new = ft_strjoin(HEREDOC_FILE, tmp);
-	if (new == NULL)
-		exit(1);
-	free(tmp);
-	if (new == NULL)
-		exit(1);
-	while (!access(new, F_OK))
-	{
-		i++;
-		free(new);
-		tmp = ft_itoa(i);
-		if (tmp == NULL)
-			exit(1);
-		new = ft_strjoin(HEREDOC_FILE, tmp);
-		if (new == NULL)
-			exit(1);
-		free(tmp);
-	}
-	fd = open(new, O_CREAT, 0644);
-	close(fd);
-	return (new);
+void	signal_handler_heredoc_quit(int signum, siginfo_t *info, void *ucontext)
+{
+	(void)signum;
+	(void)ucontext;
+	(void)info;
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-int	heredoc_open(t_file *file, t_env **env)
+void	signal_handler_heredoc(int signum, siginfo_t *info, void *ucontext)
 {
-	int	fd;
-
-	fd = heredoc_file_open()
+	(void)signum;
+	(void)ucontext;
+	(void)info;
+	close(0);
+	g_signal = 1;
 }
+
+void signal_heredoc(void)
+{
+struct sigaction act1;
+struct sigaction act2;
+
+sigemptyset(&act1.sa_mask);
+act1.sa_sigaction = signal_handler_heredoc;
+act1.sa_flags = SA_SIGINFO;
+sigaction(SIGINT, &act1, NULL);
+sigemptyset(&act2.sa_mask);
+act2.sa_sigaction = signal_handler_heredoc_quit;
+act2.sa_flags = SA_SIGINFO;
+sigaction(SIGQUIT, &act2, NULL);
+}
+
 
 void	heredoc_loop(t_file *file, t_env **env)
 {
@@ -67,16 +63,15 @@ void	heredoc_loop(t_file *file, t_env **env)
 	{
 		if (current->type == HEREDOC)
 		{
-			fd = heredoc(current, env);
-			if (fd < 0)
-				return (-1);
+			signal_heredoc();
+			heredoc(current, env);
 		}
 		else if (current->type == QUOTE_HEREDOC)
 		{
-			fd = quote_heredoc(current, env);
-			if (fd < 0)
-				return (-1);
+			signal_heredoc();
+			quote_heredoc(current, env);
 		}
+		current = current->next;
 	}
 }
 
@@ -159,25 +154,10 @@ static int	redirect(t_file *file, t_env **env)
 {
 	int	fd;
 
-	if (file->type == IN_FILE)
+	if (file->type == IN_FILE || file->type == HEREDOC
+		|| file->type == QUOTE_HEREDOC)
 	{
 		fd = open(file->file_name, O_RDONLY);
-		if (fd < 0)
-			return (-1);
-		if (dup2(fd, 0) < 0)
-			exit(1);
-	}
-	else if (file->type == HEREDOC)
-	{
-		fd = heredoc_open(file, env);
-		if (fd < 0)
-			return (-1);
-		if (dup2(fd, 0) < 0)
-			exit(1);
-	}
-	else if (file->type == QUOTE_HEREDOC)
-	{
-		fd = quote_heredoc_open(file, env);
 		if (fd < 0)
 			return (-1);
 		if (dup2(fd, 0) < 0)

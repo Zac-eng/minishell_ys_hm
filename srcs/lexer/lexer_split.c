@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/18 08:19:22 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:28:06 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,22 @@ t_token	*split_word(char **tmp, char *line)
 		return (split_dquote(tmp, line));
 	i = 0;
 	while (line[i] != ' ' && line[i])
+	{
+		if (line[i] == '<' || line[i] == '>' || line[i] == '|' )
+		{
+			i--;
+			break;
+		}
 		i++;
+	}
 	set = (char *)calloc(sizeof(char), i + 1);
 	if (set == NULL)
 		return (put_error(PARSE_ERROR, &line[i]), NULL);
 	i = 0;
 	while (line[i] != ' ' && line[i])
 	{
+		if (line[i] == '<' || line[i] == '>' || line[i] == '|' )
+			break ;
 		set[i] = line[i];
 		i++;
 	}
