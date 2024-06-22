@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/20 20:57:21 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:08:07 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ void	write_heredoc(char *line, t_file *file, t_env **env, int fd)
 	new = strdup(line);
 	while (line[start])
 	{
-		signalctrl();
 		if (line[start] == '$')
 		{
 			tmp = start;
@@ -164,6 +163,7 @@ void	read_heredoc(t_file *file, t_env **env, char *new_file)
 	int		fd;
 	char	*line;
 
+	signal_heredoc();
 	while (true)
 	{
 		fd = open(new_file, O_WRONLY | O_APPEND, 0644);

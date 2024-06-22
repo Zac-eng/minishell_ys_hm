@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/20 21:03:00 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/22 17:52:33 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,6 @@ static void	redirect_output(t_file *file_head, char *cmd);
 static void	redirect_input(t_file *file_head, t_env **env, char *cmd);
 static void	read_out_file(int fd);
 static int	redirect(t_file *file, t_env **env);
-
-g_signal = SIGINT;
-
-void	signal_handler_heredoc_quit(int signum, siginfo_t *info, void *ucontext)
-{
-	(void)signum;
-	(void)ucontext;
-	(void)info;
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	signal_handler_heredoc(int signum, siginfo_t *info, void *ucontext)
-{
-	(void)signum;
-	(void)ucontext;
-	(void)info;
-	close(0);
-	g_signal = 1;
-}
-
-void signal_heredoc(void)
-{
-struct sigaction act1;
-struct sigaction act2;
-
-sigemptyset(&act1.sa_mask);
-act1.sa_sigaction = signal_handler_heredoc;
-act1.sa_flags = SA_SIGINFO;
-sigaction(SIGINT, &act1, NULL);
-sigemptyset(&act2.sa_mask);
-act2.sa_sigaction = signal_handler_heredoc_quit;
-act2.sa_flags = SA_SIGINFO;
-sigaction(SIGQUIT, &act2, NULL);
-}
-
 
 void	heredoc_loop(t_file *file, t_env **env)
 {
@@ -63,12 +27,10 @@ void	heredoc_loop(t_file *file, t_env **env)
 	{
 		if (current->type == HEREDOC)
 		{
-			signal_heredoc();
 			heredoc(current, env);
 		}
 		else if (current->type == QUOTE_HEREDOC)
 		{
-			signal_heredoc();
 			quote_heredoc(current, env);
 		}
 		current = current->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signalctrl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 11:26:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/15 10:41:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/22 18:21:39 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,22 @@
 
 static void	sigint_redisplay(int signum);
 static void	sigquit_handler(int signum);
+
+void	signal_handler_heredoc(int signum)
+{
+	(void)signum;
+	close(0);
+}
+
+void	signal_heredoc(void)
+{
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = signal_handler_heredoc;
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+}
 
 void	signalctrl(void)
 {

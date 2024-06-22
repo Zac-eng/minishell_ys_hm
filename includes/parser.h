@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/19 23:34:39 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/22 21:29:30 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef enum e_token_kind
 	TK_CMD,
 	TK_SQUOTE,
 	TK_DQUOTE,
+	NOT_TK_QUOTE,
 	TK_LESS,
 	TK_DLESS,
 	TK_GREAT,
