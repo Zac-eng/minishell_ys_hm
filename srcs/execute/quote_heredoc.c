@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 19:48:42 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/22 15:08:32 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/23 13:48:18 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	quote_read_heredoc(t_file *file, t_env **env, char *new_file)
 	while (true)
 	{
 		fd = open(new_file, O_WRONLY | O_APPEND, 0644);
-		printf("bbb\n");
 		if (fd == -1)
 			exit(1);
 		line = readline("> ");

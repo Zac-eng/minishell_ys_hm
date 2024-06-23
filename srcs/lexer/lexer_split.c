@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/22 22:54:18 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/23 13:57:13 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ int	after_quote_check(char *line, int first_flag)
 	{
 		if (line[i] == '\'')
 		{
-			printf("bb\n");
 			return (1);
 		}
 		else if (line[i] == '\"')
@@ -195,7 +194,6 @@ t_token	*split_word(char **tmp, char *line)
 			}
 			else if (first_flag == 2)
 			{
-				printf("first%d\n",first_flag);
 				if (after_quote_check(&line[i], first_flag) == 1)
 				{
 					line++;
@@ -228,7 +226,6 @@ t_token	*split_word(char **tmp, char *line)
 			{
 				if (after_quote_check(&line[i], first_flag) == 1)
 				{
-
 					i++;
 				}
 				else
@@ -247,7 +244,6 @@ t_token	*split_word(char **tmp, char *line)
 			i++;
 	}
 	i = i -  delete_flag;
-	printf("del%d\n",i);
 	set = (char *)calloc(sizeof(char), i + 1);
 	if (set == NULL)
 		return (put_error(PARSE_ERROR, &line[i]), NULL);
@@ -276,7 +272,6 @@ t_token	*split_word(char **tmp, char *line)
 			{
 				if (after_quote_check(line, first_flag) == 1)
 				{
-					printf("aa\n");
 					set[i] = *line;
 					i++;
 					line++;
@@ -297,7 +292,6 @@ t_token	*split_word(char **tmp, char *line)
 		}
 		else if (*line == '\"')
 		{
-			
 			if (first_flag == 0)
 			{
 				line++;
@@ -337,10 +331,6 @@ t_token	*split_word(char **tmp, char *line)
 			line++;
 		}
 	}
-	
-	printf("set:%s\n",set);
-	printf("line:%s\n",line);
-	exit(0);
 	*tmp = line;
 	return (create_token(set, TK_CMD));
 }

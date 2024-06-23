@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:40:20 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/22 21:29:45 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/23 13:45:31 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ t_token	*lexer(char *line)
 		else
 			tmp->next = token;
 		tmp = token;
-	}
-	while (lexer != NULL)
-	{
-		printf("lexer:%s\n",lexer->str);
-		lexer = lexer->next;
 	}
 	return (lexer);
 }

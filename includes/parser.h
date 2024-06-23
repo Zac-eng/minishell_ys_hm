@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/22 21:29:30 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/23 22:05:22 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,13 @@ void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 void		*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 												t_parser **parser, t_env **env);
 t_token		*create_token(char *line, t_token_kind kind);
+int			question_add_len(char *str, t_env **env, int *i);
+int			env_add_len(char *str, t_env **env, int *i);
+int			is_space(char *str);
+void		str_insert(char	*new, char *str);
+int			parser_env_add(char *str, t_env **env, char *new, int *i);
+int			env_question_add(char *str, t_env **env, char *new, int *i);
+char	*env_insert(char *str, t_env **env, int len);
+
 
 #endif

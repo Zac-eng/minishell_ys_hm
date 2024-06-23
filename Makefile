@@ -6,7 +6,7 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/22 18:03:22 by yususato         ###   ########.fr        #
+#    Updated: 2024/06/23 20:30:22 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(EXECUTE_DIR)/quote_heredoc.c \
 		$(EXECUTE_DIR)/rm_file.c \
 		$(UTILS_DIR)/handle_status.c \
+		$(UTILS_DIR)/parser_utils.c \
 		$(UTILS_DIR)/is_equal.c \
 		$(UTILS_DIR)/put_error.c \
 		$(UTILS_DIR)/paths.c \
@@ -56,6 +57,7 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(PARSER_DIR)/parser_redirect.c \
 		$(PARSER_DIR)/parser_check.c \
 		$(PARSER_DIR)/free_parser.c \
+		$(PARSER_DIR)/parser_env.c \
 		./srcs/signalctrl.c \
 		./srcs/main.c \
 
