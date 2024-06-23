@@ -127,7 +127,7 @@ bool	all_quote_check(char *line, int *first_flag)
 		i++;
 	}
 	if (*first_flag == 0)
-		return (false);
+		return (true);
 	return (true);
 }
 
@@ -141,7 +141,10 @@ int	after_quote_check(char *line, int first_flag)
 	while (line[i] != ' ' && line[i])
 	{
 		if (line[i] == '\'')
+		{
+			printf("bb\n");
 			return (1);
+		}
 		else if (line[i] == '\"')
 			return (2);
 		i++;
@@ -168,14 +171,12 @@ t_token	*split_word(char **tmp, char *line)
 		return (split_squote(tmp, line));
 	else if (*line == '\"')
 		return (split_dquote(tmp, line));
-	if (!all_quote_check(line, &first_flag))
-	{
-		set = ft_strdup(line);
-		return ((create_token(set, NOT_TK_QUOTE)));
-	}
+	all_quote_check(line, &first_flag);
 	tmp_flag = first_flag;
+	first_flag = 0;
 	while (line[i] != ' ' && line[i])
 	{
+
 		if (line[i] == '<' || line[i] == '>' || line[i] == '|')
 			break ;
 		if (line[i] == '\'')
@@ -184,18 +185,18 @@ t_token	*split_word(char **tmp, char *line)
 			{
 				i++;
 				first_flag = 1;
+				delete_flag += 1;
 			}
 			else if (first_flag == 1)
 			{
 				i++;
 				first_flag = 0;
-				delete_flag += 2;
+				delete_flag += 1;
 			}
 			else if (first_flag == 2)
 			{
+				printf("first%d\n",first_flag);
 				if (after_quote_check(&line[i], first_flag) == 1)
-					i++;
-				else
 				{
 					line++;
 					while (line[i] != ' ' && line[i] && line[i] != '\'')
@@ -205,25 +206,31 @@ t_token	*split_word(char **tmp, char *line)
 					if (line[i] == '\'')
 						delete_flag += 2;
 				}
+				else
+					i++;
 			}
 		}
 		else if (line[i] == '\"')
 		{
 			if (first_flag == 0)
 			{
-				line++;
+				i++;
 				first_flag = 2;
+				delete_flag += 1;
 			}
 			else if (first_flag == 2)
 			{
-				line++;
+				i++;
 				first_flag = 0;
-				delete_flag += 2;
+				delete_flag += 1;
 			}
 			else if (first_flag == 1)
 			{
 				if (after_quote_check(&line[i], first_flag) == 1)
-				i++;
+				{
+
+					i++;
+				}
 				else
 				{
 					i++;
@@ -236,13 +243,15 @@ t_token	*split_word(char **tmp, char *line)
 				}
 			}
 			}
-		}
-	i = i - delete_flag * 2;
+		else
+			i++;
+	}
+	i = i -  delete_flag;
+	printf("del%d\n",i);
 	set = (char *)calloc(sizeof(char), i + 1);
 	if (set == NULL)
 		return (put_error(PARSE_ERROR, &line[i]), NULL);
 	i = 0;
-	first_flag = tmp_flag;
 	while (*line != ' ' && *line)
 	{
 		if (*line == '<' || *line == '>' || *line == '|')
@@ -267,6 +276,7 @@ t_token	*split_word(char **tmp, char *line)
 			{
 				if (after_quote_check(line, first_flag) == 1)
 				{
+					printf("aa\n");
 					set[i] = *line;
 					i++;
 					line++;
@@ -287,6 +297,7 @@ t_token	*split_word(char **tmp, char *line)
 		}
 		else if (*line == '\"')
 		{
+			
 			if (first_flag == 0)
 			{
 				line++;
@@ -319,7 +330,17 @@ t_token	*split_word(char **tmp, char *line)
 				}
 			}
 		}
+		else
+		{
+			set[i] = *line;
+			i++;
+			line++;
+		}
 	}
+	
+	printf("set:%s\n",set);
+	printf("line:%s\n",line);
+	exit(0);
 	*tmp = line;
 	return (create_token(set, TK_CMD));
 }

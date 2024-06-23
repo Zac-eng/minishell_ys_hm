@@ -163,7 +163,7 @@ void	read_heredoc(t_file *file, t_env **env, char *new_file)
 	int		fd;
 	char	*line;
 
-	signal_heredoc();
+	// signal_heredoc();
 	while (true)
 	{
 		fd = open(new_file, O_WRONLY | O_APPEND, 0644);
