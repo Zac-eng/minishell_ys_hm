@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/23 13:57:13 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:41:05 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,102 +151,157 @@ int	after_quote_check(char *line, int first_flag)
 	return (0);
 }
 
-t_token	*split_word(char **tmp, char *line)
+void	handle_single_quote(char *line, int *i, int *first_flag, int *delete_flag)
 {
-	char	*set;
-	int		i;
-	int		flag;
-	int		first_flag;
-	int		delete_flag;
-	int		tmp_flag;
-	int		first;
-
-	flag = 0;
-	first = 0;
-	first_flag = 0;
-	delete_flag = 0;
-	tmp_flag = 0;
-	if (*line == '\'')
-		return (split_squote(tmp, line));
-	else if (*line == '\"')
-		return (split_dquote(tmp, line));
-	all_quote_check(line, &first_flag);
-	tmp_flag = first_flag;
-	first_flag = 0;
-	while (line[i] != ' ' && line[i])
+	if (*first_flag == 0)
 	{
-
-		if (line[i] == '<' || line[i] == '>' || line[i] == '|')
-			break ;
-		if (line[i] == '\'')
-		{
-			if (first_flag == 0)
-			{
-				i++;
-				first_flag = 1;
-				delete_flag += 1;
-			}
-			else if (first_flag == 1)
-			{
-				i++;
-				first_flag = 0;
-				delete_flag += 1;
-			}
-			else if (first_flag == 2)
-			{
-				if (after_quote_check(&line[i], first_flag) == 1)
-				{
-					line++;
-					while (line[i] != ' ' && line[i] && line[i] != '\'')
-					{
-						i++;
-					}
-					if (line[i] == '\'')
-						delete_flag += 2;
-				}
-				else
-					i++;
-			}
-		}
-		else if (line[i] == '\"')
-		{
-			if (first_flag == 0)
-			{
-				i++;
-				first_flag = 2;
-				delete_flag += 1;
-			}
-			else if (first_flag == 2)
-			{
-				i++;
-				first_flag = 0;
-				delete_flag += 1;
-			}
-			else if (first_flag == 1)
-			{
-				if (after_quote_check(&line[i], first_flag) == 1)
-				{
-					i++;
-				}
-				else
-				{
-					i++;
-					while (line[i] != ' ' && line[i] && line[i] != '\'')
-					{
-						i++;
-					}
-					if (line[i] == '\'')
-						delete_flag += 2;
-				}
-			}
-			}
-		else
-			i++;
+		(*i)++;
+		*first_flag = 1;
+		*delete_flag += 1;
 	}
-	i = i -  delete_flag;
-	set = (char *)calloc(sizeof(char), i + 1);
-	if (set == NULL)
-		return (put_error(PARSE_ERROR, &line[i]), NULL);
+	else if (*first_flag == 1)
+	{
+		(*i)++;
+		*first_flag = 0;
+		*delete_flag += 1;
+	}
+	else if (*first_flag == 2)
+	{
+		if (after_quote_check(&line[*i], *first_flag) == 1)
+		{
+			line++;
+			while (line[*i] != ' ' && line[*i] && line[*i] != '\'')
+				(*i)++;
+			if (line[*i] == '\'')
+				*delete_flag += 2;
+		}
+		else
+			(*i)++;
+	}
+}
+
+void	handle_double_quote(char *line, int *i, int *first_flag, int *delete_flag)
+{
+	if (*first_flag == 0)
+	{
+		(*i)++;
+		*first_flag = 2;
+		*delete_flag += 1;
+	}
+	else if (*first_flag == 2)
+	{
+		(*i)++;
+		*first_flag = 0;
+		*delete_flag += 1;
+	}
+	else if (*first_flag == 1)
+	{
+		if (after_quote_check(&line[*i], *first_flag) == 1)
+		{
+			line++;
+			while (line[*i] != ' ' && line[*i] && line[*i] != '\'')
+				(*i)++;
+			if (line[*i] == '\'')
+				*delete_flag += 2;
+		}
+		else
+			(*i)++;
+	}
+}
+
+int	delete_word_check(char *line, int *first_flag, int *i)
+{
+	int	delete_flag;
+
+	delete_flag = 0;
+	while (line[*i] != ' ' && line[*i])
+	{
+		if (line[*i] == '<' || line[*i] == '>' || line[*i] == '|')
+			break ;
+		if (line[*i] == '\'')
+			handle_single_quote(line, i, first_flag, &delete_flag);
+		else if (line[*i] == '\"')
+			handle_double_quote(line, i, first_flag, &delete_flag);
+		else
+			(*i)++;
+	}
+	return (delete_flag);
+}
+
+void	set_single_quote(char **line, char *set, int *first_flag, int *i)
+{
+	if (*first_flag == 0)
+	{
+		(*line)++;
+		*first_flag = 1;
+	}
+	else if (*first_flag == 1)
+	{
+		(*line)++;
+		*first_flag = 0;
+	}
+	else if (*first_flag == 2)
+	{
+		if (after_quote_check(*line, *first_flag) == 1)
+		{
+			set[*i] = **line;
+			(*i)++;
+			(*line)++;
+		}
+		else
+		{
+			(*line)++;
+			while (**line != ' ' && **line && **line != '\'')
+			{
+				set[*i] = **line;
+				(*i)++;
+				(*line)++;
+			}
+			if (**line == '\'')
+				(*line)++;
+		}
+	}
+}
+
+void	set_double_quote(char **line, char *set, int *first_flag, int *i)
+{
+	if (*first_flag == 0)
+	{
+		(*line)++;
+		*first_flag = 2;
+	}
+	else if (*first_flag == 2)
+	{
+		(*line)++;
+		*first_flag = 0;
+	}
+	else if (*first_flag == 1)
+	{
+		if (after_quote_check(*line, *first_flag) == 2)
+		{
+			set[*i] = **line;
+			(*i)++;
+			(*line)++;
+		}
+		else
+		{
+			(*line)++;
+			while (**line != ' ' && **line && **line != '\'')
+			{
+				set[*i] = **line;
+				(*i)++;
+				(*line)++;
+			}
+			if (**line == '\'')
+				(*line)++;
+		}
+	}
+}
+
+char	*quote_set(char *line, char *set, int *first_flag, int *first)
+{
+	int		i;
+
 	i = 0;
 	while (*line != ' ' && *line)
 	{
@@ -255,75 +310,12 @@ t_token	*split_word(char **tmp, char *line)
 		if (*line == '\'' && *line == '\'' && first == 0)
 		{
 			line++;
+			continue ;
 		}
 		if (*line == '\'')
-		{
-			if (first_flag == 0)
-			{
-				line++;
-				first_flag = 1;
-			}
-			else if (first_flag == 1)
-			{
-				line++;
-				first_flag = 0;
-			}
-			else if (first_flag == 2)
-			{
-				if (after_quote_check(line, first_flag) == 1)
-				{
-					set[i] = *line;
-					i++;
-					line++;
-				}
-				else
-				{
-					line++;
-					while (*line != ' ' && *line && *line != '\'')
-					{
-						set[i] = *line;
-						i++;
-						line++;
-					}
-					if (*line == '\'')
-						line++;
-				}
-			}
-		}
+			set_single_quote(&line, set, first_flag, &i);
 		else if (*line == '\"')
-		{
-			if (first_flag == 0)
-			{
-				line++;
-				first_flag = 2;
-			}
-			else if (first_flag == 2)
-			{
-				line++;
-				first_flag = 0;
-			}
-			else if (first_flag == 1)
-			{
-				if (after_quote_check(line, first_flag) == 2)
-				{
-					set[i] = *line;
-					i++;
-					line++;
-				}
-				else
-				{
-					line++;
-					while (*line != ' ' && *line && *line != '\'')
-					{
-						set[i] = *line;
-						i++;
-						line++;
-					}
-					if (*line == '\'')
-						line++;
-				}
-			}
-		}
+			set_double_quote(&line, set, first_flag, &i);
 		else
 		{
 			set[i] = *line;
@@ -331,6 +323,32 @@ t_token	*split_word(char **tmp, char *line)
 			line++;
 		}
 	}
+	return (line);
+}
+
+t_token	*split_word(char **tmp, char *line)
+{
+	char	*set;
+	int		i;
+	int		first_flag;
+	int		delete_flag;
+	int		first;
+
+	i = 0;
+	first = 0;
+	first_flag = 0;
+	delete_flag = 0;
+	if (*line == '\'')
+		return (split_squote(tmp, line));
+	else if (*line == '\"')
+		return (split_dquote(tmp, line));
+	delete_flag = delete_word_check(line, &first_flag, &i);
+	i = i - delete_flag;
+	set = (char *)calloc(sizeof(char), i + 1);
+	if (set == NULL)
+		return (put_error(PARSE_ERROR, &line[i]), NULL);
+	i = 0;
+	line = quote_set(line, set, &first_flag, &first);
 	*tmp = line;
 	return (create_token(set, TK_CMD));
 }

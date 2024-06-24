@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/23 22:05:22 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/23 22:07:27 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int			is_space(char *str);
 void		str_insert(char	*new, char *str);
 int			parser_env_add(char *str, t_env **env, char *new, int *i);
 int			env_question_add(char *str, t_env **env, char *new, int *i);
-char	*env_insert(char *str, t_env **env, int len);
-
+char		*env_insert(char *str, t_env **env, int len);
 
 #endif
