@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_check.c                                     :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 18:12:03 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 17:27:38 by yususato         ###   ########.fr       */
+/*   Created: 2024/06/25 16:50:15 by yususato          #+#    #+#             */
+/*   Updated: 2024/06/25 16:57:18 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_redirect(t_token *lexer_tmp)
+void	env_expand(t_token *tmp)
 {
-	if (lexer_tmp->kind == TK_LESS || lexer_tmp->kind == TK_DLESS \
-		|| lexer_tmp->kind == TK_GREAT || lexer_tmp->kind == TK_DGREAT)
-		return (true);
-	else
-		return (false);
+	
 }
 
-bool	is_lexer_redirect(char c)
+void	expand_cmd(t_token *tmp)
 {
-	if (c == '<' || c == '>')
-		return (true);
-	else
-		return (false);
-}
+	int	i;
 
-bool	is_quote(t_token_kind kind)
-{
-	if (kind == TK_SQUOTE || kind == TK_DQUOTE)
-		return (true);
-	else
-		return (false);
+	i = 0;
+	while (tmp->str[i])
+	{
+		if (tmp->str[i] == '$')
+			env_expand(tmp);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_split_quote.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:12:37 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 18:44:51 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:33:29 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ t_token	*split_squote(char **tmp, char *line)
 		*tmp = &line[index + 2];
 	else
 		*tmp = &line[index + 1];
-	return (create_token(set, TK_SQUOTE));
+	if (*tmp && **tmp == ' ')
+		return (create_token(set, TK_SQUOTE, true));
+	return (create_token(set, TK_SQUOTE, false));
 }
 
 t_token	*split_dquote(char **tmp, char *line)
@@ -59,7 +61,9 @@ t_token	*split_dquote(char **tmp, char *line)
 		*tmp = &line[index + 2];
 	else
 		*tmp = &line[index + 1];
-	return (create_token(set, TK_DQUOTE));
+	if (*tmp && **tmp == ' ')
+		return (create_token(set, TK_SQUOTE, true));
+	return (create_token(set, TK_SQUOTE, false));
 }
 
 static char	*allocate_quoted(char *line, char quote_kind)

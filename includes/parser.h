@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/23 22:07:27 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:22:59 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_token
 	t_token_kind		kind;
 	struct s_token		*next;
 	char				*str;
+	bool				space_flag;
 }	t_token;
 
 typedef enum e_redirect_type
@@ -106,7 +107,7 @@ void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 // void		token_check(t_token	*lexer);
 void		*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 												t_parser **parser, t_env **env);
-t_token		*create_token(char *line, t_token_kind kind);
+t_token		*create_token(char *line, t_token_kind kind, bool flag);
 int			question_add_len(char *str, t_env **env, int *i);
 int			env_add_len(char *str, t_env **env, int *i);
 int			is_space(char *str);
@@ -114,5 +115,7 @@ void		str_insert(char	*new, char *str);
 int			parser_env_add(char *str, t_env **env, char *new, int *i);
 int			env_question_add(char *str, t_env **env, char *new, int *i);
 char		*env_insert(char *str, t_env **env, int len);
+t_token		*split_other(char **tmp, char *line);
+bool		is_lexer_redirect(char c);
 
 #endif
