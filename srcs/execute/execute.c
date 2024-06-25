@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/22 12:59:40 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:04:21 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 		{
 			close(pipes[READ]);
 			execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
-			exit(0);
+			exit(g_flag);
 		}
 		close(pipes[WRITE]);
 		if (dup2(pipes[READ], 0) != 0)

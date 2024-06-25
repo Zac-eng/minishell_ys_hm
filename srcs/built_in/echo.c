@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:55:49 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/17 19:58:04 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:36:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	_echo_n(char **words);
 
 void	_echo(char **cmd)
 {
-	g_status = 0;
+	g_flag = 0;
 	if (cmd == NULL || cmd[0] == NULL)
 		return ;
 	if (cmd[1] != NULL && is_equal(cmd[1], "-n") == 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:54:01 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/23 21:45:52 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:05:01 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	parser_env_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 
 bool	env_question_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 {
-	(*parser_tmp)->cmd[0] = ft_itoa(g_status);
+	(*parser_tmp)->cmd[0] = ft_itoa(g_flag);
 	if ((*parser_tmp)->cmd[0] == NULL)
 		return (false);
 	return (true);
@@ -36,7 +36,7 @@ int	env_question_add(char *str, t_env **env, char *new, int *i)
 	int		len;
 	char	*tmp;
 
-	tmp = ft_itoa(g_status);
+	tmp = ft_itoa(g_flag);
 	len = ft_strlen(tmp);
 	*i += 2;
 	str_insert(new, tmp);
@@ -71,7 +71,7 @@ int	question_add_len(char *str, t_env **env, int *i)
 	int		len;
 	char	*tmp;
 
-	tmp = ft_itoa(g_status);
+	tmp = ft_itoa(g_flag);
 	len = ft_strlen(tmp);
 	*i += 2;
 	free(tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signalctrl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 11:26:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/22 18:21:39 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:04:20 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static void	sigint_redisplay(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
-		rl_replace_line("", 0);
+		write(1, "\n", 1);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	g_status = 1;
+	g_flag = 1;
 }
 
 static void	sigquit_handler(int signum)

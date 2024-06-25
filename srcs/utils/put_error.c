@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/17 22:07:30 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/18 10:36:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	put_error(t_code error_code, char *insert)
 		printf("minishell: %s: No such file or directory\n", insert);
 	else if (error_code == PARSE_ERROR)
 		printf("minishell: syntax error near unexpected token `%c'\n", *insert);
-	g_status = error_code;
+	g_flag = error_code;
 }
 
 void	put_error_exit(t_code error_code)
