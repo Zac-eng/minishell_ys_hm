@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_parser.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 20:16:45 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 14:56:00 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/22 13:00:49 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ void	free_parser(t_parser *parser_head)
 		current = current->next;
 		free_str_list(tmp->cmd);
 		if (tmp->file != NULL)
+		{
+			if (tmp->file->type == HEREDOC | tmp->file->type == QUOTE_HEREDOC)
+				unlink(tmp->file->file_name);
 			free(tmp->file);
+		}
 		free(tmp);
 	}
 }

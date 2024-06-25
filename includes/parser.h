@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/16 18:44:49 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/23 22:07:27 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef enum e_token_kind
 	TK_CMD,
 	TK_SQUOTE,
 	TK_DQUOTE,
+	NOT_TK_QUOTE,
 	TK_LESS,
 	TK_DLESS,
 	TK_GREAT,
@@ -106,5 +107,12 @@ void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 void		*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 												t_parser **parser, t_env **env);
 t_token		*create_token(char *line, t_token_kind kind);
+int			question_add_len(char *str, t_env **env, int *i);
+int			env_add_len(char *str, t_env **env, int *i);
+int			is_space(char *str);
+void		str_insert(char	*new, char *str);
+int			parser_env_add(char *str, t_env **env, char *new, int *i);
+int			env_question_add(char *str, t_env **env, char *new, int *i);
+char		*env_insert(char *str, t_env **env, int len);
 
 #endif

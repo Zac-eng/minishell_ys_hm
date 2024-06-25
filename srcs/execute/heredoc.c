@@ -6,21 +6,31 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/17 20:00:17 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/23 13:42:43 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc(t_file *file, t_env **env)
+void	filename_change(t_file *file, char *new_file)
+{
+	free(file->file_name);
+	file->file_name = strdup(new_file);
+	if (file->file_name == NULL)
+		exit(0);
+	free(new_file);
+	return ;
+}
+
+void	heredoc(t_file *file, t_env **env)
 {
 	int		fd;
 	char	*new_file;
 
 	new_file = create_file();
 	read_heredoc(file, env, new_file);
-	fd = open(new_file, O_RDONLY);
-	return (fd);
+	filename_change(file, new_file);
+	return ;
 }
 
 char	*create_file(void)
@@ -67,7 +77,6 @@ char	*heredoc_join(char *before, char *after, char *env_str, int *i)
 	tmp = strdup(new);
 	free(new);
 	new = ft_strjoin(tmp, after);
-	*i = strlen(before) + strlen(env_str);
 	return (new);
 }
 
@@ -93,7 +102,12 @@ char	*env_heredoc(char *line, t_file *file, t_env **env, int *i)
 	env_name = ft_substr(line, *i, j);
 	head_env = find_node(*env, env_name);
 	if (!head_env)
-		return (line);
+	{
+		if (&line[*i + j + 1] && line[*i + j + 1] == ' ')
+			return (line);
+		else
+			return (NULL);
+	}
 	env_str = strdup(head_env->value);
 	*i = *i + j;
 	return (heredoc_join(before, after, env_str, i));
@@ -101,36 +115,47 @@ char	*env_heredoc(char *line, t_file *file, t_env **env, int *i)
 
 void	write_heredoc(char *line, t_file *file, t_env **env, int fd)
 {
-	int		i;
+	int		start;
 	int		j;
 	int		tmp;
 	char	*new;
 
-	i = 0;
+	start = 0;
 	j = 0;
 	tmp = 0;
 	new = strdup(line);
-	while (line[i])
+	while (line[start])
 	{
-		if (line[i] == '$')
+		if (line[start] == '$')
 		{
-			tmp = i;
-			i++;
-			new = env_heredoc(line, file, env, &i);
-			j = i;
-			i = tmp;
+			tmp = start;
+			start++;
+			new = env_heredoc(line, file, env, &start);
+			if (new == NULL)
+			{
+				write(fd, "\n", 1);
+				return ;
+			}
+			j = strlen(new);
+			start = tmp;
 		}
 		else
 		{
-			new[j] = line[i];
+			new[j] = line[start];
 		}
-		i++;
+		start++;
 		j++;
 	}
-	new[j] = line[i];
+	new[j] = line[start];
 	write(fd, new, strlen(new));
 	write(fd, "\n", 1);
 	return ;
+}
+
+void	free_close(char *line, int fd)
+{
+	free(line);
+	close(fd);
 }
 
 void	read_heredoc(t_file *file, t_env **env, char *new_file)
@@ -138,6 +163,7 @@ void	read_heredoc(t_file *file, t_env **env, char *new_file)
 	int		fd;
 	char	*line;
 
+	signal_heredoc();
 	while (true)
 	{
 		fd = open(new_file, O_WRONLY | O_APPEND, 0644);
@@ -146,17 +172,13 @@ void	read_heredoc(t_file *file, t_env **env, char *new_file)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strlen(line) == 0 && ft_strlen(file->file_name))
+		if (ft_strlen(line) && !strcmp(line, file->file_name))
 		{
-			// free_close(line, fd);
-			break ;
-		}
-		else if (ft_strlen(line) && !strcmp(line, file->file_name))
-		{
-			// free_close(line, fd);
+			free_close(line, fd);
 			break ;
 		}
 		write_heredoc(line, file, env, fd);
+		free(line);
 		close(fd);
 	}
 }

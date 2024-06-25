@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/18 21:22:07 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:04:18 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	main(int argc, char **argv, char **env)
 			add_history(line);
 			paths = get_paths(tenv);
 			execute(line, &tenv, paths);
-			rm_heredoc_file();
 			free_str_list(paths);
 			free(line);
 		}

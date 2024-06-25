@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:51 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/14 21:04:49 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/18 21:19:17 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,26 @@ void	file_init(t_file **file, char *file_name, t_token_kind kind, \
 void	file_add(t_file **file, char *file_name, t_token_kind kind, \
 												t_token_kind next_kind)
 {
-	while ((*file)->next != NULL)
-		(*file) = (*file)->next;
-	(*file)->next = (t_file *)malloc(sizeof(t_file));
-	if ((*file) == NULL)
+	t_file	*tmp;
+
+	tmp = *file;
+	while ((tmp)->next != NULL)
+		(tmp) = (tmp)->next;
+	(tmp)->next = (t_file *)malloc(sizeof(t_file));
+	if ((tmp)->next == NULL)
 		exit(1);
-	(*file) = (*file)->next;
-	(*file)->next = NULL;
-	(*file)->file_name = ft_strdup(file_name);
+	(tmp) = (tmp)->next;
+	(tmp)->file_name = ft_strdup(file_name);
 	if (kind == TK_DLESS && is_quote(next_kind) == true)
-		(*file)->type = QUOTE_HEREDOC;
+		(tmp)->type = QUOTE_HEREDOC;
 	else if (kind == TK_DLESS)
-		(*file)->type = HEREDOC;
+		(tmp)->type = HEREDOC;
 	else if (kind == TK_LESS)
-		(*file)->type = IN_FILE;
+		(tmp)->type = IN_FILE;
 	else if (kind == TK_DGREAT)
-		(*file)->type = APPEND;
+		(tmp)->type = APPEND;
 	else if (kind == TK_GREAT)
-		(*file)->type = OUT_FILE;
+		(tmp)->type = OUT_FILE;
 	return ;
 }
 
@@ -79,10 +81,13 @@ void	parser_input(t_token **lexer_tmp, t_parser **parser_tmp)
 
 void	*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp)
 {
-	if ((*lexer_tmp)->kind == TK_LESS || (*lexer_tmp)->kind == TK_DLESS)
-		parser_output(lexer_tmp, parser_tmp);
-	else if ((*lexer_tmp)->kind == TK_GREAT || (*lexer_tmp)->kind == TK_DGREAT)
-		parser_input(lexer_tmp, parser_tmp);
-	*lexer_tmp = (*lexer_tmp)->next;
+	while (is_redirect(*lexer_tmp))
+	{
+		if ((*lexer_tmp)->kind == TK_LESS || (*lexer_tmp)->kind == TK_DLESS)
+			parser_output(lexer_tmp, parser_tmp);
+		else if ((*lexer_tmp)->kind == TK_GREAT || (*lexer_tmp)->kind == TK_DGREAT)
+			parser_input(lexer_tmp, parser_tmp);
+		*lexer_tmp = (*lexer_tmp)->next;
+	}
 	return (parser_tmp);
 }

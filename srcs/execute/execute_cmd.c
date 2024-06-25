@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/20 10:44:10 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:21:20 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	execute_cmd(char **cmd, t_env **env, char **paths)
 	else if (is_equal(cmd[0], "cd") == 1)
 		return (_cd(cmd, *env));
 	else if (is_equal(cmd[0], "pwd") == 1)
-		return (_pwd(cmd));
+		return (_pwd());
 	else if (is_equal(cmd[0], "export") == 1)
 		return (_export(cmd, env));
 	else if (is_equal(cmd[0], "unset") == 1)
@@ -64,7 +64,7 @@ static void	execute_path(char *path, char **cmd, char **env)
 	{
 		if (execve(path, cmd, env) == -1)
 		{
-			put_error(NO_FILE_ERROR, cmd[0]);
+			perror(strerror(errno));
 			exit(g_flag);
 		}
 	}

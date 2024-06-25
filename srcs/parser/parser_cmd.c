@@ -6,71 +6,54 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:18 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/18 10:36:28 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:04:22 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	parser_env_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
+int	cmd_len(char *str, t_env **env)
 {
-	t_env	*head_env;
+	int		i;
+	int		count;
+	int		tmp;
 
-	head_env = find_node(*env, (&(*lexer_tmp)->str[1]));
-	if (!head_env)
-		return (false);
-	(*parser_tmp)->cmd[0] = strdup(head_env->value);
-	return (true);
-}
-
-bool	parser_env_add(t_token **lexer_tmp, char **tmp, t_env **env, int i)
-{
-	t_env	*head_env;
-
-	head_env = find_node(*env, (&(*lexer_tmp)->str[1]));
-	if (!head_env)
-		return (false);
-	tmp[i] = strdup(head_env->value);
-	return (true);
-}
-
-bool	env_question_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
-{
-	(*parser_tmp)->cmd[0] = ft_itoa(g_flag);
-	if ((*parser_tmp)->cmd[0] == NULL)
-		return (false);
-	return (true);
-}
-
-bool	env_question_add(t_token **lexer_tmp, char **tmp, t_env **env, int i)
-{
-	tmp[i] = ft_itoa(g_flag);
-	if (tmp[i] == NULL)
-		return (false);
-	return (true);
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			if (str[i + 1] && str[i + 1] == '?')
+			{
+				tmp = question_add_len(&str[i+1], env, &i);
+				count += tmp;
+			}
+			else
+			{
+				tmp = env_add_len(&str[i+1], env, &i);
+				count += tmp;
+			}
+		}
+		else
+		{
+			i++;
+			count++;
+		}
+	}
+	return (count);
 }
 
 void	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 {
-	bool	flag;
+	int		len;
 
-	flag = false;
+	len = 0;
 	(*parser_tmp)->cmd = (char **)calloc(2, sizeof(char *));
 	if ((*parser_tmp)->cmd == NULL)
 		exit(0);
-	if ((*lexer_tmp)->str[0] == '$')
-	{
-		if ((*lexer_tmp)->str[1] && (*lexer_tmp)->str[1] == '?')
-		{
-			flag = env_question_init(lexer_tmp, parser_tmp, env);
-		}
-		else if (parser_env_init(lexer_tmp, parser_tmp, env))
-			flag = true;
-		else
-			flag = false;
-	}
-	if (flag == false)
-		(*parser_tmp)->cmd[0] = strdup((*lexer_tmp)->str);
+	len = cmd_len((*lexer_tmp)->str, env);
+	(*parser_tmp)->cmd[0] = env_insert((*lexer_tmp)->str, env, len);
 	if ((*parser_tmp)->cmd[0] == NULL)
 		exit(0);
 	(*parser_tmp)->cmd[1] = NULL;
@@ -94,28 +77,17 @@ void	free_parser_tmp(t_parser **tmp)
 void	cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp, t_env **env)
 {
 	int	i;
-	int	flag;
+	int	len;
 
 	i = 0;
-	flag = false;
+	len = 0;
 	while ((*parser_tmp)->cmd[i] != NULL)
 	{
 		tmp[i] = strdup((*parser_tmp)->cmd[i]);
 		i++;
 	}
-	if ((*lexer_tmp)->str[0] == '$')
-	{
-		if ((*lexer_tmp)->str[1] && (*lexer_tmp)->str[1] == '?')
-		{
-			flag = env_question_add(lexer_tmp, tmp, env, i);
-		}
-		else if (parser_env_add(lexer_tmp, tmp, env, i))
-			flag = true;
-		else
-			flag = false;
-	}
-	if (flag == false)
-		tmp[i] = strdup((*lexer_tmp)->str);
+	len = cmd_len((*lexer_tmp)->str, env);
+	tmp[i] = env_insert((*lexer_tmp)->str, env, len);
 	free_parser_tmp(parser_tmp);
 	(*parser_tmp)->cmd = (char **)calloc((i + 2), sizeof(char *));
 	i = 0;
@@ -126,6 +98,42 @@ void	cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp, t_env **env
 	}
 	(*parser_tmp)->cmd[i] = NULL;
 	free(tmp);
+}
+
+
+char	*env_insert(char *str, t_env **env, int len)
+{
+	int		i;
+	int		tmp;
+	int		count;
+	char	*new;
+
+	i = 0;
+	count = 0;
+	new = (char *)malloc(sizeof(char) * (len + 1));
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			if (str[i + 1] && str[i + 1] == '?')
+			{
+				tmp = env_question_add(&str[i+1], env, &new[count], &i);
+				count += tmp;
+			}
+			else
+			{
+				tmp = parser_env_add(&str[i+1], env, &new[count], &i);
+				count += tmp;
+			}
+		}
+		else
+		{
+			new[count] = str[i];
+			i++;
+			count++;
+		}
+	}
+	return (new);
 }
 
 void	*parser_cmd(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)

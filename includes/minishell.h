@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/20 10:44:38 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:45:24 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	_cd(char **cmd, t_env *env);
 void	_echo(char **cmd);
 void	_env(t_env *env, bool is_export);
 void	_export(char **cmd, t_env **env_head);
-void	_pwd(char **cmd);
+void	_pwd(void);
 void	_unset(char **cmd, t_env **env);
 void	minishell_exit(char **cmd);
 t_env	*create_envnode(char *env_line);
@@ -60,17 +60,21 @@ int		remove_env(t_env *previous);
 char	*_getenv(t_env *env_head, char *key);
 void	put_error(t_code error_code, char *insert);
 void	put_error_exit(t_code error_code);
+void	perror_set_flag(void);
 void	handle_status(pid_t pid_to_wait);
 pid_t	safe_fork(void);
 int		is_equal(char *str, char *ref);
-int		heredoc(t_file *file, t_env **env);
+void	heredoc(t_file *file, t_env **env);
 char	*heredoc_join(char *before, char *after, char *env_str, int *i);
 char	*env_heredoc(char *line, t_file *file, t_env **env, int *i);
 void	write_heredoc(char *line, t_file *file, t_env **env, int fd);
-int		quote_heredoc(t_file *file, t_env **env);
-void	quote_read_heredoc(t_file *file, t_env **env);
+void	quote_heredoc(t_file *file, t_env **env);
+void	quote_read_heredoc(t_file *file, t_env **env, char *new_file);
 char	*create_file(void);
 void	rm_heredoc_file(void);
 void	read_heredoc(t_file *file, t_env **env, char *new_file);
+void	filename_change(t_file *file, char *new_file);
+void	free_close(char *line, int fd);
+void	signal_heredoc(void);
 
 #endif
