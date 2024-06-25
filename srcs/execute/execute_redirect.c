@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/22 17:52:33 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:40:23 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	std_in = dup(0);
 	std_out = dup(1);
 	if (std_in < 0 || std_out < 0)
-		return (put_error(FILE_ERROR, cmd->cmd[0]));
+		return (perror(strerror(errno)));
 	heredoc_loop(cmd->file, env);
 	redirect_input(cmd->file, env, cmd->cmd[0]);
 	redirect_output(cmd->file, cmd->cmd[0]);
 	execute_cmd(cmd->cmd, env, paths);
 	if (dup2(std_in, 0) < 0)
-		return (exit(1));
+		return (perror(strerror(errno)));
 	if (dup2(std_out, 1) < 0)
-		return (exit(1));
+		return (perror(strerror(errno)));
 }
 
 static void	redirect_output(t_file *file_head, char *cmd)
@@ -74,11 +74,11 @@ static void	redirect_output(t_file *file_head, char *cmd)
 				unlink(current->file_name);
 			fd = open(current->file_name, O_CREAT | O_RDWR, 0666);
 			if (fd < 0)
-				return (put_error(FILE_ERROR, cmd));
+				return (perror(strerror(errno)));
 			if (current->type == APPEND)
 				read_out_file(fd);
 			if (dup2(fd, 1) < 0)
-				return (exit(1));
+				return (perror(strerror(errno)));
 		}
 		current = current->next;
 	}
@@ -121,9 +121,9 @@ static int	redirect(t_file *file, t_env **env)
 	{
 		fd = open(file->file_name, O_RDONLY);
 		if (fd < 0)
-			return (-1);
+			return (perror(strerror(errno)), -1);
 		if (dup2(fd, 0) < 0)
-			exit(1);
+			return (perror(strerror(errno)), -1);
 	}
 	return (0);
 }

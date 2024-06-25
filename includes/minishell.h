@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 09:04:07 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 09:22:02 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	_cd(char **cmd, t_env *env);
 void	_echo(char **cmd);
 void	_env(t_env *env, bool is_export);
 void	_export(char **cmd, t_env **env_head);
-void	_pwd(char **cmd);
+void	_pwd(void);
 void	_unset(char **cmd, t_env **env);
 void	minishell_exit(char **cmd);
 t_env	*create_envnode(char *env_line);
