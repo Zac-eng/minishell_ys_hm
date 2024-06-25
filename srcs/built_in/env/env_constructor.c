@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:28:47 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 10:55:20 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:42:14 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,40 @@
 
 static t_env	*allocate_tenv(char *env_line);
 static int		get_env_len(char *env_line, int *key_value_len);
+static int		copy_kv(char *dest, char *ref);
 
 t_env	*create_envnode(char *env_line)
 {
 	t_env	*env_node;
 	int		index;
-	int		value_index;
 
 	index = 0;
-	value_index = 0;
 	if (env_line == NULL)
 		return (NULL);
 	env_node = allocate_tenv(env_line);
 	if (env_node == NULL)
 		return (NULL);
-	while (env_line[index] != '=' && env_line[index] != '\0')
+	index += copy_kv(env_node->key, &env_line[index]);
+	if (env_line[index] == '+')
+		index += 2;
+	else
+		index += 1;
+	copy_kv(env_node->value, &env_line[index]);
+	return (env_node);
+}
+
+static int	copy_kv(char *dest, char *ref)
+{
+	int	index;
+
+	index = 0;
+	while (ref[index] != '\0' && ref[index] != '=' && ref[index] != '+')
 	{
-		env_node->key[index] = env_line[index];
+		dest[index] = ref[index];
 		index++;
 	}
-	env_node->key[index] = '\0';
-	while (env_line[++index] != '\0')
-	{
-		env_node->value[value_index] = env_line[index];
-		value_index++;
-	}
-	env_node->value[value_index] = '\0';
-	return (env_node);
+	dest[index] = '\0';
+	return (index);
 }
 
 static t_env	*allocate_tenv(char *env_line)
@@ -72,20 +79,31 @@ static t_env	*allocate_tenv(char *env_line)
 	return (env_node);
 }
 
-static int	get_env_len(char *env_line, int *key_value_len)
+static int	get_env_len(char *env, int *kv_lens)
 {
-	if (env_line == NULL || key_value_len == NULL)
+	int	operand;
+
+	if (env == NULL || kv_lens == NULL)
 		return (-1);
-	key_value_len[0] = 0;
-	key_value_len[1] = 0;
-	while (env_line[key_value_len[0]] != '=' \
-		&& env_line[key_value_len[0]] != '\0')
-		key_value_len[0]++;
-	if (env_line[key_value_len[0]] != '=')
+	kv_lens[0] = 0;
+	kv_lens[1] = 0;
+	while (env[kv_lens[0]] != '=' && env[kv_lens[0]] != '+' \
+									&& env[kv_lens[0]] != '\0')
+		kv_lens[0]++;
+	if (env[kv_lens[0]] == '\0' || \
+			(env[kv_lens[0]] == '+' && env[kv_lens[0] + 1] != '='))
 		return (1);
-	if (key_value_len[0] == 0)
+	else if (env[kv_lens[0]] == '+')
+			operand = 2;
+	else
+		operand = 1;
+	if (kv_lens[0] == 0)
+	{
+		write(2, "not a valid identifier\n", 23);
+		g_flag = 1;
 		return (1);
-	while (env_line[key_value_len[0] + key_value_len[1] + 1] != '\0')
-		key_value_len[1]++;
+	}
+	while (env[kv_lens[0] + kv_lens[1] + operand] != '\0')
+		kv_lens[1]++;
 	return (0);
 }
