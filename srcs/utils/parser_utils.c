@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   safe_fork.c                                        :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 08:52:45 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 09:58:59 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/06/23 20:04:19 by yususato          #+#    #+#             */
+/*   Updated: 2024/06/23 21:36:26 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-pid_t	safe_fork(void)
+int	is_space(char *str)
 {
-	pid_t	pid;
+	int	len;
 
-	pid = fork();
-	if (pid < 0)
+	len = 0;
+	while (str[len] && str[len] != ' ')
+		len++;
+	return (len);
+}
+
+void	str_insert(char	*new, char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len])
 	{
-		perror(strerror(errno));
-		exit(errno);
+		new[len] = str[len];
+		len++;
 	}
-	return (pid);
+	return ;
 }
