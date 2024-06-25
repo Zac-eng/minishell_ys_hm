@@ -6,15 +6,15 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 09:40:23 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:39:10 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	redirect_output(t_file *file_head, char *cmd);
-static void	redirect_input(t_file *file_head, t_env **env, char *cmd);
-static void	read_out_file(int fd);
+static int	redirect_output(t_file *file_head, char *cmd);
+static int	redirect_input(t_file *file_head, t_env **env, char *cmd);
+static int	read_out_file(int fd);
 static int	redirect(t_file *file, t_env **env);
 
 void	heredoc_loop(t_file *file, t_env **env)
@@ -49,18 +49,20 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	std_in = dup(0);
 	std_out = dup(1);
 	if (std_in < 0 || std_out < 0)
-		return (perror(strerror(errno)));
+		return (perror(""));
 	heredoc_loop(cmd->file, env);
-	redirect_input(cmd->file, env, cmd->cmd[0]);
-	redirect_output(cmd->file, cmd->cmd[0]);
+	if (redirect_input(cmd->file, env, cmd->cmd[0]) < 0)
+		return ;
+	if (redirect_output(cmd->file, cmd->cmd[0]) < 0)
+		return ;
 	execute_cmd(cmd->cmd, env, paths);
 	if (dup2(std_in, 0) < 0)
-		return (perror(strerror(errno)));
+		return (perror(""));
 	if (dup2(std_out, 1) < 0)
-		return (perror(strerror(errno)));
+		return (perror(""));
 }
 
-static void	redirect_output(t_file *file_head, char *cmd)
+static int	redirect_output(t_file *file_head, char *cmd)
 {
 	t_file	*current;
 	int		fd;
@@ -74,17 +76,20 @@ static void	redirect_output(t_file *file_head, char *cmd)
 				unlink(current->file_name);
 			fd = open(current->file_name, O_CREAT | O_RDWR, 0666);
 			if (fd < 0)
-				return (perror(strerror(errno)));
+				return (perror(""), -1);
 			if (current->type == APPEND)
-				read_out_file(fd);
+			{
+				if (read_out_file(fd) < 0)
+					return (-1);
+			}
 			if (dup2(fd, 1) < 0)
-				return (perror(strerror(errno)));
+				return (perror(""), -1);
 		}
 		current = current->next;
 	}
 }
 
-static void	redirect_input(t_file *file_head, t_env **env, char *cmd)
+static int	redirect_input(t_file *file_head, t_env **env, char *cmd)
 {
 	t_file	*current;
 	int		fd;
@@ -93,12 +98,13 @@ static void	redirect_input(t_file *file_head, t_env **env, char *cmd)
 	while (current != NULL)
 	{
 		if (redirect(current, env) < 0)
-			return (put_error(FILE_ERROR, cmd));
+			return (-1);
 		current = current->next;
 	}
+	return (0);
 }
 
-static void	read_out_file(int fd)
+static int	read_out_file(int fd)
 {
 	char	buffer[1024];
 	int		read_len;
@@ -108,8 +114,9 @@ static void	read_out_file(int fd)
 	{
 		read_len = read(fd, buffer, sizeof(buffer));
 		if (read_len < 0)
-			return ;
+			return (perror(""), -1);
 	}
+	return (0);
 }
 
 static int	redirect(t_file *file, t_env **env)
@@ -121,9 +128,9 @@ static int	redirect(t_file *file, t_env **env)
 	{
 		fd = open(file->file_name, O_RDONLY);
 		if (fd < 0)
-			return (perror(strerror(errno)), -1);
+			return (perror(""), -1);
 		if (dup2(fd, 0) < 0)
-			return (perror(strerror(errno)), -1);
+			return (perror(""), -1);
 	}
 	return (0);
 }

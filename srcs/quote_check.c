@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 21:30:59 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/22 22:15:46 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:19:46 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,6 @@ t_token	*split_word(char **tmp, char *line)
 	}
 	i = i - delete_flag * 2;
 	set = (char *)calloc(sizeof(char), i + 1);
-	printf("i:%d\n",i);
 	if (set == NULL)
 		return (put_error(PARSE_ERROR, &line[i]), NULL);
 	i = 0;

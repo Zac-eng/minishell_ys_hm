@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 09:04:21 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:33:27 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	execute(char *line, t_env **env, char **paths)
 		return ;
 	current = parser_head;
 	while (current != NULL && current->next != NULL)
-	{
 		current = current->next;
-	}
 	execute_pipe(current, env, paths, 1);
 	free_parser(parser_head);
 }
@@ -79,18 +77,18 @@ static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
 	io[WRITE] = dup(1);
 	if (io[READ] < 0 || io[WRITE] < 0)
 	{
-		put_error(FILE_ERROR, cmd->cmd[0]);
+		perror("");
 		return (-1);
 	}
 	if (pipe(pipes) < 0)
 	{
-		put_error(FILE_ERROR, cmd->cmd[0]);
+		perror("");
 		return (-1);
 	}
 	if (dup_out != 1)
 	{
 		if (dup2(dup_out, 1) < 0)
-			exit(1);
+			perror("");
 	}
 	if (cmd->prev == NULL)
 	{
@@ -103,7 +101,7 @@ static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
 static void	get_back_io(int *original_io)
 {
 	if (dup2(original_io[WRITE], 1) < 0)
-		exit(1);
+		perror("");
 	if (dup2(original_io[READ], 0) < 0)
-		exit(1);
+		perror("");
 }

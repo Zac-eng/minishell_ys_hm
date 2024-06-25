@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 17:16:38 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/25 09:20:55 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:28:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	_pwd(void)
 	}
 	else
 	{
-		printf("pwd: getcwd failed\n");
+		write(2, "pwd: getcwd failed\n", 19);
 		g_flag = RUN_ERROR;
 	}
 	return ;
