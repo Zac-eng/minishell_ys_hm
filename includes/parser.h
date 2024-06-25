@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/25 19:22:59 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/25 22:51:27 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef enum e_code
 bool		check_word(char	*line);
 void		remove_squote(t_token *token);
 void		remove_dquote(t_token *token);
-void		expand(t_token *token);
+// void		expand(t_token *token);
 bool		split_space(char **tmp, char *line);
 t_token		*split_pipe(char **tmp, char *line);
 t_token		*split_red(char **tmp, char *line);
@@ -117,5 +117,7 @@ int			env_question_add(char *str, t_env **env, char *new, int *i);
 char		*env_insert(char *str, t_env **env, int len);
 t_token		*split_other(char **tmp, char *line);
 bool		is_lexer_redirect(char c);
+void		token_check(t_token	*lexer, t_env **env);
+int	cmd_len(char *str, t_env **env);
 
 #endif
