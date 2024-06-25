@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 09:22:02 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:45:24 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int		remove_env(t_env *previous);
 char	*_getenv(t_env *env_head, char *key);
 void	put_error(t_code error_code, char *insert);
 void	put_error_exit(t_code error_code);
+void	perror_set_flag(void);
 void	handle_status(pid_t pid_to_wait);
 pid_t	safe_fork(void);
 int		is_equal(char *str, char *ref);

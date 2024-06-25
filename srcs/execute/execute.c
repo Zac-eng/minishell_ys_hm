@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 10:33:27 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:47:07 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,18 @@ static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
 	io[WRITE] = dup(1);
 	if (io[READ] < 0 || io[WRITE] < 0)
 	{
-		perror("");
+		perror_set_flag();
 		return (-1);
 	}
 	if (pipe(pipes) < 0)
 	{
-		perror("");
+		perror_set_flag();
 		return (-1);
 	}
 	if (dup_out != 1)
 	{
 		if (dup2(dup_out, 1) < 0)
-			perror("");
+			perror_set_flag();
 	}
 	if (cmd->prev == NULL)
 	{
@@ -101,7 +101,7 @@ static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
 static void	get_back_io(int *original_io)
 {
 	if (dup2(original_io[WRITE], 1) < 0)
-		perror("");
+		perror_set_flag();
 	if (dup2(original_io[READ], 0) < 0)
-		perror("");
+		perror_set_flag();
 }

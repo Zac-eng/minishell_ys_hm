@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 10:39:10 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:48:05 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	std_in = dup(0);
 	std_out = dup(1);
 	if (std_in < 0 || std_out < 0)
-		return (perror(""));
+		return (perror_set_flag());
 	heredoc_loop(cmd->file, env);
 	if (redirect_input(cmd->file, env, cmd->cmd[0]) < 0)
 		return ;
@@ -57,9 +57,9 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 		return ;
 	execute_cmd(cmd->cmd, env, paths);
 	if (dup2(std_in, 0) < 0)
-		return (perror(""));
+		return (perror_set_flag());
 	if (dup2(std_out, 1) < 0)
-		return (perror(""));
+		return (perror_set_flag());
 }
 
 static int	redirect_output(t_file *file_head, char *cmd)
@@ -76,17 +76,18 @@ static int	redirect_output(t_file *file_head, char *cmd)
 				unlink(current->file_name);
 			fd = open(current->file_name, O_CREAT | O_RDWR, 0666);
 			if (fd < 0)
-				return (perror(""), -1);
+				return (perror_set_flag(), -1);
 			if (current->type == APPEND)
 			{
 				if (read_out_file(fd) < 0)
 					return (-1);
 			}
 			if (dup2(fd, 1) < 0)
-				return (perror(""), -1);
+				return (perror_set_flag(), -1);
 		}
 		current = current->next;
 	}
+	return (0);
 }
 
 static int	redirect_input(t_file *file_head, t_env **env, char *cmd)
@@ -114,7 +115,7 @@ static int	read_out_file(int fd)
 	{
 		read_len = read(fd, buffer, sizeof(buffer));
 		if (read_len < 0)
-			return (perror(""), -1);
+			return (perror_set_flag(), -1);
 	}
 	return (0);
 }
@@ -128,9 +129,9 @@ static int	redirect(t_file *file, t_env **env)
 	{
 		fd = open(file->file_name, O_RDONLY);
 		if (fd < 0)
-			return (perror(""), -1);
+			return (perror_set_flag(), -1);
 		if (dup2(fd, 0) < 0)
-			return (perror(""), -1);
+			return (perror_set_flag(), -1);
 	}
 	return (0);
 }

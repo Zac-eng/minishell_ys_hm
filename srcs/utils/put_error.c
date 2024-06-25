@@ -6,11 +6,17 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/18 10:36:28 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 10:59:38 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	perror_set_flag(void)
+{
+	perror(NULL);
+	g_flag = 1;
+}
 
 void	put_error(t_code error_code, char *insert)
 {
