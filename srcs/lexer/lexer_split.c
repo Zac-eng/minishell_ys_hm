@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 19:35:29 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:26:32 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ t_token	*split_other(char **tmp, char *line)
 		i++;
 	}
 	*tmp = &line[len];
-	printf("tmp:%s\n",*tmp);
 	if (line[len] == ' ')
 		return (create_token(set, TK_CMD, true));
 	else
