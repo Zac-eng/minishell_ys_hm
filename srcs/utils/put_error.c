@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 10:59:38 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:32:30 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	put_error(t_code error_code, char *insert)
 		printf("minishell: %s: No such file or directory\n", insert);
 	else if (error_code == PARSE_ERROR)
 		printf("minishell: syntax error near unexpected token `%c'\n", *insert);
+	
 	g_flag = error_code;
 }
 
