@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 10:47:07 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/27 11:07:26 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,16 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 		if (dup2(pipes[READ], 0) != 0)
 			return (handle_status(pid));
 		execute_redirect(cmd, env, paths);
+		get_back_io(&original_io[READ]);
 		handle_status(pid);
 	}
 	else
+	{
 		execute_redirect(cmd, env, paths);
-	get_back_io(&original_io[READ]);
+		get_back_io(&original_io[READ]);
+		close(pipes[0]);
+		close(pipes[1]);
+	}
 }
 
 static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
