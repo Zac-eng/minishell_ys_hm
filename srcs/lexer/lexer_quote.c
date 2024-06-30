@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:19:28 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/16 17:02:04 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 22:51:18 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ void	remove_dquote(t_token *token)
 	return ;
 }
 
-void	expand(t_token *token)
-{
-	while (token->next != NULL)
-	{
-		if (token->str[0] == '\'')
-			remove_squote(token);
-		else if (token->str[0] == '\"')
-			remove_dquote(token);
-		token = token->next;
-	}
-}
+// void	expand(t_token *token)
+// {
+// 	while (token->next != NULL)
+// 	{
+// 		if (token->str[0] == '\'')
+// 			remove_squote(token);
+// 		else if (token->str[0] == '\"')
+// 			remove_dquote(token);
+// 		token = token->next;
+// 	}
+// }

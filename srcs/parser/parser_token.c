@@ -3,57 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   parser_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:17:01 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 20:14:06 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:24:19 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h";
+#include "minishell.h"
 
-bool	can_connect(t_token *next)
+bool	start_check(t_token *tmp, t_env **env)
 {
-	if (tmp->token == TK_CMD || tmp->token == TK_SQUOTE || \
-		tmp->token == TK_DQUOTE)
+	if (tmp->kind == TK_CMD || tmp->kind == TK_SQUOTE || tmp->kind == TK_DQUOTE)
 		return (true);
-	else
-		return (false);
+	return (false);
 }
 
-// bool	start_check(t_token *tmp)
-// {
-// 	// はじめに来ていいトークンか見る
-// 	// 左スペース、左ダブル、シングルクオート以外
-// 	return (true);
-// 	else
-// 		return (false);
-// }
+bool	connect_check(t_token *tmp, t_env **env)
+{
+	if (tmp->kind == TK_CMD || tmp->kind == TK_SQUOTE || tmp->kind == TK_DQUOTE)
+		return (true);
+	return (false);
+}
 
 void	node_delete(t_token *tmp, t_token *tmp_next)
 {
 	t_token	*tmp2;
 
 	tmp2 = tmp_next->next;
+	tmp->space_flag = tmp_next->space_flag;
 	tmp->next = tmp2;
 	free(tmp_next->str);
-	free(tmp_next->kind);
 	free(tmp_next);
 }
 
-void	token_check(t_token	*lexer)
+void	token_check(t_token	*lexer, t_env **env)
 {
 	t_token	*tmp;
 	t_token	*tmp2;
+	char	*new;
 
 	tmp = lexer;
 	tmp2 = lexer;
 	while (tmp->next != NULL && tmp != NULL)
 	{
-		if (start_check(tmp) && can_connect(tmp->next))
+		if (tmp->space_flag == false)
 		{
-			ft_strjoin(tmp->str, tmp->next->str);
-			node_delete(tmp, tmp->next);
+			if (start_check(tmp, env) && connect_check(tmp->next, env))
+			{
+				new = ft_strjoin(tmp->str, tmp->next->str);
+				if (new == NULL)
+					exit(0);
+				free(tmp->str);
+				tmp->str = new;
+				node_delete(tmp, tmp->next);
+			}
+			else
+				tmp = tmp->next;
 		}
 		else
 			tmp = tmp->next;

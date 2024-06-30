@@ -6,7 +6,7 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/23 20:30:22 by yususato         ###   ########.fr        #
+#    Updated: 2024/06/26 16:06:44 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,8 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(PARSER_DIR)/parser_check.c \
 		$(PARSER_DIR)/free_parser.c \
 		$(PARSER_DIR)/parser_env.c \
+		$(PARSER_DIR)/parser_token.c \
+		$(PARSER_DIR)/expand.c \
 		./srcs/signalctrl.c \
 		./srcs/main.c \
 
