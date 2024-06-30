@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/30 18:35:14 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/30 18:36:17 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void	execute_path(char *path, char **cmd, char **env)
 
 	if (cmd == NULL)
 		return ;
-	printf("aaa\n");
 	pid = safe_fork();
 	if (pid == 0)
 	{
