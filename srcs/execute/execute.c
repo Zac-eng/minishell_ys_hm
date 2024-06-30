@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 10:47:07 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/30 19:29:02 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out);
 static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out);
-static void	get_back_io(int *original_io);
+static void	get_back_io(int *original_io, int *pipes);
 
 void	execute(char *line, t_env **env, char **paths)
 {
@@ -62,11 +62,14 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 		if (dup2(pipes[READ], 0) != 0)
 			return (handle_status(pid));
 		execute_redirect(cmd, env, paths);
+		get_back_io(&original_io[READ], &pipes[0]);
 		handle_status(pid);
 	}
 	else
+	{
 		execute_redirect(cmd, env, paths);
-	get_back_io(&original_io[READ]);
+		get_back_io(&original_io[READ], &pipes[0]);
+	}
 }
 
 static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
@@ -98,10 +101,12 @@ static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
 	return (0);
 }
 
-static void	get_back_io(int *original_io)
+static void	get_back_io(int *original_io, int *pipes)
 {
 	if (dup2(original_io[WRITE], 1) < 0)
 		perror_set_flag();
 	if (dup2(original_io[READ], 0) < 0)
 		perror_set_flag();
+	close(pipes[READ]);
+	close(pipes[WRITE]);
 }
