@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:49 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/13 11:23:01 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:31:31 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*create_token(char *line, t_token_kind kind)
+t_token	*create_token(char *line, t_token_kind kind, bool flag)
 {
 	t_token	*token;
 
@@ -23,6 +23,7 @@ t_token	*create_token(char *line, t_token_kind kind)
 		return (NULL);
 	token->str = line;
 	token->kind = kind;
+	token->space_flag = flag;
 	token->next = NULL;
 	return (token);
 }

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/23 22:07:27 by yususato         ###   ########.fr       */
+/*   Updated: 2024/06/26 19:24:24 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_token
 	t_token_kind		kind;
 	struct s_token		*next;
 	char				*str;
+	bool				space_flag;
 }	t_token;
 
 typedef enum e_redirect_type
@@ -78,7 +79,7 @@ typedef enum e_code
 bool		check_word(char	*line);
 void		remove_squote(t_token *token);
 void		remove_dquote(t_token *token);
-void		expand(t_token *token);
+// void		expand(t_token *token);
 bool		split_space(char **tmp, char *line);
 t_token		*split_pipe(char **tmp, char *line);
 t_token		*split_red(char **tmp, char *line);
@@ -91,9 +92,9 @@ t_parser	*parser(t_token	*lexer, t_env **env);
 void		free_parser(t_parser *parser_head);
 bool		is_redirect(t_token *lexer_tmp);
 bool		is_quote(t_token_kind kind);
-void		cmd_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env);
-void		cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp, t_env **env);
-void		*parser_cmd(t_token **lexertmp, t_parser **parsertmp, t_env **env);
+void		cmd_init(t_token **lexer_tmp, t_parser **parser_tmp);
+void		cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp);
+void		*parser_cmd(t_token **lexertmp, t_parser **parsertmp);
 void		*parser_pipe(t_parser **parser_tmp, t_parser **parser);
 t_parser	*parser_node_new(void);
 void		file_init(t_file **file, char *file_name, t_token_kind kind, \
@@ -106,13 +107,20 @@ void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 // void		token_check(t_token	*lexer);
 void		*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 												t_parser **parser, t_env **env);
-t_token		*create_token(char *line, t_token_kind kind);
+t_token		*create_token(char *line, t_token_kind kind, bool flag);
 int			question_add_len(char *str, t_env **env, int *i);
 int			env_add_len(char *str, t_env **env, int *i);
-int			is_space(char *str);
 void		str_insert(char	*new, char *str);
 int			parser_env_add(char *str, t_env **env, char *new, int *i);
 int			env_question_add(char *str, t_env **env, char *new, int *i);
 char		*env_insert(char *str, t_env **env, int len);
+t_token		*split_other(char **tmp, char *line);
+bool		is_lexer_redirect(char c);
+void		token_check(t_token	*lexer, t_env **env);
+int			cmd_len(char *str, t_env **env);
+void		expand(t_token *lexer, t_env **env);
+void		expand_dquote(t_token *tmp, t_env **env);
+void		expand_cmd(t_token *tmp, t_env **env);
+int			is_squote_space(char *str);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:03 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/10 19:58:35 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:27:38 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@ bool	is_redirect(t_token *lexer_tmp)
 {
 	if (lexer_tmp->kind == TK_LESS || lexer_tmp->kind == TK_DLESS \
 		|| lexer_tmp->kind == TK_GREAT || lexer_tmp->kind == TK_DGREAT)
+		return (true);
+	else
+		return (false);
+}
+
+bool	is_lexer_redirect(char c)
+{
+	if (c == '<' || c == '>')
 		return (true);
 	else
 		return (false);
