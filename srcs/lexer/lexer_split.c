@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/26 15:26:32 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/02 15:58:00 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_token	*split_other(char **tmp, char *line)
 	len = 0;
 	i = 0;
 	while (line[len] && (line[len] != ' ' && line[len] != '\"'
-			&& line[len] != '\'' && !is_lexer_redirect(line[len])))
+			&& line[len] != '\'' && !is_lexer_continue(line[len])))
 		len++;
 	set = (char *)ft_calloc(sizeof(char), len + 1);
 	if (set == NULL)

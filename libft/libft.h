@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 15:42:31 by yususato          #+#    #+#             */
-/*   Updated: 2023/06/05 15:12:44 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/02 18:00:01 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <ctype.h>
 # include <string.h>
 # include <limits.h>
+# include <libc.h>
+# include <inttypes.h>
+# include <stdarg.h>
+# include <stdint.h>
 
 typedef struct s_list
 {
@@ -70,5 +74,20 @@ t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f) (void *), void (*del) (void *));
 t_list	*ft_lstnew(void *content);
 int		ft_lstsize(t_list *lst);
+int		ft_putnbr_i(int nb);
+int		ft_putnbr_u(unsigned int nb);
+int		ft_putstr(char *s);
+int		ft_printf(const char *fmt, ...);
+int		count(const char *save, va_list ap);
+int		ft_range(int c, va_list ap);
+int		ft_process_u(unsigned int u);
+int		ft_process_c(char c);
+int		ft_process_i(int c);
+int		ft_process_s(char *c);
+int		ft_process_x(unsigned int p, int c);
+int		ft_small(unsigned int p);
+int		ft_large(unsigned int p);
+int		ft_process_p(uintptr_t p);
+int		ft_putchar(int n);
 
 #endif

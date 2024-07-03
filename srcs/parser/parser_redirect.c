@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:51 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/18 21:19:17 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/02 21:23:52 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	file_add(t_file **file, char *file_name, t_token_kind kind, \
 	if ((tmp)->next == NULL)
 		exit(1);
 	(tmp) = (tmp)->next;
+	(tmp)->next = NULL;
 	(tmp)->file_name = ft_strdup(file_name);
 	if (kind == TK_DLESS && is_quote(next_kind) == true)
 		(tmp)->type = QUOTE_HEREDOC;
@@ -61,6 +62,8 @@ void	file_add(t_file **file, char *file_name, t_token_kind kind, \
 
 void	parser_output(t_token **lexer_tmp, t_parser **parser_tmp)
 {
+	if ((*lexer_tmp)->next == NULL)
+		return ;
 	if ((*parser_tmp)->file == NULL)
 		file_init(&(*parser_tmp)->file, (*lexer_tmp)->next->str, \
 					(*lexer_tmp)->kind, (*lexer_tmp)->next->kind);
@@ -71,6 +74,8 @@ void	parser_output(t_token **lexer_tmp, t_parser **parser_tmp)
 
 void	parser_input(t_token **lexer_tmp, t_parser **parser_tmp)
 {
+	if ((*lexer_tmp)->next == NULL)
+		return ;
 	if ((*parser_tmp)->file == NULL)
 		file_init(&(*parser_tmp)->file, (*lexer_tmp)->next->str, \
 					(*lexer_tmp)->kind, (*lexer_tmp)->next->kind);
@@ -87,7 +92,10 @@ void	*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp)
 			parser_output(lexer_tmp, parser_tmp);
 		else if ((*lexer_tmp)->kind == TK_GREAT || (*lexer_tmp)->kind == TK_DGREAT)
 			parser_input(lexer_tmp, parser_tmp);
-		*lexer_tmp = (*lexer_tmp)->next;
+		if ((*lexer_tmp)->next == NULL)
+			break ;
+		else
+			*lexer_tmp = (*lexer_tmp)->next;
 	}
 	return (parser_tmp);
 }

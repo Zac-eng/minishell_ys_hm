@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
+#    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/19 16:12:07 by yususato          #+#    #+#              #
-#    Updated: 2024/03/09 10:09:08 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/07/02 17:51:59 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,12 @@ SRCS = ft_isalpha.c \
 		ft_split.c \
 		ft_substr.c \
 		ft_atoi.c \
-		ft_itoa.c
+		ft_itoa.c \
+		ft_printf.c \
+		ft_printf_uni.c \
+		printf_tool.c
+		
+
 
 BONUS_SRCS = ft_lstnew.c \
 			ft_lstadd_front.c \

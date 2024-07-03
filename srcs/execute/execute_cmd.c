@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/30 18:36:17 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:04:28 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,12 @@ static void	execute_path(char *path, char **cmd, char **env)
 		if (execve(path, cmd, env) == -1)
 		{
 			perror(strerror(errno));
-			exit(g_flag);
+			if (errno == EACCES)
+				exit(126);
+			else if (errno == ENOENT)
+				exit(127);
+			else
+				exit(EXIT_FAILURE);
 		}
 	}
 	handle_status(pid);

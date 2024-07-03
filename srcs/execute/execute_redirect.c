@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/30 17:38:38 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:20:59 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	if (std_in < 0 || std_out < 0)
 		return (perror_set_flag());
 	heredoc_loop(cmd->file, env);
+	if (cmd->cmd == NULL)
+		return ;
 	if (redirect_input(cmd->file, env, cmd->cmd[0]) < 0)
 		return ;
 	if (redirect_output(cmd->file, cmd->cmd[0]) < 0)

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:17:01 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/26 16:24:19 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:25:05 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,9 @@ void	node_delete(t_token *tmp, t_token *tmp_next)
 void	token_check(t_token	*lexer, t_env **env)
 {
 	t_token	*tmp;
-	t_token	*tmp2;
 	char	*new;
 
 	tmp = lexer;
-	tmp2 = lexer;
 	while (tmp->next != NULL && tmp != NULL)
 	{
 		if (tmp->space_flag == false)

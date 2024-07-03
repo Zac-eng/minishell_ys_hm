@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:03 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 17:27:38 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/02 16:01:39 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ bool	is_redirect(t_token *lexer_tmp)
 		return (false);
 }
 
-bool	is_lexer_redirect(char c)
+bool	is_lexer_continue(char c)
 {
-	if (c == '<' || c == '>')
+	if (c == '<' || c == '>' || c == '|')
 		return (true);
 	else
 		return (false);

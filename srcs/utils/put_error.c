@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/30 17:32:30 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:05:30 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,13 @@ void	perror_set_flag(void)
 void	put_error(t_code error_code, char *insert)
 {
 	if (error_code == FILE_ERROR)
-		printf("%s: Too many open files\n", insert);
+		ft_printf("%s: Too many open files\n", insert);
 	else if (error_code == NOT_FOUND_ERROR)
-		printf("minishell: %s: command not found\n", insert);
+		ft_printf("minishell: %s: command not found\n", insert);
 	else if (error_code == NO_FILE_ERROR)
-		printf("minishell: %s: No such file or directory\n", insert);
+		ft_printf("minishell: %s: No such file or directory\n", insert);
 	else if (error_code == PARSE_ERROR)
-		printf("minishell: syntax error near unexpected token `%c'\n", *insert);
-	
+		ft_printf("minishell: syntax error near unexpected token `%c'\n", *insert);
 	g_flag = error_code;
 }
 
