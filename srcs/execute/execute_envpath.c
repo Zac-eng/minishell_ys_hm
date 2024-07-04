@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 17:24:58 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/30 19:22:52 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/04 09:09:47 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	execute_envpath(char **paths, char **cmd, char **env)
 	if (cmd == NULL || cmd[0] == NULL)
 		return ;
 	if (paths == NULL)
-		return (put_error(NO_FILE_ERROR, cmd[0]));
+		return (perror_set_flag());
 	index = 0;
 	status = -1;
 	pid = safe_fork();
@@ -34,7 +34,7 @@ void	execute_envpath(char **paths, char **cmd, char **env)
 			status = execve(create_path(paths[index], cmd[0]), cmd, env);
 			index++;
 		}
-		put_error(NOT_FOUND_ERROR, cmd[0]);
+		write(2, "minishell: command not found\n", 29);
 		exit(NOT_FOUND_ERROR);
 	}
 	handle_status(pid);

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/30 17:37:34 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:22:46 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 		if (dup2(pipes[READ], 0) != 0)
 			return (handle_status(pid));
 		execute_redirect(cmd, env, paths);
-        get_back_io(&original_io[READ], &pipes[0]);
+		get_back_io(&original_io[READ], &pipes[0]);
 		handle_status(pid);
 	}
 	else
-    {
+	{
 		execute_redirect(cmd, env, paths);
-        get_back_io(&original_io[READ], &pipes[0]);
-    }
+		get_back_io(&original_io[READ], &pipes[0]);
+	}
 }
 
 static int	control_stream(t_parser *cmd, int *pipes, int *io, int dup_out)
@@ -107,6 +107,6 @@ static void	get_back_io(int *original_io, int *pipes)
 		perror_set_flag();
 	if (dup2(original_io[READ], 0) < 0)
 		perror_set_flag();
-    close(pipes[READ]);
-    close(pipes[WRITE]);
+	close(pipes[READ]);
+	close(pipes[WRITE]);
 }
