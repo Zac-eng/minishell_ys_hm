@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 08:52:45 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 09:58:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/04 09:17:33 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ pid_t	safe_fork(void)
 	pid = fork();
 	if (pid < 0)
 	{
-		perror(strerror(errno));
+		perror("minishell");
 		exit(errno);
 	}
 	return (pid);

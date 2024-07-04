@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/06/25 10:57:18 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/04 09:19:14 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	_cd(char **cmd, t_env *env)
 	{
 		if (home == NULL)
 		{
-			perror_set_flag();
+			write(2, "minishell: cd: HOME not set\n", 28);
 			return ;
 		}
 		destination = home;

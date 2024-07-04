@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/03 15:20:59 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/04 10:44:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static int	redirect_output(t_file *file_head, char *cmd)
 			}
 			if (dup2(fd, 1) < 0)
 				return (perror_set_flag(), -1);
+			close(fd);
 		}
 		current = current->next;
 	}
@@ -134,6 +135,7 @@ static int	redirect(t_file *file, t_env **env)
 			return (perror_set_flag(), -1);
 		if (dup2(fd, 0) < 0)
 			return (perror_set_flag(), -1);
+		close(fd);
 	}
 	return (0);
 }
