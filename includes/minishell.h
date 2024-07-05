@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 16:57:30 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/05 19:04:22 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # ifndef HEREDOC_FILE
 #  define HEREDOC_FILE "/tmp/.heredoc"
 # endif
+
+# define READ  (0)
+# define WRITE (1)
 
 extern volatile sig_atomic_t	g_flag;
 
@@ -76,5 +79,7 @@ void	read_heredoc(t_file *file, t_env **env, char *new_file);
 void	filename_change(t_file *file, char *new_file);
 void	free_close(char *line, int fd);
 void	signal_heredoc(void);
+int		save_io(int *original_io);
+int		get_back_io(int *original_io);
 
 #endif

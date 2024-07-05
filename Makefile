@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
+#    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/06/26 16:06:44 by yususato         ###   ########.fr        #
+#    Updated: 2024/07/05 18:50:26 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(EXECUTE_DIR)/heredoc.c \
 		$(EXECUTE_DIR)/quote_heredoc.c \
 		$(EXECUTE_DIR)/rm_file.c \
+		$(EXECUTE_DIR)/ioctl.c \
 		$(UTILS_DIR)/handle_status.c \
 		$(UTILS_DIR)/parser_utils.c \
 		$(UTILS_DIR)/is_equal.c \
