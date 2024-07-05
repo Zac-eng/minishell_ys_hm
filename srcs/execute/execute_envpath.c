@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_envpath.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 17:24:58 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/04 09:09:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:57:09 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*create_path(char *where, char *cmd_name);
 
-void	execute_envpath(char **paths, char **cmd, char **env)
+void	execute_envpath(char **paths, char **cmd, char **env, bool set_st)
 {
 	int		pid;
 	int		index;
@@ -37,7 +37,7 @@ void	execute_envpath(char **paths, char **cmd, char **env)
 		write(2, "minishell: command not found\n", 29);
 		exit(NOT_FOUND_ERROR);
 	}
-	handle_status(pid);
+	handle_status(pid, set_st);
 }
 
 static char	*create_path(char *where, char *cmd_name)

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/02 15:17:26 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:15:40 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv, char **env)
 	char		*line;
 
 	(void)argc, (void)argv;
+	printf("%s\n", env[0]);
 	tenv = env_into_tenv(env);
 	while (true)
 	{

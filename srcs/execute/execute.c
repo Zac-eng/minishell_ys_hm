@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/03 18:22:46 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:58:13 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 		}
 		close(pipes[WRITE]);
 		if (dup2(pipes[READ], 0) != 0)
-			return (handle_status(pid));
-		execute_redirect(cmd, env, paths);
+			return (handle_status(pid, dup_out == 1));
+		execute_redirect(cmd, env, paths, dup_out == 1);
 		get_back_io(&original_io[READ], &pipes[0]);
-		handle_status(pid);
+		ft_printf("pid:%d  %s\n", pid, cmd->cmd[0]);
+		handle_status(pid, false);
 	}
 	else
 	{
-		execute_redirect(cmd, env, paths);
+		execute_redirect(cmd, env, paths, dup_out == 1);
 		get_back_io(&original_io[READ], &pipes[0]);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/04 10:44:28 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:55:26 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	heredoc_loop(t_file *file, t_env **env)
 	}
 }
 
-void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
+void	execute_redirect(t_parser *cmd, t_env **env, char **paths, bool set_st)
 {
 	int		std_in;
 	int		std_out;
@@ -45,7 +45,7 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	if (cmd == NULL || env == NULL)
 		return ;
 	if (cmd->file == NULL)
-		return (execute_cmd(cmd->cmd, env, paths));
+		return (execute_cmd(cmd->cmd, env, paths, set_st));
 	std_in = dup(0);
 	std_out = dup(1);
 	if (std_in < 0 || std_out < 0)
@@ -57,7 +57,7 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 		return ;
 	if (redirect_output(cmd->file, cmd->cmd[0]) < 0)
 		return ;
-	execute_cmd(cmd->cmd, env, paths);
+	execute_cmd(cmd->cmd, env, paths, set_st);
 	if (dup2(std_in, 0) < 0)
 		return (perror_set_flag());
 	if (dup2(std_out, 1) < 0)
