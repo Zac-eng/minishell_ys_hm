@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 16:58:13 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:34:27 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
 			return (handle_status(pid, dup_out == 1));
 		execute_redirect(cmd, env, paths, dup_out == 1);
 		get_back_io(&original_io[READ], &pipes[0]);
-		ft_printf("pid:%d  %s\n", pid, cmd->cmd[0]);
 		handle_status(pid, false);
 	}
 	else

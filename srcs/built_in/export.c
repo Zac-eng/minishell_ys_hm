@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:07 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/02 12:56:46 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:36:55 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	_export(char **cmd, t_env **env_head)
 		type = check_envvars(cmd[envvar_index]);
 		if (type == INVALID)
 		{
-			write(2, "not a valid identifier\n", 23);
+			write(2, "minishell: not a valid identifier\n", 34);
 			g_flag = 1;
 			envvar_index++;
 			continue ;

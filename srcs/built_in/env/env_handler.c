@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:50:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/17 22:02:30 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:32:32 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ t_env	*find_node(t_env *env_head, char *key)
 	if (env_head == NULL || key == NULL)
 		return (NULL);
 	current = env_head;
-	while (is_equal(current->key, key) != 1 && \
-		current->next != NULL && is_equal(current->next->key, "_") != 1)
+	while (is_equal(current->key, key) != 1 && current->next != NULL)
 		current = current->next;
 	if (is_equal(current->key, key) == 1)
 		return (current);
@@ -54,7 +53,7 @@ void	push_env(t_env *env_head, t_env *new_node)
 	current = env_head;
 	if (current == NULL)
 		return ;
-	while (current->next != NULL && is_equal(current->next->key, "_") == 0)
+	while (current->next != NULL)
 		current = current->next;
 	current_next = current->next;
 	current->next = new_node;
