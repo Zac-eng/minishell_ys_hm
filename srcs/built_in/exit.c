@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 18:05:59 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 09:55:45 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/05 19:47:07 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	minishell_exit(char **cmd)
 		exit(0);
 	if (cmd[2] != NULL)
 	{
-		write(2, " too many arguments \n", 19);
+		write(2, "minishell: too many arguments\n", 30);
 		exit(1);
 	}
 	if (is_numeric(cmd[1]) == false)
 	{
-		write(2, " numeric argument required \n", 26);
+		write(2, "minishell: numeric argument required\n", 37);
 		exit(-1);
 	}
 	exit(ft_atoi(cmd[1]));

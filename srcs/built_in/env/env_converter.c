@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:53:15 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/18 10:03:18 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/05 22:52:04 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char	**env_into_list(t_env *env)
 		index++;
 	}
 	env_list[index] = NULL;
+	// for (int i=0; env_list[i] != NULL; i++)
+	// 	printf("%s\n", env_list[i]);
 	return (env_list);
 }
 

@@ -6,14 +6,14 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/07/05 18:50:26 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/07/05 22:35:36 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 INCLUDES_DIR = ./includes
-CFLAGS = -I$(INCLUDES_DIR)
+CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
 BUILTIN_DIR = ./srcs/built_in
 EXECUTE_DIR = ./srcs/execute
 LEXER_DIR = ./srcs/lexer
@@ -37,7 +37,9 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(EXECUTE_DIR)/heredoc.c \
 		$(EXECUTE_DIR)/quote_heredoc.c \
 		$(EXECUTE_DIR)/rm_file.c \
-		$(EXECUTE_DIR)/ioctl.c \
+		$(EXECUTE_DIR)/control_io.c \
+		$(EXECUTE_DIR)/redirect_stream.c \
+		$(EXECUTE_DIR)/heredoc_loop.c \
 		$(UTILS_DIR)/handle_status.c \
 		$(UTILS_DIR)/parser_utils.c \
 		$(UTILS_DIR)/is_equal.c \

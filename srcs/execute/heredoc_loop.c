@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   heredoc_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/07/05 19:40:34 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/07/05 22:02:05 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/07/05 22:35:45 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	_cd(char **cmd, t_env *env)
+void	heredoc_loop(t_file *file, t_env **env)
 {
-	char	*destination;
-	char	*home;
+	t_file	*current;
 
-	if (cmd == NULL || cmd[0] == NULL)
-		return ;
-	destination = cmd[1];
-	home = _getenv(env, "HOME");
-	if (destination == NULL)
+	current = file;
+	while (current != NULL)
 	{
-		if (home == NULL)
+		if (current->type == HEREDOC)
 		{
-			write(2, "minishell: cd: HOME not set\n", 28);
-			return ;
+			heredoc(current, env);
 		}
-		destination = home;
+		else if (current->type == QUOTE_HEREDOC)
+		{
+			quote_heredoc(current, env);
+		}
+		current = current->next;
 	}
-	if (chdir(destination) != 0)
-		perror_set_flag();
-	else
-		g_flag = 0;
-	if (home != NULL)
-		free(home);
 }
