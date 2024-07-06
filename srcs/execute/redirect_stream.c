@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_stream.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:08:32 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 23:01:46 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/06 16:58:45 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static int	redirect_input(char *filename, t_redirect_type type, int *infd)
 			return (perror_set_flag(), -1);
 		if (dup2(*infd, 0) < 0)
 			return (perror_set_flag(), -1);
+		close(*infd);
 	}
 	return (0);
 }
@@ -65,14 +66,16 @@ static int	redirect_output(char *filename, t_redirect_type type, int *outfd)
 			return (perror_set_flag(), -1);
 		if (dup2(*outfd, 1) < 0)
 			return (perror_set_flag(), -1);
+		close(*outfd);
 	}
 	if (type == APPEND)
 	{
-		*outfd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		*outfd = open(filename, O_APPEND | O_CREAT | O_WRONLY, 0644);
 		if (*outfd < 0)
 			return (perror_set_flag(), -1);
 		if (dup2(*outfd, 1) < 0)
 			return (perror_set_flag(), -1);
+		close(*outfd);
 	}
 	return (*outfd);
 }
