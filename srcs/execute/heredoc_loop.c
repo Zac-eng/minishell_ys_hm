@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   heredoc_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/21 17:16:38 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/06 18:08:04 by yususato         ###   ########.fr       */
+/*   Created: 2024/07/05 22:02:05 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/07/07 15:00:02 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	_pwd(void)
+void	heredoc_loop(t_file *file, t_env **env)
 {
-	char	path[PATH_MAX];
+	t_file	*current;
 
-	if (getcwd(path, sizeof(path)) != NULL)
+	current = file;
+	while (current != NULL)
 	{
-		write(1, path, ft_strlen(path));
-		write(1,"\n",1);
-		g_flag = 0;
+		if (current->type == HEREDOC)
+		{
+			heredoc(current, env);
+		}
+		else if (current->type == QUOTE_HEREDOC)
+		{
+			quote_heredoc(current);
+		}
+		current = current->next;
 	}
-	else
-	{
-		write(2, "pwd: getcwd failed\n", 19);
-		g_flag = RUN_ERROR;
-	}
-	return ;
 }

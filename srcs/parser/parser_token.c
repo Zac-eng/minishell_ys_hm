@@ -6,20 +6,20 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:17:01 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/02 19:25:05 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:05:26 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	start_check(t_token *tmp, t_env **env)
+bool	start_check(t_token *tmp)
 {
 	if (tmp->kind == TK_CMD || tmp->kind == TK_SQUOTE || tmp->kind == TK_DQUOTE)
 		return (true);
 	return (false);
 }
 
-bool	connect_check(t_token *tmp, t_env **env)
+bool	connect_check(t_token *tmp)
 {
 	if (tmp->kind == TK_CMD || tmp->kind == TK_SQUOTE || tmp->kind == TK_DQUOTE)
 		return (true);
@@ -37,7 +37,7 @@ void	node_delete(t_token *tmp, t_token *tmp_next)
 	free(tmp_next);
 }
 
-void	token_check(t_token	*lexer, t_env **env)
+void	token_check(t_token	*lexer)
 {
 	t_token	*tmp;
 	char	*new;
@@ -47,7 +47,7 @@ void	token_check(t_token	*lexer, t_env **env)
 	{
 		if (tmp->space_flag == false)
 		{
-			if (start_check(tmp, env) && connect_check(tmp->next, env))
+			if (start_check(tmp) && connect_check(tmp->next))
 			{
 				new = ft_strjoin(tmp->str, tmp->next->str);
 				if (new == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:55:49 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/04 08:04:08 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/06 18:17:44 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	_echo(char **cmd)
 	else
 	{
 		_echo_n(&cmd[1]);
-		printf("\n");
+		write(1, "\n", 1);
 	}
 }
 
@@ -40,9 +40,10 @@ static void	_echo_n(char **words)
 		return ;
 	while (words[iter] != NULL && words[iter + 1] != NULL)
 	{
-		printf("%s ", words[iter]);
+		write(1, words[iter], ft_strlen(words[iter]));
+		write(1, " ", 1);
 		iter++;
 	}
 	if (words[iter] != NULL)
-		printf("%s", words[iter]);
+		write(1, words[iter], ft_strlen(words[iter]));
 }

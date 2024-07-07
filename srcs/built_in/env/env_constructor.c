@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:28:47 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/30 19:52:10 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/05 22:46:41 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	get_env_len(char *env, int *kv_lens)
 		operand = 1;
 	if (kv_lens[0] == 0)
 	{
-		write(2, "not a valid identifier\n", 23);
+		write(2, "minishell: not a valid identifier\n", 34);
 		g_flag = 1;
 		return (1);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/25 10:45:24 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/07 14:59:33 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 #  define HEREDOC_FILE "/tmp/.heredoc"
 # endif
 
+# define READ  (0)
+# define WRITE (1)
+
 extern volatile sig_atomic_t	g_flag;
 
 void	signalctrl(void);
@@ -40,9 +43,9 @@ char	**get_paths(t_env *env);
 t_env	*env_into_tenv(char **env);
 char	**env_into_list(t_env *env);
 void	execute(char *line, t_env **env, char **paths);
-void	execute_cmd(char **cmd, t_env **env, char **paths);
-void	execute_envpath(char **paths, char **cmd, char **env);
-void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
+void	execute_cmd(char **cmd, t_env **env, char **paths, bool set_st);
+void	execute_envpath(char **paths, char **cmd, char **env, bool set_st);
+void	execute_redirect(t_parser *cmd, t_env **env, char **paths, bool set_st);
 void	_cd(char **cmd, t_env *env);
 void	_echo(char **cmd);
 void	_env(t_env *env, bool is_export);
@@ -61,20 +64,24 @@ char	*_getenv(t_env *env_head, char *key);
 void	put_error(t_code error_code, char *insert);
 void	put_error_exit(t_code error_code);
 void	perror_set_flag(void);
-void	handle_status(pid_t pid_to_wait);
+void	handle_status(pid_t pid_to_wait, bool set_st);
 pid_t	safe_fork(void);
+int		redirect_stream(t_file *file_head);
 int		is_equal(char *str, char *ref);
 void	heredoc(t_file *file, t_env **env);
-char	*heredoc_join(char *before, char *after, char *env_str, int *i);
-char	*env_heredoc(char *line, t_file *file, t_env **env, int *i);
-void	write_heredoc(char *line, t_file *file, t_env **env, int fd);
-void	quote_heredoc(t_file *file, t_env **env);
-void	quote_read_heredoc(t_file *file, t_env **env, char *new_file);
+char	*heredoc_join(char *before, char *after, char *env_str);
+char	*env_heredoc(char *line, t_env **env, int *i);
+void	write_heredoc(char *line, t_env **env, int fd);
+void	quote_heredoc(t_file *file);
+void	quote_read_heredoc(t_file *file, char *new_file);
 char	*create_file(void);
 void	rm_heredoc_file(void);
 void	read_heredoc(t_file *file, t_env **env, char *new_file);
 void	filename_change(t_file *file, char *new_file);
 void	free_close(char *line, int fd);
 void	signal_heredoc(void);
+void	heredoc_loop(t_file *file, t_env **env);
+int		save_io(int *original_io);
+int		get_back_io(int *original_io);
 
 #endif

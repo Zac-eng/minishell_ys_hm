@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:18 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/02 19:16:03 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:01:35 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp)
 {
-	bool	flag;
-
 	(*parser_tmp)->cmd = (char **)calloc(2, sizeof(char *));
 	if ((*parser_tmp)->cmd == NULL)
 		exit(0);

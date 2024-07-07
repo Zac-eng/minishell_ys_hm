@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/06/23 13:42:43 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 14:44:32 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	filename_change(t_file *file, char *new_file)
 
 void	heredoc(t_file *file, t_env **env)
 {
-	int		fd;
 	char	*new_file;
 
 	new_file = create_file();
@@ -66,7 +65,7 @@ char	*create_file(void)
 	return (new);
 }
 
-char	*heredoc_join(char *before, char *after, char *env_str, int *i)
+char	*heredoc_join(char *before, char *after, char *env_str)
 {
 	char	*new;
 	char	*tmp;
@@ -80,10 +79,9 @@ char	*heredoc_join(char *before, char *after, char *env_str, int *i)
 	return (new);
 }
 
-char	*env_heredoc(char *line, t_file *file, t_env **env, int *i)
+char	*env_heredoc(char *line, t_env **env, int *i)
 {
 	int		j;
-	char	*new;
 	char	*before;
 	char	*after;
 	char	*env_name;
@@ -110,10 +108,10 @@ char	*env_heredoc(char *line, t_file *file, t_env **env, int *i)
 	}
 	env_str = strdup(head_env->value);
 	*i = *i + j;
-	return (heredoc_join(before, after, env_str, i));
+	return (heredoc_join(before, after, env_str));
 }
 
-void	write_heredoc(char *line, t_file *file, t_env **env, int fd)
+void	write_heredoc(char *line, t_env **env, int fd)
 {
 	int		start;
 	int		j;
@@ -130,7 +128,7 @@ void	write_heredoc(char *line, t_file *file, t_env **env, int fd)
 		{
 			tmp = start;
 			start++;
-			new = env_heredoc(line, file, env, &start);
+			new = env_heredoc(line, env, &start);
 			if (new == NULL)
 			{
 				write(fd, "\n", 1);
@@ -177,7 +175,7 @@ void	read_heredoc(t_file *file, t_env **env, char *new_file)
 			free_close(line, fd);
 			break ;
 		}
-		write_heredoc(line, file, env, fd);
+		write_heredoc(line, env, fd);
 		free(line);
 		close(fd);
 	}
