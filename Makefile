@@ -6,14 +6,15 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/07/05 22:35:36 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/07/07 14:44:52 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 INCLUDES_DIR = ./includes
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
+# CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
+CFLAGS =  -I$(INCLUDES_DIR)
 BUILTIN_DIR = ./srcs/built_in
 EXECUTE_DIR = ./srcs/execute
 LEXER_DIR = ./srcs/lexer

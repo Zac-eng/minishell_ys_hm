@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 22:34:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/07 14:52:29 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ void	put_error_exit(t_code error_code);
 void	perror_set_flag(void);
 void	handle_status(pid_t pid_to_wait, bool set_st);
 pid_t	safe_fork(void);
-int		redirect_stream(t_file *file_head, int *file_io);
+int		redirect_stream(t_file *file_head);
 int		is_equal(char *str, char *ref);
 void	heredoc(t_file *file, t_env **env);
-char	*heredoc_join(char *before, char *after, char *env_str, int *i);
-char	*env_heredoc(char *line, t_file *file, t_env **env, int *i);
-void	write_heredoc(char *line, t_file *file, t_env **env, int fd);
+char	*heredoc_join(char *before, char *after, char *env_str);
+char	*env_heredoc(char *line, t_env **env, int *i);
+void	write_heredoc(char *line, t_env **env, int fd);
 void	quote_heredoc(t_file *file, t_env **env);
 void	quote_read_heredoc(t_file *file, t_env **env, char *new_file);
 char	*create_file(void);
