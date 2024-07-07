@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 14:52:29 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/07 14:59:33 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void	heredoc(t_file *file, t_env **env);
 char	*heredoc_join(char *before, char *after, char *env_str);
 char	*env_heredoc(char *line, t_env **env, int *i);
 void	write_heredoc(char *line, t_env **env, int fd);
-void	quote_heredoc(t_file *file, t_env **env);
-void	quote_read_heredoc(t_file *file, t_env **env, char *new_file);
+void	quote_heredoc(t_file *file);
+void	quote_read_heredoc(t_file *file, char *new_file);
 char	*create_file(void);
 void	rm_heredoc_file(void);
 void	read_heredoc(t_file *file, t_env **env, char *new_file);

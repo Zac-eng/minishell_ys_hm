@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:02:05 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 22:35:45 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:00:02 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	heredoc_loop(t_file *file, t_env **env)
 		}
 		else if (current->type == QUOTE_HEREDOC)
 		{
-			quote_heredoc(current, env);
+			quote_heredoc(current);
 		}
 		current = current->next;
 	}

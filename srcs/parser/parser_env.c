@@ -6,13 +6,13 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:54:01 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/05 17:24:37 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:04:36 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	question_add_len(char *str, t_env **env, int *i)
+int	question_add_len(int *i)
 {
 	int		len;
 	char	*tmp;
@@ -59,7 +59,7 @@ int	cmd_len(char *str, t_env **env)
 		{
 			if (str[i + 1] && str[i + 1] == '?')
 			{
-				tmp = question_add_len(&str[i+1], env, &i);
+				tmp = question_add_len(&i);
 				count += tmp;
 			}
 			else
@@ -88,7 +88,7 @@ bool	parser_env_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 	return (true);
 }
 
-bool	env_question_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
+bool	env_question_init(t_parser **parser_tmp)
 {
 	(*parser_tmp)->cmd[0] = ft_itoa(g_flag);
 	if ((*parser_tmp)->cmd[0] == NULL)
@@ -96,7 +96,7 @@ bool	env_question_init(t_token **lexer_tmp, t_parser **parser_tmp, t_env **env)
 	return (true);
 }
 
-int	env_question_add(char *str, t_env **env, char *new, int *i)
+int	env_question_add(char *new, int *i)
 {
 	int		len;
 	char	*tmp;
@@ -147,7 +147,7 @@ char	*env_insert(char *str, t_env **env, int len)
 		{
 			if (str[i + 1] && str[i + 1] == '?')
 			{
-				tmp = env_question_add(&str[i+1], env, &new[count], &i);
+				tmp = env_question_add(&new[count], &i);
 				count += tmp;
 			}
 			else if (str[i + 1] == '\0' || str[i + 1] == ' ' || str[i + 1] == '$')

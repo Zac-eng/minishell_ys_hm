@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/02 20:56:41 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:05:38 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,17 +106,17 @@ void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 // void		node_delete(t_token *tmp, t_token *tmp_next);
 // void		token_check(t_token	*lexer);
 void		*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
-												t_parser **parser, t_env **env);
+												t_parser **parser);
 t_token		*create_token(char *line, t_token_kind kind, bool flag);
-int			question_add_len(char *str, t_env **env, int *i);
+int			question_add_len(int *i);
 int			env_add_len(char *str, t_env **env, int *i);
 void		str_insert(char	*new, char *str);
 int			parser_env_add(char *str, t_env **env, char *new, int *i);
-int			env_question_add(char *str, t_env **env, char *new, int *i);
+int			env_question_add(char *new, int *i);
 char		*env_insert(char *str, t_env **env, int len);
 t_token		*split_other(char **tmp, char *line);
 bool		is_lexer_continue(char c);
-void		token_check(t_token	*lexer, t_env **env);
+void		token_check(t_token	*lexer);
 int			cmd_len(char *str, t_env **env);
 void		expand(t_token *lexer, t_env **env);
 void		expand_dquote(t_token *tmp, t_env **env);
