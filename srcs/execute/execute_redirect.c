@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 14:53:03 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:03:23 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths, bool set_st)
 		return (execute_cmd(cmd->cmd, env, paths, set_st));
 	if (save_io(&std_io[0]) < 0)
 		return ;
-	heredoc_loop(cmd->file, env);
+	if (heredoc_loop(cmd->file, env) == false)
+		return ;
 	if (cmd->cmd == NULL)
 		return ;
 	if (redirect_stream(cmd->file) < 0)

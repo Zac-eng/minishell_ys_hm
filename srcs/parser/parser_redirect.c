@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:51 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/02 21:23:52 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:25:37 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp)
 	{
 		if ((*lexer_tmp)->kind == TK_LESS || (*lexer_tmp)->kind == TK_DLESS)
 			parser_output(lexer_tmp, parser_tmp);
-		else if ((*lexer_tmp)->kind == TK_GREAT || (*lexer_tmp)->kind == TK_DGREAT)
+		else if ((*lexer_tmp)->kind == TK_GREAT
+			|| (*lexer_tmp)->kind == TK_DGREAT)
 			parser_input(lexer_tmp, parser_tmp);
 		if ((*lexer_tmp)->next == NULL)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:18 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 15:01:35 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 16:28:08 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp)
 	(*parser_tmp)->cmd[1] = NULL;
 	return ;
 }
+
 void	free_parser_tmp(t_parser **tmp)
 {
 	int	i;

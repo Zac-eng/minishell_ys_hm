@@ -6,13 +6,13 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:02:05 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 15:00:02 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:12:00 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_loop(t_file *file, t_env **env)
+bool	heredoc_loop(t_file *file, t_env **env)
 {
 	t_file	*current;
 
@@ -21,12 +21,15 @@ void	heredoc_loop(t_file *file, t_env **env)
 	{
 		if (current->type == HEREDOC)
 		{
-			heredoc(current, env);
+			if (heredoc(current, env) == false)
+				return (false);
 		}
 		else if (current->type == QUOTE_HEREDOC)
 		{
-			quote_heredoc(current);
+			if (quote_heredoc(current) == false)
+				return (false);
 		}
 		current = current->next;
 	}
+	return (true);
 }

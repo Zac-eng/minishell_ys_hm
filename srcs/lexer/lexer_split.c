@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/02 15:58:00 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:16:56 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,5 @@ t_token	*split_word(char **tmp, char *line)
 	else if (*line == '\"')
 		return (split_dquote(tmp, line));
 	else
-		return (split_other(tmp,line));
+		return (split_other(tmp, line));
 }

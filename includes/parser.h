@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/07 15:05:38 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/07 20:52:01 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,8 @@ typedef enum e_code
 }	t_code;
 
 bool		check_word(char	*line);
-void		remove_squote(t_token *token);
-void		remove_dquote(t_token *token);
-// void		expand(t_token *token);
+bool		is_pipe_redirect(t_token *lexer_tmp);
+void		simple_counter(int *i, int *count);
 bool		split_space(char **tmp, char *line);
 t_token		*split_pipe(char **tmp, char *line);
 t_token		*split_red(char **tmp, char *line);
@@ -102,6 +101,7 @@ void		file_init(t_file **file, char *file_name, t_token_kind kind, \
 void		file_add(t_file **file, char *file_name, t_token_kind kind, \
 												t_token_kind next_kind);
 void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
+void		simple_insert(char *new, char c, int *count, int *i);
 // bool		can_connect(t_token *next);
 // void		node_delete(t_token *tmp, t_token *tmp_next);
 // void		token_check(t_token	*lexer);
@@ -112,7 +112,7 @@ int			question_add_len(int *i);
 int			env_add_len(char *str, t_env **env, int *i);
 void		str_insert(char	*new, char *str);
 int			parser_env_add(char *str, t_env **env, char *new, int *i);
-int			env_question_add(char *new, int *i);
+int			env_question_add(char *new, int *i, int *count);
 char		*env_insert(char *str, t_env **env, int len);
 t_token		*split_other(char **tmp, char *line);
 bool		is_lexer_continue(char c);
@@ -122,5 +122,8 @@ void		expand(t_token *lexer, t_env **env);
 void		expand_dquote(t_token *tmp, t_env **env);
 void		expand_cmd(t_token *tmp, t_env **env);
 int			is_squote_space(char *str);
+void		env_process(char *str, char *new, t_env **env, int *count);
+char		*head_env_check(char *line, int *i, int *j);
+bool		env_process_heredoc(char *str, char *new, t_env **env, int *count);
 
 #endif
