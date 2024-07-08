@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:20:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 15:16:56 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:32:07 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ t_token	*split_pipe(char **tmp, char *line)
 	char	*set;
 	t_token	*token;
 
-	set = strdup("|");
+	set = ft_strdup("|");
+	if (set == NULL)
+		return (NULL);
 	*tmp = &line[1];
 	token = create_token(set, TK_PIPE, false);
 	return (token);
@@ -44,7 +46,7 @@ t_token	*split_red(char **tmp, char *line)
 			return (create_token(ft_strdup("<<"), TK_DLESS, false));
 		}
 		else
-			return (create_token(strdup("<"), TK_LESS, false));
+			return (create_token(ft_strdup("<"), TK_LESS, false));
 	}
 	else if (*line == '>')
 	{
@@ -52,12 +54,12 @@ t_token	*split_red(char **tmp, char *line)
 		if (line[1] == '>')
 		{
 			*tmp += 1;
-			return (create_token(strdup(">>"), TK_DGREAT, false));
+			return (create_token(ft_strdup(">>"), TK_DGREAT, false));
 		}
 		else
-			return (create_token(strdup(">"), TK_GREAT, false));
+			return (create_token(ft_strdup(">"), TK_GREAT, false));
 	}
-	exit(0);
+	return (NULL);
 }
 
 t_token	*split_other(char **tmp, char *line)

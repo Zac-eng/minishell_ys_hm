@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 19:48:42 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/07 21:00:41 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:20:06 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	quote_heredoc(t_file *file)
 {
 	char	*new_file;
 
-		new_file = create_file();
+	new_file = create_file();
 	if (new_file == NULL)
 		return (false);
 	if (quote_read_heredoc(file, new_file) == false)

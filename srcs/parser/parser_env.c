@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:54:01 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/07 20:27:34 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:53:08 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	question_add_len(int *i)
 	char	*tmp;
 
 	tmp = ft_itoa(g_flag);
+	if (tmp == NULL)
+		return (-1);
 	len = ft_strlen(tmp);
 	*i += 2;
 	free(tmp);
@@ -35,12 +37,13 @@ int	env_add_len(char *str, t_env **env, int *i)
 	*i += len + 1;
 	tmp = ft_substr(str, 0, len);
 	if (!tmp)
-		exit(0);
+		return (-1);
 	head_env = _getenv(*env, tmp);
 	if (!head_env)
-		return (0);
+		return (free(tmp), 0);
 	free(tmp);
 	len = ft_strlen(head_env);
+	free(head_env);
 	return (len);
 }
 
@@ -98,12 +101,13 @@ int	parser_env_add(char *str, t_env **env, char *new, int *i)
 	*i += len + 1;
 	tmp = ft_substr(str, 0, len);
 	if (!tmp)
-		exit(0);
+		return (-1);
 	env_value = _getenv(*env, tmp);
 	if (!env_value)
-		return (0);
+		return (free(tmp), 0);
 	free(tmp);
 	len = ft_strlen(env_value);
 	str_insert(new, env_value);
+	free(env_value);
 	return (len);
 }

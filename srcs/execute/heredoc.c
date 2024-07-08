@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/07 21:37:29 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 13:05:10 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ bool	read_heredoc(t_file *file, t_env **env, char *new_file)
 			break ;
 		}
 		if (write_heredoc(line, env, fd) == false)
-		{
 			return (false);
-		}
 		free(line);
 	}
 	close(fd);

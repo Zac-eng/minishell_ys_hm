@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:18:10 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 16:27:59 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:31:09 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ t_parser	*parser(t_token	*lexer, t_env **env)
 	t_parser	*parser;
 	t_parser	*parser_tmp;
 
-	if (lexer == NULL || (is_pipe_redirect(lexer) && lexer->next == NULL))
+	if (lexer == NULL || (is_pipe_redirect(lexer) && lexer->next == NULL) \
+			|| expand(lexer, env) == false || token_check(lexer) == false)
 		return (NULL);
-	expand(lexer, env);
-	token_check(lexer);
 	lexer_tmp = lexer;
 	parser = parser_node_new();
 	if (parser == NULL)
@@ -37,7 +36,7 @@ t_parser	*parser(t_token	*lexer, t_env **env)
 			continue ;
 		}
 		if (parser_check(&lexer_tmp, &parser_tmp, &parser) == NULL)
-			return (parser_error(parser, lexer_tmp->str), NULL);
+			return (parser_error(parser_tmp, lexer_tmp->str), NULL);
 			lexer_tmp = (lexer_tmp)->next;
 	}
 	return (parser);

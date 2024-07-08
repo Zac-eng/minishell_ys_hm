@@ -6,22 +6,22 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:18 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 16:28:08 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:38:03 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp)
+bool	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp)
 {
 	(*parser_tmp)->cmd = (char **)calloc(2, sizeof(char *));
 	if ((*parser_tmp)->cmd == NULL)
-		exit(0);
+		return (false);
 	(*parser_tmp)->cmd[0] = strdup((*lexer_tmp)->str);
 	if ((*parser_tmp)->cmd[0] == NULL)
-		exit(0);
+		return (false);
 	(*parser_tmp)->cmd[1] = NULL;
-	return ;
+	return (true);
 }
 
 void	free_parser_tmp(t_parser **tmp)
@@ -38,27 +38,44 @@ void	free_parser_tmp(t_parser **tmp)
 	return ;
 }
 
-void	cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp)
+bool	parser_tmp_insert(t_parser **parser_tmp, char **tmp, int *i)
+{
+	*i = 0;
+	while ((*parser_tmp)->cmd[*i] != NULL)
+	{
+		tmp[*i] = strdup((*parser_tmp)->cmd[*i]);
+		if (tmp[*i] == NULL)
+			return (false);
+		(*i)++;
+	}
+	return (true);
+}
+
+bool	cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp)
 {
 	int	i;
 
 	i = 0;
-	while ((*parser_tmp)->cmd[i] != NULL)
-	{
-		tmp[i] = strdup((*parser_tmp)->cmd[i]);
-		i++;
-	}
+	if (parser_tmp_insert(parser_tmp, tmp, &i) == false)
+		return (false);
 	tmp[i] = strdup((*lexer_tmp)->str);
+	if (tmp[i] == NULL)
+		return (false);
 	free_parser_tmp(parser_tmp);
 	(*parser_tmp)->cmd = (char **)calloc((i + 2), sizeof(char *));
+	if ((*parser_tmp)->cmd == NULL)
+		return (false);
 	i = 0;
 	while (tmp[i] != NULL)
 	{
 		(*parser_tmp)->cmd[i] = strdup(tmp[i]);
+		if ((*parser_tmp)->cmd[i] == NULL)
+			return (false);
 		i++;
 	}
 	(*parser_tmp)->cmd[i] = NULL;
-	free(tmp);
+	free_str_list(tmp);
+	return (true);
 }
 
 void	*parser_cmd(t_token **lexer_tmp, t_parser **parser_tmp)
@@ -69,14 +86,18 @@ void	*parser_cmd(t_token **lexer_tmp, t_parser **parser_tmp)
 	i = 0;
 	if ((*parser_tmp)->cmd == NULL)
 	{
-		cmd_init(lexer_tmp, parser_tmp);
+		if (cmd_init(lexer_tmp, parser_tmp) == false)
+			return (NULL);
 	}
 	else
 	{
 		while ((*parser_tmp)->cmd[i] != NULL)
 			i++;
 		tmp = (char **)ft_calloc((i + 2), sizeof(char *));
-		cmd_add(lexer_tmp, parser_tmp, tmp);
+		if (tmp == NULL)
+			return (NULL);
+		if (cmd_add(lexer_tmp, parser_tmp, tmp) == false)
+			return (NULL);
 	}
 	return (parser_tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:17:01 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 15:05:26 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:01:13 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	node_delete(t_token *tmp, t_token *tmp_next)
 	free(tmp_next);
 }
 
-void	token_check(t_token	*lexer)
+bool	token_check(t_token	*lexer)
 {
 	t_token	*tmp;
 	char	*new;
@@ -51,7 +51,7 @@ void	token_check(t_token	*lexer)
 			{
 				new = ft_strjoin(tmp->str, tmp->next->str);
 				if (new == NULL)
-					exit(0);
+					return (false);
 				free(tmp->str);
 				tmp->str = new;
 				node_delete(tmp, tmp->next);
@@ -62,4 +62,5 @@ void	token_check(t_token	*lexer)
 		else
 			tmp = tmp->next;
 	}
+	return (true);
 }

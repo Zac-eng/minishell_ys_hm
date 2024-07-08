@@ -6,14 +6,14 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/07/07 21:01:13 by yususato         ###   ########.fr        #
+#    Updated: 2024/07/08 13:04:05 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 INCLUDES_DIR = ./includes
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
+CFLAGS =  -I$(INCLUDES_DIR)
 BUILTIN_DIR = ./srcs/built_in
 EXECUTE_DIR = ./srcs/execute
 LEXER_DIR = ./srcs/lexer

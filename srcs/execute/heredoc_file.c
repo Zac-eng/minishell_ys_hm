@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 16:45:35 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/07 21:39:48 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 19:27:01 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 bool	filename_change(t_file *file, char *new_file)
 {
 	free(file->file_name);
-	file->file_name = strdup(new_file);
+	file->file_name = new_file;
 	if (file->file_name == NULL)
-		(false);
-	free(new_file);
+	{
+		free(new_file);
+		return (false);
+	}
 	return (true);
 }
 
@@ -31,7 +33,7 @@ char	*create_check(int *i)
 	if (tmp == NULL)
 		return (NULL);
 	new = ft_strjoin(HEREDOC_FILE, tmp);
-	if (tmp == NULL || new == NULL)
+	if (new == NULL)
 		return (NULL);
 	free(tmp);
 	while (!access(new, F_OK))

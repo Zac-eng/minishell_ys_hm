@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/07 20:52:01 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:03:35 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ t_parser	*parser(t_token	*lexer, t_env **env);
 void		free_parser(t_parser *parser_head);
 bool		is_redirect(t_token *lexer_tmp);
 bool		is_quote(t_token_kind kind);
-void		cmd_init(t_token **lexer_tmp, t_parser **parser_tmp);
-void		cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp);
+bool		cmd_init(t_token **lexer_tmp, t_parser **parser_tmp);
+bool		cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp);
 void		*parser_cmd(t_token **lexertmp, t_parser **parsertmp);
 void		*parser_pipe(t_parser **parser_tmp, t_parser **parser);
 t_parser	*parser_node_new(void);
-void		file_init(t_file **file, char *file_name, t_token_kind kind, \
+bool		file_init(t_file **file, char *file_name, t_token_kind kind, \
 												t_token_kind next_kind);
-void		file_add(t_file **file, char *file_name, t_token_kind kind, \
+bool		file_add(t_file **file, char *file_name, t_token_kind kind, \
 												t_token_kind next_kind);
 void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 void		simple_insert(char *new, char c, int *count, int *i);
@@ -116,11 +116,11 @@ int			env_question_add(char *new, int *i, int *count);
 char		*env_insert(char *str, t_env **env, int len);
 t_token		*split_other(char **tmp, char *line);
 bool		is_lexer_continue(char c);
-void		token_check(t_token	*lexer);
+bool		token_check(t_token	*lexer);
 int			cmd_len(char *str, t_env **env);
-void		expand(t_token *lexer, t_env **env);
-void		expand_dquote(t_token *tmp, t_env **env);
-void		expand_cmd(t_token *tmp, t_env **env);
+bool		expand(t_token *lexer, t_env **env);
+bool		expand_dquote(t_token *tmp, t_env **env);
+bool		expand_cmd(t_token *tmp, t_env **env);
 int			is_squote_space(char *str);
 void		env_process(char *str, char *new, t_env **env, int *count);
 char		*head_env_check(char *line, int *i, int *j);

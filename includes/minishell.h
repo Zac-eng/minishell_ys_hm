@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 21:00:53 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:39:47 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,5 @@ char	*create_file(void);
 char	*expand_heredoc(char *line, t_env **env);
 char	*env_insert_heredoc(char *str, t_env **env, int len);
 int		get_env_len(char *env_line, int *key_value_len);
-
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:50:15 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/07 16:35:21 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:02:08 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_cmd(t_token *tmp, t_env **env)
+bool	expand_cmd(t_token *tmp, t_env **env)
 {
 	int		i;
 	int		len;
@@ -22,11 +22,14 @@ void	expand_cmd(t_token *tmp, t_env **env)
 	len = 0;
 	len = cmd_len(tmp->str, env);
 	set = env_insert(tmp->str, env, len);
+	if (set == NULL)
+		return (false);
 	free(tmp->str);
 	tmp->str = set;
+	return (true);
 }
 
-void	expand_dquote(t_token *tmp, t_env **env)
+bool	expand_dquote(t_token *tmp, t_env **env)
 {
 	int		len;
 	char	*set;
@@ -34,11 +37,14 @@ void	expand_dquote(t_token *tmp, t_env **env)
 	len = 0;
 	len = cmd_len(tmp->str, env);
 	set = env_insert(tmp->str, env, len);
+	if (set == NULL)
+		return (false);
 	free(tmp->str);
 	tmp->str = set;
+	return (true);
 }
 
-void	expand(t_token *lexer, t_env **env)
+bool	expand(t_token *lexer, t_env **env)
 {
 	t_token	*tmp;
 
@@ -46,9 +52,16 @@ void	expand(t_token *lexer, t_env **env)
 	while (tmp != NULL)
 	{
 		if (tmp->kind == TK_CMD)
-			expand_cmd(tmp, env);
+		{
+			if (expand_cmd(tmp, env) == false)
+				return (false);
+		}
 		else if (tmp->kind == TK_DQUOTE)
-			expand_dquote(tmp, env);
+		{
+			if (expand_dquote(tmp, env) == false)
+				return (false);
+		}
 		tmp = tmp->next;
 	}
+	return (true);
 }

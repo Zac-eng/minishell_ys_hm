@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 19:19:41 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/07 21:38:37 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:03:07 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ int	heredoc_env_add(char *str, t_env **env, char *new, int *i)
 		return (-1);
 	env_value = _getenv(*env, tmp);
 	if (env_value == NULL)
-		return (0);
+		return (free(tmp), 0);
 	len = ft_strlen(env_value);
 	str_insert(new, env_value);
+	free(env_value);
+	free(tmp);
 	return (len);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:46 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/06 09:32:44 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/07 22:08:17 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void	*parser_pipe(t_parser **parser_tmp, t_parser **parser)
 	(void)parser;
 	(*parser_tmp)->next = parser_node_new();
 	if ((*parser_tmp)->next == NULL)
-	{
-		exit(0);
-	}
+		return (NULL);
 	(*parser_tmp)->next->prev = *parser_tmp;
 	(*parser_tmp) = (*parser_tmp)->next;
 	return (*parser_tmp);
