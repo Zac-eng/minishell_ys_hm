@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:16:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/08 21:37:45 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:52:13 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	rm_heredoc_loop(int *i, char *file, char *tmp)
 		if (file == NULL)
 			return ;
 	}
+	if (tmp != NULL)
+		free(tmp);
 	free(file);
 }
 
@@ -42,7 +44,10 @@ void	rm_heredoc_file(void)
 		return ;
 	file = ft_strjoin(HEREDOC_FILE, tmp);
 	if (file == NULL)
-		return (free(tmp));
+	{
+		free(tmp);
+		return ;
+	}
 	rm_heredoc_loop(&i, file, tmp);
 	return ;
 }
