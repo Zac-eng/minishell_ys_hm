@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:18 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/08 19:38:03 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 22:16:09 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp)
 {
-	(*parser_tmp)->cmd = (char **)calloc(2, sizeof(char *));
+	(*parser_tmp)->cmd = (char **)ft_calloc(2, sizeof(char *));
 	if ((*parser_tmp)->cmd == NULL)
 		return (false);
 	(*parser_tmp)->cmd[0] = strdup((*lexer_tmp)->str);
@@ -62,7 +62,7 @@ bool	cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp)
 	if (tmp[i] == NULL)
 		return (false);
 	free_parser_tmp(parser_tmp);
-	(*parser_tmp)->cmd = (char **)calloc((i + 2), sizeof(char *));
+	(*parser_tmp)->cmd = (char **)ft_calloc((i + 2), sizeof(char *));
 	if ((*parser_tmp)->cmd == NULL)
 		return (false);
 	i = 0;
