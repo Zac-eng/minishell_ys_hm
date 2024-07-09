@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:18 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/08 22:16:09 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:49:34 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	cmd_init(t_token **lexer_tmp, t_parser **parser_tmp)
 	(*parser_tmp)->cmd = (char **)ft_calloc(2, sizeof(char *));
 	if ((*parser_tmp)->cmd == NULL)
 		return (false);
-	(*parser_tmp)->cmd[0] = strdup((*lexer_tmp)->str);
+	(*parser_tmp)->cmd[0] = ft_strdup((*lexer_tmp)->str);
 	if ((*parser_tmp)->cmd[0] == NULL)
 		return (false);
 	(*parser_tmp)->cmd[1] = NULL;
@@ -43,7 +43,7 @@ bool	parser_tmp_insert(t_parser **parser_tmp, char **tmp, int *i)
 	*i = 0;
 	while ((*parser_tmp)->cmd[*i] != NULL)
 	{
-		tmp[*i] = strdup((*parser_tmp)->cmd[*i]);
+		tmp[*i] = ft_strdup((*parser_tmp)->cmd[*i]);
 		if (tmp[*i] == NULL)
 			return (false);
 		(*i)++;
@@ -58,7 +58,7 @@ bool	cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp)
 	i = 0;
 	if (parser_tmp_insert(parser_tmp, tmp, &i) == false)
 		return (false);
-	tmp[i] = strdup((*lexer_tmp)->str);
+	tmp[i] = ft_strdup((*lexer_tmp)->str);
 	if (tmp[i] == NULL)
 		return (false);
 	free_parser_tmp(parser_tmp);
@@ -68,7 +68,7 @@ bool	cmd_add(t_token **lexer_tmp, t_parser **parser_tmp, char **tmp)
 	i = 0;
 	while (tmp[i] != NULL)
 	{
-		(*parser_tmp)->cmd[i] = strdup(tmp[i]);
+		(*parser_tmp)->cmd[i] = ft_strdup(tmp[i]);
 		if ((*parser_tmp)->cmd[i] == NULL)
 			return (false);
 		i++;
