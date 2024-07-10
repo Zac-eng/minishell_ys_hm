@@ -6,13 +6,14 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:55:49 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/06 18:17:44 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/09 16:24:42 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	_echo_n(char **words);
+static bool	n_flag(char *flag);
 
 void	_echo(char **cmd)
 {
@@ -21,7 +22,7 @@ void	_echo(char **cmd)
 		g_flag = 0;
 		return ;
 	}
-	if (cmd[1] != NULL && is_equal(cmd[1], "-n") == 1)
+	if (cmd[1] != NULL && n_flag(cmd[1]))
 		_echo_n(&cmd[2]);
 	else
 	{
@@ -46,4 +47,20 @@ static void	_echo_n(char **words)
 	}
 	if (words[iter] != NULL)
 		write(1, words[iter], ft_strlen(words[iter]));
+}
+
+static bool	n_flag(char *flag)
+{
+	int	index;
+
+	if (flag == NULL || flag[0] != '-')
+		return (false);
+	index = 1;
+	while (flag[index] != '\0')
+	{
+		if (flag[index] != 'n')
+			return (false);
+		index += 1;
+	}
+	return (true);
 }

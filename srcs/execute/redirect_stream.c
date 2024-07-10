@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:08:32 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 14:51:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:43:00 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,3 @@ static int	redirect_output(char *filename, t_redirect_type type)
 	}
 	return (0);
 }
-
-// static int	get_mode(char *filename, mode_t	*mode)
-// {
-// 	struct stat	file_status;
-
-// 	if (stat(filename, &file_status) < 0)
-// 		return (-1);
-// 	*mode = file_status.st_mode;
-// 	printf("mode: %d\n", *mode);
-// 	return (0);
-// }

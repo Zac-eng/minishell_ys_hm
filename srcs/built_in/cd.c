@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/07/05 19:40:34 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:31:27 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	_cd(char **cmd, t_env *env)
 		destination = home;
 	}
 	if (chdir(destination) != 0)
-		perror_set_flag();
+	{
+		write(2, "minishell: cd: ", 15);
+		perror_set_flag(destination);
+	}
 	else
 		g_flag = 0;
 	if (home != NULL)

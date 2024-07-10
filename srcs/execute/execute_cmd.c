@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 16:57:47 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:39:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	execute_execve(char **cmd, t_env *env, char **paths, bool set_st)
 	env_str = env_into_list(env);
 	if (env_str == NULL)
 		return ;
-	if (ft_strchr(cmd[0], '/') == NULL)
+	if (paths != NULL && ft_strchr(cmd[0], '/') == NULL)
 		execute_envpath(paths, cmd, env_str, set_st);
 	else
 		execute_path(cmd[0], cmd, env_str, set_st);
@@ -64,7 +64,8 @@ static void	execute_path(char *path, char **cmd, char **env, bool set_st)
 	{
 		if (execve(path, cmd, env) == -1)
 		{
-			perror("minishell");
+			write(2, "minishell: ", 11);
+			perror(cmd[0]);
 			if (errno == EACCES)
 				exit(126);
 			else if (errno == EISDIR)

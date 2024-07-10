@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:07 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 17:36:55 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:11:53 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,52 @@ void	_export(char **cmd, t_env **env_head)
 		type = check_envvars(cmd[envvar_index]);
 		if (type == INVALID)
 		{
-			write(2, "minishell: not a valid identifier\n", 34);
-			g_flag = 1;
+			put_error(EXPORT_ERROR, cmd[envvar_index]);
 			envvar_index++;
 			continue ;
 		}
 		export_action(env_head, cmd[envvar_index], type);
 		envvar_index++;
 	}
+}
+
+bool	is_valid_envkey(char *envvars)
+{
+	int	index;
+
+	index = 0;
+	if (envvars == NULL || ('0' <= envvars[0] && envvars[0] <= '9'))
+		return (false);
+	if (envvars[0] == '\0' || envvars[0] == '=' || envvars[0] == '+')
+		return (false);
+	while (envvars[index] != '\0' \
+		&& envvars[index] != '=' && envvars[index] != '+')
+	{
+		if (ft_isalnum(envvars[index]) == 0 && envvars[index] != '_')
+			return (false);
+		index += 1;
+	}
+	return (true);
+}
+
+static t_export	check_envvars(char *envvars)
+{
+	int	index;
+
+	index = 0;
+	if (is_valid_envkey(envvars) == false)
+		return (INVALID);
+	while (envvars[index] != '\0' \
+		&& envvars[index] != '=' && envvars[index] != '+')
+		index += 1;
+	if (envvars[index] == '+')
+	{
+		if (envvars[index + 1] == '=')
+			return (ADDITION);
+		else
+			return (INVALID);
+	}
+	return (EQUAL);
 }
 
 static void	export_action(t_env **env_head, char *envvars, t_export type)
@@ -71,30 +109,6 @@ static void	export_action(t_env **env_head, char *envvars, t_export type)
 		rewrite_value(&target->value, new_node->value, type);
 		free_node(new_node);
 	}
-}
-
-static t_export	check_envvars(char *envvars)
-{
-	int	index;
-
-	index = 0;
-	if ('0' <= envvars[0] && envvars[0] <= '9')
-		return (INVALID);
-	while (envvars[index] != '\0' && envvars[index] != '=')
-	{
-		if (envvars[index] == '-' || envvars[index] == '%' || \
-			envvars[index] == '/' || envvars[index] == ' ')
-			return (INVALID);
-		else if (envvars[index] == '+')
-		{
-			if (envvars[index + 1] == '=')
-				return (ADDITION);
-			else
-				return (INVALID);
-		}
-		index++;
-	}
-	return (EQUAL);
 }
 
 static int	rewrite_value(char **before, char *after, t_export type)
