@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/10 14:39:51 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:02:48 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	execute_execve(char **cmd, t_env *env, char **paths, bool set_st);
 static void	execute_path(char *path, char **cmd, char **env, bool set_st);
+static bool	is_dir(char *path);
 
 void	execute_cmd(char **cmd, t_env **env, char **paths, bool set_st)
 {
@@ -64,6 +65,8 @@ static void	execute_path(char *path, char **cmd, char **env, bool set_st)
 	{
 		if (execve(path, cmd, env) == -1)
 		{
+			if (is_dir(path) == true)
+				errno = EISDIR;
 			write(2, "minishell: ", 11);
 			perror(cmd[0]);
 			if (errno == EACCES)
@@ -77,4 +80,15 @@ static void	execute_path(char *path, char **cmd, char **env, bool set_st)
 		}
 	}
 	handle_status(pid, set_st);
+}
+
+static bool	is_dir(char *path)
+{
+	struct stat	path_stat;
+
+	if (stat(path, &path_stat) < 0)
+		return (false);
+	if (S_ISDIR(path_stat.st_mode))
+		return (true);
+	return (false);
 }
