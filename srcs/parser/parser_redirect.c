@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redirect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:12:51 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/09 15:42:58 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:20:02 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	file_init(t_file **file, char *file_name, t_token_kind kind, \
 	if ((*file) == NULL)
 		return (false);
 	(*file)->next = NULL;
-	(*file)->file_name = (file_name);
+	(*file)->file_name = ft_strdup(file_name);
 	if ((*file)->file_name == NULL)
 		return (false);
 	if (kind == TK_DLESS && is_quote(next_kind) == true)

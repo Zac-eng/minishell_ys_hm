@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/05 22:08:32 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/10 14:43:00 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:29:22 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,15 @@ static int	redirect_input(char *filename, t_redirect_type type)
 	{
 		fd = open(filename, O_RDONLY);
 		if (fd < 0)
-			return (perror_set_flag(), -1);
+		{
+			write(2, "minishell: ", 11);
+			return (perror_set_flag(filename), -1);
+		}
 		if (dup2(fd, 0) < 0)
-			return (perror_set_flag(), -1);
+		{
+			write(2, "minishell: ", 11);
+			return (perror_set_flag(filename), -1);
+		}
 		close(fd);
 	}
 	return (0);
@@ -59,23 +65,21 @@ static int	redirect_output(char *filename, t_redirect_type type)
 {
 	int	fd;
 
+	fd = 0;
 	if (type == OUT_FILE)
-	{
 		fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (fd < 0)
-			return (perror_set_flag(), -1);
-		if (dup2(fd, 1) < 0)
-			return (perror_set_flag(), -1);
-		close(fd);
-	}
-	if (type == APPEND)
-	{
+	else if (type == APPEND)
 		fd = open(filename, O_APPEND | O_CREAT | O_WRONLY, 0644);
-		if (fd < 0)
-			return (perror_set_flag(), -1);
-		if (dup2(fd, 1) < 0)
-			return (perror_set_flag(), -1);
-		close(fd);
+	if (fd < 0)
+	{
+		write(2, "minishell: ", 11);
+		return (perror_set_flag(filename), -1);
 	}
+	if (dup2(fd, 1) < 0)
+	{
+		write(2, "minishell: ", 11);
+		return (perror_set_flag(filename), -1);
+	}
+	close(fd);
 	return (0);
 }
