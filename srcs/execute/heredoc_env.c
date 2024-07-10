@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 19:19:41 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/10 21:56:15 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/10 23:13:39 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,8 @@ int	heredoc_env_add(char *str, t_env **env, char *new, int *i)
 	char	*tmp;
 
 	len = 0;
-	(*i)++;
-	if (!ft_isalnum(str[0]))
-		return (1);
 	len = is_special_space(str);
-	*i += len;
+	*i += len + 1;
 	tmp = ft_substr(str, 0, len);
 	if (!tmp)
 		return (-1);
