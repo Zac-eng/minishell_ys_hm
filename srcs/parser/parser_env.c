@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:54:01 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/08 19:53:08 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:32:24 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ int	env_add_len(char *str, t_env **env, int *i)
 	char	*tmp;
 
 	len = 0;
-	len = is_squote_space(str);
-	*i += len + 1;
+	(*i)++;
+	if (!ft_isalnum(str[0]))
+		return (1);
+	len = is_special_space(str);
+	*i += len;
 	tmp = ft_substr(str, 0, len);
 	if (!tmp)
 		return (-1);
@@ -97,7 +100,7 @@ int	parser_env_add(char *str, t_env **env, char *new, int *i)
 	char	*tmp;
 
 	len = 0;
-	len = is_squote_space(str);
+	len = is_special_space(str);
 	*i += len + 1;
 	tmp = ft_substr(str, 0, len);
 	if (!tmp)

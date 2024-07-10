@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:18:10 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/10 13:08:36 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:31:11 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	lexer_connect_check(t_token *lexer)
 	if (is_pipe_redirect(lexer) && lexer->next == NULL)
 	{
 		if (lexer->kind == TK_PIPE)
-			return (put_error(PARSE_ERROR, "|"), false);
+			return (put_error(PARSE_ERROR_REDIRECT_STR, "|"), false);
 		else
 			return (put_error(PARSE_ERROR_REDIRECT, ""), false);
 	}
@@ -44,11 +44,6 @@ t_parser	*parser(t_token	*lexer, t_env **env)
 	parser_tmp = parser;
 	while (lexer_tmp != NULL)
 	{
-		if (lexer != NULL && lexer_tmp->str[0] == '\0')
-		{
-			lexer_tmp = lexer_tmp->next;
-			continue ;
-		}
 		if (parser_check(&lexer_tmp, &parser_tmp, &parser) == NULL)
 			return (parser_error(parser, lexer_tmp->str), NULL);
 			lexer_tmp = (lexer_tmp)->next;

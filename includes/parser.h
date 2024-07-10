@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/10 13:06:01 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:39:00 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef enum e_code
 	FORK_ERROR = 149,
 	PARSE_ERROR = 258,
 	PARSE_ERROR_REDIRECT = 8,
+	PARSE_ERROR_REDIRECT_STR = 9,
 }	t_code;
 
 bool		check_word(char	*line);
@@ -122,7 +123,7 @@ int			cmd_len(char *str, t_env **env);
 bool		expand(t_token *lexer, t_env **env);
 bool		expand_dquote(t_token *tmp, t_env **env);
 bool		expand_cmd(t_token *tmp, t_env **env);
-int			is_squote_space(char *str);
+int			is_special_space(char *str);
 void		env_process(char *str, char *new, t_env **env, int *count);
 char		*head_env_check(char *line, int *i, int *j);
 bool		env_process_heredoc(char *str, char *new, t_env **env, int *count);
