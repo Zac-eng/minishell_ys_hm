@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_constructor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:28:47 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 22:46:41 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/07 20:29:44 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_env	*allocate_tenv(char *env_line);
-static int		get_env_len(char *env_line, int *key_value_len);
 static int		copy_kv(char *dest, char *ref);
 
 t_env	*create_envnode(char *env_line)
@@ -79,7 +78,7 @@ static t_env	*allocate_tenv(char *env_line)
 	return (env_node);
 }
 
-static int	get_env_len(char *env, int *kv_lens)
+int	get_env_len(char *env, int *kv_lens)
 {
 	int	operand;
 

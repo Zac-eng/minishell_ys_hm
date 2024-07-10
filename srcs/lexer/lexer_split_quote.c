@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:12:37 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/26 20:09:08 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:34:41 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token	*split_squote(char **tmp, char *line)
 	index = 0;
 	set = allocate_quoted(line, '\'');
 	if (set == NULL)
-		put_error(PARSE_ERROR, &line[0]);
+		return (put_error(PARSE_ERROR, &line[0]), NULL);
 	while (line[index + 1] != '\0')
 	{
 		if (line[index + 1] == '\'')
@@ -50,7 +50,7 @@ t_token	*split_dquote(char **tmp, char *line)
 	index = 0;
 	set = allocate_quoted(line, '\"');
 	if (set == NULL)
-		put_error(PARSE_ERROR, &line[0]);
+		return (put_error(PARSE_ERROR, &line[0]), NULL);
 	while (line[index + 1] != '\0')
 	{
 		if (line[index + 1] == '\"')
@@ -82,6 +82,6 @@ static char	*allocate_quoted(char *line, char quote_kind)
 		len += 1;
 	quoted = (char *)malloc(sizeof(char) * (len + 1));
 	if (quoted == NULL)
-		exit(1);
+		return (NULL);
 	return (quoted);
 }

@@ -6,7 +6,7 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/07/07 14:57:30 by yususato         ###   ########.fr        #
+#    Updated: 2024/07/09 21:03:02 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,8 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(EXECUTE_DIR)/control_io.c \
 		$(EXECUTE_DIR)/redirect_stream.c \
 		$(EXECUTE_DIR)/heredoc_loop.c \
+		$(EXECUTE_DIR)/heredoc_file.c \
+		$(EXECUTE_DIR)/heredoc_env.c \
 		$(UTILS_DIR)/handle_status.c \
 		$(UTILS_DIR)/parser_utils.c \
 		$(UTILS_DIR)/is_equal.c \
@@ -50,7 +52,6 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(LEXER_DIR)/lexer.c \
 		$(LEXER_DIR)/free_lexer.c \
 		$(LEXER_DIR)/lexer_check.c \
-		$(LEXER_DIR)/lexer_quote.c \
 		$(LEXER_DIR)/lexer_split.c \
 		$(LEXER_DIR)/lexer_split_quote.c \
 		$(LEXER_DIR)/lexer_token.c \
@@ -58,11 +59,13 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(PARSER_DIR)/parser_cmd.c \
 		$(PARSER_DIR)/parser_pipe.c \
 		$(PARSER_DIR)/parser_redirect.c \
+		$(PARSER_DIR)/parser_env_utils.c \
 		$(PARSER_DIR)/parser_check.c \
 		$(PARSER_DIR)/free_parser.c \
 		$(PARSER_DIR)/parser_env.c \
 		$(PARSER_DIR)/parser_token.c \
 		$(PARSER_DIR)/expand.c \
+		$(PARSER_DIR)/parser_token_pipe_redirect.c \
 		./srcs/signalctrl.c \
 		./srcs/main.c \
 

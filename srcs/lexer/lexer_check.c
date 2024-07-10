@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:19:25 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/05/13 18:19:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:42:17 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 bool	check_word(char	*line)
 {
-	return (*line && !strchr("|&;()\t\n",*line));
+	return (*line && !ft_strchr("|&;()\t\n",*line));
 }
