@@ -6,13 +6,14 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/10 22:10:21 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:08:49 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	write_error_efd(t_code error_code, char *insert);
+static char	*join_three_strs(char *s1, char *s2, char *s3);
 
 void	perror_set_flag(char *insert)
 {
@@ -48,28 +49,34 @@ void	put_error_exit(t_code error_code)
 
 static void	write_error_efd(t_code error_code, char *insert)
 {
+	char	*error_message;
+
+	error_message = NULL;
 	if (error_code == EXPORT_ERROR)
-	{
-		write(2, "minishell: export: `", 20);
-		write(2, insert, ft_strlen(insert));
-		write(2, "': not a valid identifier\n", 26);
-	}
+		error_message = join_three_strs("minishell: export: `", insert, \
+										"': not a valid identifier\n");
 	else if (error_code == UNSET_ERROR)
-	{
-		write(2, "minishell: unset: `", 19);
-		write(2, insert, ft_strlen(insert));
-		write(2, "': not a valid identifier\n", 26);
-	}
+		error_message = join_three_strs("minishell: unset: `", insert, \
+										"': not a valid identifier\n");
 	else if (error_code == NOT_FOUND_ERROR)
-	{
-		write(2, "minishell: ", 12);
-		write(2, insert, ft_strlen(insert));
-		write(2, ": command not found\n", 20);
-	}
+		error_message = join_three_strs("minishell: ", insert, \
+									": command not found\n");
 	else if (error_code == PARSE_ERROR)
-	{
-		write(2, "minishell: syntax error near unexpected token `", 47);
-		write(2, insert, ft_strlen(insert));
-		write(2, "'\n", 2);
-	}
+		error_message = join_three_strs(\
+		"minishell: syntax error near unexpected token `", insert, "'\n");
+	else
+		return ;
+	write(2, error_message, ft_strlen(error_message));
+	free(error_message);
+}
+
+static char	*join_three_strs(char *s1, char *s2, char *s3)
+{
+	char	*tmp1;
+	char	*tmp2;
+
+	tmp1 = ft_strjoin(s1, s2);
+	tmp2 = ft_strjoin(tmp1, s3);
+	free(tmp1);
+	return (tmp2);
 }

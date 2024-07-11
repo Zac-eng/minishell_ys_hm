@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/07/11 10:30:51 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:04:03 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ static void	change_old_pwd(t_env *env)
 	pwd_node = find_node(env, "PWD");
 	if (oldpwd_node == NULL)
 		return ;
+	if (oldpwd_node->value != NULL)
+		free(oldpwd_node->value);
 	if (pwd_node == NULL)
 		oldpwd_node->value = NULL;
 	else
