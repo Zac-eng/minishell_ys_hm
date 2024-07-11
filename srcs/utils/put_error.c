@@ -6,14 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/11 11:08:49 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:44:34 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	write_error_efd(t_code error_code, char *insert);
-static char	*join_three_strs(char *s1, char *s2, char *s3);
 
 void	perror_set_flag(char *insert)
 {
@@ -68,15 +67,4 @@ static void	write_error_efd(t_code error_code, char *insert)
 		return ;
 	write(2, error_message, ft_strlen(error_message));
 	free(error_message);
-}
-
-static char	*join_three_strs(char *s1, char *s2, char *s3)
-{
-	char	*tmp1;
-	char	*tmp2;
-
-	tmp1 = ft_strjoin(s1, s2);
-	tmp2 = ft_strjoin(tmp1, s3);
-	free(tmp1);
-	return (tmp2);
 }

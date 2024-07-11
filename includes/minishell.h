@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/11 11:28:02 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:45:07 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ char	*create_file(void);
 char	*expand_heredoc(char *line, t_env **env);
 char	*env_insert_heredoc(char *str, t_env **env, int len);
 int		get_env_len(char *env_line, int *key_value_len);
+char	*join_three_strs(char *s1, char *s2, char *s3);
 
 #endif
