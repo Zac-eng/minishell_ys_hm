@@ -6,14 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 17:28:47 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 22:46:41 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/10 14:10:21 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_env	*allocate_tenv(char *env_line);
-static int		get_env_len(char *env_line, int *key_value_len);
 static int		copy_kv(char *dest, char *ref);
 
 t_env	*create_envnode(char *env_line)
@@ -79,7 +78,7 @@ static t_env	*allocate_tenv(char *env_line)
 	return (env_node);
 }
 
-static int	get_env_len(char *env, int *kv_lens)
+int	get_env_len(char *env, int *kv_lens)
 {
 	int	operand;
 
@@ -98,11 +97,7 @@ static int	get_env_len(char *env, int *kv_lens)
 	else
 		operand = 1;
 	if (kv_lens[0] == 0)
-	{
-		write(2, "minishell: not a valid identifier\n", 34);
-		g_flag = 1;
 		return (1);
-	}
 	while (env[kv_lens[0] + kv_lens[1] + operand] != '\0')
 		kv_lens[1]++;
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/07 14:59:33 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/11 11:45:07 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@
 
 extern volatile sig_atomic_t	g_flag;
 
+typedef enum e_export {
+	ADDITION,
+	INVALID,
+	EQUAL,
+}	t_export;
+
 void	signalctrl(void);
 char	**get_paths(t_env *env);
 t_env	*env_into_tenv(char **env);
@@ -53,35 +59,45 @@ void	_export(char **cmd, t_env **env_head);
 void	_pwd(void);
 void	_unset(char **cmd, t_env **env);
 void	minishell_exit(char **cmd);
+bool	is_valid_envkey(char *envvars);
 t_env	*create_envnode(char *env_line);
+void	export_action(t_env **env_head, char *envvars, t_export type);
 void	free_env(t_env *env);
 void	free_node(t_env *node);
 void	free_str_list(char **str_list);
 t_env	*find_node(t_env *env_head, char *key);
+int		rewrite_value(char **before, char *after, t_export type);
 void	push_env(t_env *env_head, t_env *new_node);
 int		remove_env(t_env *previous);
 char	*_getenv(t_env *env_head, char *key);
 void	put_error(t_code error_code, char *insert);
 void	put_error_exit(t_code error_code);
-void	perror_set_flag(void);
+void	perror_set_flag(char *insert);
 void	handle_status(pid_t pid_to_wait, bool set_st);
 pid_t	safe_fork(void);
 int		redirect_stream(t_file *file_head);
 int		is_equal(char *str, char *ref);
-void	heredoc(t_file *file, t_env **env);
+bool	heredoc(t_file *file, t_env **env);
 char	*heredoc_join(char *before, char *after, char *env_str);
-char	*env_heredoc(char *line, t_env **env, int *i);
-void	write_heredoc(char *line, t_env **env, int fd);
-void	quote_heredoc(t_file *file);
-void	quote_read_heredoc(t_file *file, char *new_file);
+char	*env_heredoc(char *line, t_env **env, int *i, int j);
+bool	quote_heredoc(t_file *file);
+bool	quote_read_heredoc(t_file *file, char *new_file);
 char	*create_file(void);
 void	rm_heredoc_file(void);
-void	read_heredoc(t_file *file, t_env **env, char *new_file);
-void	filename_change(t_file *file, char *new_file);
 void	free_close(char *line, int fd);
 void	signal_heredoc(void);
-void	heredoc_loop(t_file *file, t_env **env);
 int		save_io(int *original_io);
 int		get_back_io(int *original_io);
+bool	filename_change(t_file *file, char *new_file);
+bool	read_heredoc(t_file *file, t_env **env, char *new_file);
+bool	write_heredoc(char *line, t_env **env, int fd);
+char	*create_new_line(char *line, t_env **env, int *start);
+bool	heredoc_loop(t_file *file, t_env **env);
+void	free_close(char *line, int fd);
+char	*create_file(void);
+char	*expand_heredoc(char *line, t_env **env);
+char	*env_insert_heredoc(char *str, t_env **env, int len);
+int		get_env_len(char *env_line, int *key_value_len);
+char	*join_three_strs(char *s1, char *s2, char *s3);
 
 #endif

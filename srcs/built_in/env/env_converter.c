@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:53:15 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/05 22:52:04 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/11 10:30:11 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**env_into_list(t_env *env)
 	env_list = (char **)malloc(sizeof(char *) * (env_len + 1));
 	if (env_list == NULL)
 		return (NULL);
-	while (current != NULL)
+	while (current != NULL && index < env_len)
 	{
 		env_list[index] = flatten_tenv(current);
 		if (env_list[index] == NULL)
@@ -70,8 +70,6 @@ char	**env_into_list(t_env *env)
 		index++;
 	}
 	env_list[index] = NULL;
-	// for (int i=0; env_list[i] != NULL; i++)
-	// 	printf("%s\n", env_list[i]);
 	return (env_list);
 }
 
