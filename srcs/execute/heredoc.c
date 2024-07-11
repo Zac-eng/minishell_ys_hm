@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/09 15:49:18 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:15:34 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool	read_heredoc(t_file *file, t_env **env, char *new_file)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strlen(line) && !is_equal(line, file->file_name))
+		if (ft_strlen(line) && is_equal(line, file->file_name))
 		{
 			free_close(line, fd);
 			break ;

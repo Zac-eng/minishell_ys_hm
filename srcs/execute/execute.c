@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/08 19:35:26 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:15:52 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,19 @@
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out);
 static void	pipe_action(t_parser *cmd, t_env **env, char **paths, int dup_out);
+
+bool	heredoc_check_loop(t_parser *parser, t_env **env)
+{
+	t_parser	*current;
+
+	current = parser;
+	if (current->file != NULL)
+	{
+		if (heredoc_loop(current->file, env) == false)
+			return (false);
+	}
+	return (true);
+}
 
 void	execute(char *line, t_env **env, char **paths)
 {
@@ -32,6 +45,8 @@ void	execute(char *line, t_env **env, char **paths)
 	if (parser_head == NULL)
 		return ;
 	current = parser_head;
+	if (heredoc_check_loop(current, env) == false)
+		return (free_parser(parser_head));
 	while (current != NULL && current->next != NULL)
 		current = current->next;
 	execute_pipe(current, env, paths, 1);

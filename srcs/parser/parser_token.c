@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:17:01 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/08 21:01:13 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:15:03 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	node_delete(t_token *tmp, t_token *tmp_next)
 	free(tmp_next);
 }
 
-bool	token_check(t_token	*lexer)
+bool	token_check_str(t_token	*lexer)
 {
 	t_token	*tmp;
 	char	*new;

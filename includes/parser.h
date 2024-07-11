@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/10 09:19:46 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:26:28 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ typedef enum e_code
 	NOT_FOUND_ERROR,
 	FORK_ERROR,
 	PARSE_ERROR,
+	PARSE_ERROR_REDIRECT,
+	PARSE_ERROR_REDIRECT_STR,
 }	t_code;
 
 bool		check_word(char	*line);
@@ -116,14 +118,16 @@ int			env_question_add(char *new, int *i, int *count);
 char		*env_insert(char *str, t_env **env, int len);
 t_token		*split_other(char **tmp, char *line);
 bool		is_lexer_continue(char c);
-bool		token_check(t_token	*lexer);
+bool		token_check_str(t_token	*lexer);
 int			cmd_len(char *str, t_env **env);
 bool		expand(t_token *lexer, t_env **env);
 bool		expand_dquote(t_token *tmp, t_env **env);
 bool		expand_cmd(t_token *tmp, t_env **env);
-int			is_squote_space(char *str);
+int			is_special_space(char *str);
 void		env_process(char *str, char *new, t_env **env, int *count);
 char		*head_env_check(char *line, int *i, int *j);
 bool		env_process_heredoc(char *str, char *new, t_env **env, int *count);
+bool		token_check_pipe_redirect(t_token *lexer);
+bool		lexer_connect_check(t_token *lexer);
 
 #endif

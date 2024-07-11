@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:18:10 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/08 21:31:09 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/11 13:15:02 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,28 @@
 
 static void	parser_error(t_parser *parser_head, char *current_str);
 
+bool	lexer_connect_check(t_token *lexer)
+{
+	if (is_pipe_redirect(lexer) && lexer->next == NULL)
+	{
+		if (lexer->kind == TK_PIPE)
+			return (put_error(PARSE_ERROR_REDIRECT_STR, "|"), false);
+		else
+			return (put_error(PARSE_ERROR_REDIRECT, ""), false);
+	}
+	return (true);
+}
+
 t_parser	*parser(t_token	*lexer, t_env **env)
 {
 	t_token		*lexer_tmp;
 	t_parser	*parser;
 	t_parser	*parser_tmp;
 
-	if (lexer == NULL || (is_pipe_redirect(lexer) && lexer->next == NULL) \
-			|| expand(lexer, env) == false || token_check(lexer) == false)
+	if (lexer == NULL || !lexer_connect_check(lexer))
+		return (NULL);
+	if (!token_check_pipe_redirect(lexer) \
+		|| expand(lexer, env) == false || token_check_str(lexer) == false)
 		return (NULL);
 	lexer_tmp = lexer;
 	parser = parser_node_new();
@@ -30,13 +44,8 @@ t_parser	*parser(t_token	*lexer, t_env **env)
 	parser_tmp = parser;
 	while (lexer_tmp != NULL)
 	{
-		if (lexer != NULL && lexer_tmp->str[0] == '\0')
-		{
-			lexer_tmp = lexer_tmp->next;
-			continue ;
-		}
 		if (parser_check(&lexer_tmp, &parser_tmp, &parser) == NULL)
-			return (parser_error(parser_tmp, lexer_tmp->str), NULL);
+			return (parser_error(parser, lexer_tmp->str), NULL);
 			lexer_tmp = (lexer_tmp)->next;
 	}
 	return (parser);
