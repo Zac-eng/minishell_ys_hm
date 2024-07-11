@@ -6,21 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:07:07 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/10 14:11:53 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/11 09:30:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-typedef enum e_export {
-	ADDITION,
-	INVALID,
-	EQUAL,
-}	t_export;
-static void		export_action(t_env **env_head, char *envvars, \
-											t_export type);
 static t_export	check_envvars(char *envvars);
-static int		rewrite_value(char **before, char *after, t_export type);
 
 void	_export(char **cmd, t_env **env_head)
 {
@@ -66,52 +58,7 @@ bool	is_valid_envkey(char *envvars)
 	return (true);
 }
 
-static t_export	check_envvars(char *envvars)
-{
-	int	index;
-
-	index = 0;
-	if (is_valid_envkey(envvars) == false)
-		return (INVALID);
-	while (envvars[index] != '\0' \
-		&& envvars[index] != '=' && envvars[index] != '+')
-		index += 1;
-	if (envvars[index] == '+')
-	{
-		if (envvars[index + 1] == '=')
-			return (ADDITION);
-		else
-			return (INVALID);
-	}
-	return (EQUAL);
-}
-
-static void	export_action(t_env **env_head, char *envvars, t_export type)
-{
-	t_env	*target;
-	t_env	*new_node;
-
-	if (envvars == NULL)
-		return ;
-	new_node = create_envnode(envvars);
-	if (new_node == NULL)
-		return ;
-	if (*env_head == NULL)
-	{
-		*env_head = new_node;
-		return ;
-	}
-	target = find_node(*env_head, new_node->key);
-	if (target == NULL)
-		push_env(*env_head, new_node);
-	else
-	{
-		rewrite_value(&target->value, new_node->value, type);
-		free_node(new_node);
-	}
-}
-
-static int	rewrite_value(char **before, char *after, t_export type)
+int	rewrite_value(char **before, char *after, t_export type)
 {
 	char	*tmp;
 
@@ -133,4 +80,49 @@ static int	rewrite_value(char **before, char *after, t_export type)
 			return (-1);
 	}
 	return (0);
+}
+
+static t_export	check_envvars(char *envvars)
+{
+	int	index;
+
+	index = 0;
+	if (is_valid_envkey(envvars) == false)
+		return (INVALID);
+	while (envvars[index] != '\0' \
+		&& envvars[index] != '=' && envvars[index] != '+')
+		index += 1;
+	if (envvars[index] == '+')
+	{
+		if (envvars[index + 1] == '=')
+			return (ADDITION);
+		else
+			return (INVALID);
+	}
+	return (EQUAL);
+}
+
+void	export_action(t_env **env_head, char *envvars, t_export type)
+{
+	t_env	*target;
+	t_env	*new_node;
+
+	if (env_head == NULL || envvars == NULL)
+		return ;
+	new_node = create_envnode(envvars);
+	if (new_node == NULL)
+		return ;
+	if (*env_head == NULL)
+	{
+		*env_head = new_node;
+		return ;
+	}
+	target = find_node(*env_head, new_node->key);
+	if (target == NULL)
+		push_env(*env_head, new_node);
+	else
+	{
+		rewrite_value(&target->value, new_node->value, type);
+		free_node(new_node);
+	}
 }

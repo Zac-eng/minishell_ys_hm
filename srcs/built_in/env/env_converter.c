@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_converter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:53:15 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/08 21:39:06 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/11 10:27:50 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	**env_into_list(t_env *env)
 	env_list = (char **)malloc(sizeof(char *) * (env_len + 1));
 	if (env_list == NULL)
 		return (NULL);
-	while (current != NULL)
+	while (current != NULL && index < env_len)
 	{
 		env_list[index] = flatten_tenv(current);
 		if (env_list[index] == NULL)
@@ -89,6 +89,7 @@ static char	*flatten_tenv(t_env *env)
 	line[index] = '=';
 	index++;
 	index += ft_strlcpy(&line[index], env->value, lens[1] + 1);
+	printf("%s\n", line);
 	return (line);
 }
 

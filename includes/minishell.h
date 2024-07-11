@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/10 14:32:10 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/11 09:24:16 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@
 
 extern volatile sig_atomic_t	g_flag;
 
+typedef enum e_export {
+	ADDITION,
+	INVALID,
+	EQUAL,
+}	t_export;
+
 void	signalctrl(void);
 char	**get_paths(t_env *env);
 t_env	*env_into_tenv(char **env);
@@ -55,10 +61,12 @@ void	_unset(char **cmd, t_env **env);
 void	minishell_exit(char **cmd);
 bool	is_valid_envkey(char *envvars);
 t_env	*create_envnode(char *env_line);
+void	export_action(t_env **env_head, char *envvars, t_export type);
 void	free_env(t_env *env);
 void	free_node(t_env *node);
 void	free_str_list(char **str_list);
 t_env	*find_node(t_env *env_head, char *key);
+int		rewrite_value(char **before, char *after, t_export type);
 void	push_env(t_env *env_head, t_env *new_node);
 int		remove_env(t_env *previous);
 char	*_getenv(t_env *env_head, char *key);
