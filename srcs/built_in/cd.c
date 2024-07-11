@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/07/11 09:43:56 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/11 10:30:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static int	change_dir_env(t_env *env, char *new_cwd)
 			free(pwd_node->value);
 		pwd_node->value = allocated_cwd;
 	}
-	printf("%s\n", pwd_node->value);
 	return (0);
 }
 
