@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 15:48:26 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/10 21:18:47 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:05:47 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*env_insert(char *str, t_env **env, int len)
 
 	count = 0;
 	new = (char *)malloc(sizeof(char) * (len + 1));
-	if (!new)
+	if (new == NULL)
 		return (NULL);
 	env_process(str, new, env, &count);
 	return (new);

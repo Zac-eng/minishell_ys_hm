@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/10 20:39:00 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:17:31 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ bool		is_lexer_continue(char c);
 bool		token_check_str(t_token	*lexer);
 int			cmd_len(char *str, t_env **env);
 bool		expand(t_token *lexer, t_env **env);
-bool		expand_dquote(t_token *tmp, t_env **env);
-bool		expand_cmd(t_token *tmp, t_env **env);
+bool		expand_dquote(t_token *lexer, t_token *tmp, t_env **env);
+bool		expand_cmd(t_token *lexer, t_token *tmp, t_env **env);
 int			is_special_space(char *str);
 void		env_process(char *str, char *new, t_env **env, int *count);
 char		*head_env_check(char *line, int *i, int *j);
