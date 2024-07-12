@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:50:15 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/11 13:15:42 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:22:25 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ bool	expand(t_token *lexer, t_env **env)
 	tmp = lexer;
 	while (tmp != NULL)
 	{
-		if (tmp->kind == TK_CMD)
+		if (tmp->kind == TK_DLESS && tmp->next != NULL)
+			tmp = tmp->next;
+		else if (tmp->kind == TK_CMD)
 		{
 			if (expand_cmd(tmp, env) == false)
 				return (false);
