@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/11 13:15:34 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:56:41 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ bool	read_heredoc(t_file *file, t_env **env, char *new_file)
 	char	*line;
 
 	signal_heredoc();
+	fd = open(new_file, O_WRONLY | O_APPEND, 0644);
+	if (fd == -1)
+		return (false);
 	while (true)
 	{
-		fd = open(new_file, O_WRONLY | O_APPEND, 0644);
-		if (fd == -1)
-			return (false);
 		line = readline("> ");
 		if (!line)
 			break ;
