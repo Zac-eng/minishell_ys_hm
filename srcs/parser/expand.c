@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:50:15 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/12 18:22:25 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/12 19:26:04 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ bool	expand_cmd(t_token *tmp, t_env **env)
 	len = 0;
 	len = cmd_len(tmp->str, env);
 	set = env_insert(tmp->str, env, len);
-	if (set == NULL)
-		return (false);
 	free(tmp->str);
 	tmp->str = set;
 	return (true);
@@ -41,6 +39,27 @@ bool	expand_dquote(t_token *tmp, t_env **env)
 		return (false);
 	free(tmp->str);
 	tmp->str = set;
+	return (true);
+}
+
+bool	lexer_len_check(t_token *lexer)
+{
+	t_token	*tmp;
+	int		flag;
+	int		count;
+
+	flag = 0;
+	count = 0;
+	tmp = lexer;
+	while (tmp != NULL)
+	{
+		if (tmp->str == NULL || tmp->str[0] == '\0')
+			flag++;
+		count++;
+		tmp = tmp->next;
+	}
+	if (count == flag)
+		return (false);
 	return (true);
 }
 
@@ -65,5 +84,7 @@ bool	expand(t_token *lexer, t_env **env)
 		}
 		tmp = tmp->next;
 	}
+	if (lexer_len_check(lexer) == false)
+		return (false);
 	return (true);
 }
