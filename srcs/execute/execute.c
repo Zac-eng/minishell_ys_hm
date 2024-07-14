@@ -6,15 +6,16 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/11 13:15:52 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/14 13:27:39 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out);
-static void	pipe_action(t_parser *cmd, t_env **env, char **paths, int dup_out);
+static void	execute_pipe(t_parser *cmd, t_env **env, char **paths);
+static void	pipe_function(t_parser *cmd, t_env **env, char **paths, int dup_out);
+static void	pipe_action(t_parser *cmd, t_env **env, char **paths);
 
 bool	heredoc_check_loop(t_parser *parser, t_env **env)
 {
@@ -49,21 +50,39 @@ void	execute(char *line, t_env **env, char **paths)
 		return (free_parser(parser_head));
 	while (current != NULL && current->next != NULL)
 		current = current->next;
-	execute_pipe(current, env, paths, 1);
+	execute_pipe(current, env, paths);
 	free_parser(parser_head);
 }
 
-static void	execute_pipe(t_parser *cmd, t_env **env, char **paths, int dup_out)
+static void	execute_pipe(t_parser *cmd, t_env **env, char **paths)
+{
+	pid_t	pid;
+
+	if (cmd->prev != NULL)
+	{
+		pid = safe_fork();
+		if (pid == 0)
+		{
+			pipe_function(cmd, env, paths, 1);
+			exit(g_flag);
+		}
+		handle_status(pid, true);
+	}
+	else
+		execute_redirect(cmd, env, paths);
+}
+
+static void	pipe_function(t_parser *cmd, t_env **env, char **paths, int dup_out)
 {
 	if (dup_out != 1)
 		dup2(dup_out, 1);
 	if (cmd->prev != NULL)
-		pipe_action(cmd, env, paths, dup_out);
+		pipe_action(cmd, env, paths);
 	else
-		execute_redirect(cmd, env, paths, (dup_out == 1));
+		execute_redirect(cmd, env, paths);
 }
 
-static void	pipe_action(t_parser *cmd, t_env **env, char **paths, int dup_out)
+static void	pipe_action(t_parser *cmd, t_env **env, char **paths)
 {
 	pid_t	pid;
 	int		pipes[2];
@@ -77,16 +96,16 @@ static void	pipe_action(t_parser *cmd, t_env **env, char **paths, int dup_out)
 	if (pid == 0)
 	{
 		close(pipes[READ]);
-		execute_pipe(cmd->prev, env, paths, pipes[WRITE]);
+		pipe_function(cmd->prev, env, paths, pipes[WRITE]);
 		close(pipes[WRITE]);
 		exit(g_flag);
 	}
 	close(pipes[WRITE]);
 	if (dup2(pipes[READ], 0) != 0)
-		return (handle_status(pid, dup_out == 1));
-	execute_redirect(cmd, env, paths, dup_out == 1);
+		return (handle_status(pid, false));
 	close(pipes[READ]);
+	execute_redirect(cmd, env, paths);
 	if (get_back_io(&original_io[0]) < 0)
-		return (handle_status(pid, dup_out == 1));
+		return (handle_status(pid, false));
 	handle_status(pid, false);
 }

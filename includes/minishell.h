@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/11 13:15:26 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/14 13:18:12 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ char	**get_paths(t_env *env);
 t_env	*env_into_tenv(char **env);
 char	**env_into_list(t_env *env);
 void	execute(char *line, t_env **env, char **paths);
-void	execute_cmd(char **cmd, t_env **env, char **paths, bool set_st);
-void	execute_envpath(char **paths, char **cmd, char **env, bool set_st);
-void	execute_redirect(t_parser *cmd, t_env **env, char **paths, bool set_st);
+void	execute_cmd(char **cmd, t_env **env, char **paths);
+void	execute_envpath(char **paths, char **cmd, char **env);
+void	execute_redirect(t_parser *cmd, t_env **env, char **paths);
 void	_cd(char **cmd, t_env *env);
 void	_echo(char **cmd);
 void	_env(t_env *env, bool is_export);
@@ -73,7 +73,7 @@ char	*_getenv(t_env *env_head, char *key);
 void	put_error(t_code error_code, char *insert);
 void	put_error_exit(t_code error_code);
 void	perror_set_flag(char *insert);
-void	handle_status(pid_t pid_to_wait, bool set_st);
+void	handle_status(pid_t pid_to_wait, bool set_flag);
 pid_t	safe_fork(void);
 int		redirect_stream(t_file *file_head);
 int		is_equal(char *str, char *ref);
