@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 10:21:14 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/14 20:53:41 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/14 22:14:34 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	sigint_no_redisplay(int signum)
 {
 	if (signum == SIGINT)
 	{
-		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 	}
