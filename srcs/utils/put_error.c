@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/11 13:25:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:55:41 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void	put_error(t_code error_code, char *insert)
 	else if (error_code == PARSE_ERROR_REDIRECT_STR)
 	{
 		write_error_efd(error_code, insert);
-		g_flag = 9;
+		g_flag = 258;
 	}
 	else if (error_code == PARSE_ERROR_REDIRECT)
 	{
 		write(2, "minishell: syntax error near unexpected 'newline'\n", 50);
-		g_flag = 8;
+		g_flag = 258;
 	}
 }
 
@@ -70,7 +70,10 @@ static void	write_error_efd(t_code e_code, char *insert)
 	else if (e_code == NOT_FOUND_ERROR)
 		error_message = join_three_strs("minishell: ", insert, \
 									": command not found\n");
-	else if (e_code == PARSE_ERROR || e_code == PARSE_ERROR_REDIRECT_STR)
+	else if (e_code == PARSE_ERROR)
+		error_message = join_three_strs(\
+		"minishell: syntax error near unexpected token `", insert, "'\n");
+	else if (e_code == PARSE_ERROR_REDIRECT_STR)
 		error_message = join_three_strs(\
 		"minishell: syntax error near unexpected token `", insert, "'\n");
 	else

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 20:55:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/14 15:30:08 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/14 16:02:09 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ bool	token_check_pipe_redirect(t_token *lexer)
 			return (put_error(PARSE_ERROR, "|"), false);
 		else if (tmp->kind == TK_PIPE && tmp->next->kind == TK_PIPE)
 			return (put_error(PARSE_ERROR, "|"), false);
+		else if (is_redirect(tmp) && is_redirect(tmp->next))
+			return (put_error(PARSE_ERROR_REDIRECT_STR, tmp->next->str), false);
 		else
 			tmp = tmp->next;
 	}
