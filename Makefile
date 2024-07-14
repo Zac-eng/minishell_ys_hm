@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/02 20:28:35 by yususato          #+#    #+#              #
-#    Updated: 2024/07/11 11:47:05 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/07/11 13:15:25 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRCS =	$(BUILTIN_DIR)/env/env_constructor.c \
 		$(PARSER_DIR)/parser_env.c \
 		$(PARSER_DIR)/parser_token.c \
 		$(PARSER_DIR)/expand.c \
+		$(PARSER_DIR)/parser_token_pipe_redirect.c \
 		./srcs/signalctrl.c \
 		./srcs/main.c \
 

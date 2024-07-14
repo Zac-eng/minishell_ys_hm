@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 19:48:42 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/09 15:48:25 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:34:36 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ bool	quote_read_heredoc(t_file *file, char *new_file)
 	char	*line;
 
 	signal_heredoc();
+	fd = open(new_file, O_WRONLY | O_APPEND, 0644);
+	if (fd == -1)
+		return (false);
 	while (true)
 	{
-		fd = open(new_file, O_WRONLY | O_APPEND, 0644);
-		if (fd == -1)
-			return (false);
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strlen(line) && !is_equal(line, file->file_name))
+		if (ft_strlen(line) && is_equal(line, file->file_name))
 		{
 			free_close(line, fd);
 			break ;
@@ -48,7 +48,7 @@ bool	quote_read_heredoc(t_file *file, char *new_file)
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
-		close(fd);
 	}
+	close(fd);
 	return (true);
 }

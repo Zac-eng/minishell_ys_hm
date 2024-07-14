@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/11 11:44:34 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:55:41 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ void	put_error(t_code error_code, char *insert)
 		write_error_efd(error_code, insert);
 		g_flag = 258;
 	}
+	else if (error_code == PARSE_ERROR_REDIRECT_STR)
+	{
+		write_error_efd(error_code, insert);
+		g_flag = 258;
+	}
+	else if (error_code == PARSE_ERROR_REDIRECT)
+	{
+		write(2, "minishell: syntax error near unexpected 'newline'\n", 50);
+		g_flag = 258;
+	}
 }
 
 void	put_error_exit(t_code error_code)
@@ -46,21 +56,24 @@ void	put_error_exit(t_code error_code)
 	exit(149);
 }
 
-static void	write_error_efd(t_code error_code, char *insert)
+static void	write_error_efd(t_code e_code, char *insert)
 {
 	char	*error_message;
 
 	error_message = NULL;
-	if (error_code == EXPORT_ERROR)
+	if (e_code == EXPORT_ERROR)
 		error_message = join_three_strs("minishell: export: `", insert, \
 										"': not a valid identifier\n");
-	else if (error_code == UNSET_ERROR)
+	else if (e_code == UNSET_ERROR)
 		error_message = join_three_strs("minishell: unset: `", insert, \
 										"': not a valid identifier\n");
-	else if (error_code == NOT_FOUND_ERROR)
+	else if (e_code == NOT_FOUND_ERROR)
 		error_message = join_three_strs("minishell: ", insert, \
 									": command not found\n");
-	else if (error_code == PARSE_ERROR)
+	else if (e_code == PARSE_ERROR)
+		error_message = join_three_strs(\
+		"minishell: syntax error near unexpected token `", insert, "'\n");
+	else if (e_code == PARSE_ERROR_REDIRECT_STR)
 		error_message = join_three_strs(\
 		"minishell: syntax error near unexpected token `", insert, "'\n");
 	else

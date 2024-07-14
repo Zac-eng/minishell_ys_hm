@@ -6,16 +6,25 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:04:19 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/07 15:49:45 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:33:25 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	is_squote_space(char *str)
+#include "minishell.h"
+
+bool	lexer_null_check(t_token *lexer)
+{
+	if (lexer->str[0] == '\0' && lexer->kind == TK_CMD)
+		return (false);
+	return (true);
+}
+
+int	is_special_space(char *str)
 {
 	int	len;
 
 	len = 0;
-	while (str[len] && str[len] != ' ' && str[len] != '\'')
+	while (str[len] && ft_isalnum(str[len]))
 		len++;
 	return (len);
 }

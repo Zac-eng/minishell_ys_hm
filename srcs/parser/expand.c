@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 16:50:15 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/08 21:02:08 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/14 14:04:52 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ bool	expand_cmd(t_token *tmp, t_env **env)
 	len = 0;
 	len = cmd_len(tmp->str, env);
 	set = env_insert(tmp->str, env, len);
-	if (set == NULL)
-		return (false);
 	free(tmp->str);
 	tmp->str = set;
 	return (true);
@@ -51,7 +49,9 @@ bool	expand(t_token *lexer, t_env **env)
 	tmp = lexer;
 	while (tmp != NULL)
 	{
-		if (tmp->kind == TK_CMD)
+		if (tmp->kind == TK_DLESS && tmp->next != NULL)
+			tmp = tmp->next;
+		else if (tmp->kind == TK_CMD)
 		{
 			if (expand_cmd(tmp, env) == false)
 				return (false);

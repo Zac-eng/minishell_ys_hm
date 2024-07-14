@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 11:26:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/06/30 17:16:54 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/14 20:53:36 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ static void	sigquit_handler(int signum);
 
 void	signal_handler_heredoc(int signum)
 {
-	(void)signum;
-	close(0);
+	if (signum == SIGINT)
+	{
+		g_flag = 1;
+		close(0);
+	}
 }
 
 void	signal_heredoc(void)

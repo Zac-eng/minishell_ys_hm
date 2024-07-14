@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/11 10:08:17 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/14 21:14:00 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	execute_execve(char **cmd, t_env *env, char **paths, bool set_st);
-static void	execute_path(char *path, char **cmd, char **env, bool set_st);
+static void	execute_execve(char **cmd, t_env *env, char **paths);
+static void	execute_path(char *path, char **cmd, char **env);
 static bool	is_dir(char *path);
 
-void	execute_cmd(char **cmd, t_env **env, char **paths, bool set_st)
+void	execute_cmd(char **cmd, t_env **env, char **paths)
 {
 	if (cmd == NULL || env == NULL)
 		return ;
@@ -35,10 +35,10 @@ void	execute_cmd(char **cmd, t_env **env, char **paths, bool set_st)
 	else if (is_equal(cmd[0], "exit") == 1)
 		return (minishell_exit(cmd));
 	else
-		execute_execve(cmd, *env, paths, set_st);
+		execute_execve(cmd, *env, paths);
 }
 
-static void	execute_execve(char **cmd, t_env *env, char **paths, bool set_st)
+static void	execute_execve(char **cmd, t_env *env, char **paths)
 {
 	char	**env_str;
 
@@ -48,13 +48,13 @@ static void	execute_execve(char **cmd, t_env *env, char **paths, bool set_st)
 	if (env_str == NULL)
 		return ;
 	if (paths != NULL && ft_strchr(cmd[0], '/') == NULL)
-		execute_envpath(paths, cmd, env_str, set_st);
+		execute_envpath(paths, cmd, env_str);
 	else
-		execute_path(cmd[0], cmd, env_str, set_st);
+		execute_path(cmd[0], cmd, env_str);
 	free_str_list(env_str);
 }
 
-static void	execute_path(char *path, char **cmd, char **env, bool set_st)
+static void	execute_path(char *path, char **cmd, char **env)
 {
 	pid_t	pid;
 
@@ -79,7 +79,7 @@ static void	execute_path(char *path, char **cmd, char **env, bool set_st)
 				exit(EXIT_FAILURE);
 		}
 	}
-	handle_status(pid, set_st);
+	handle_status(pid, true);
 }
 
 static bool	is_dir(char *path)

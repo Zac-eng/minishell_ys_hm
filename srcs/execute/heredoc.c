@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/09 15:49:18 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/14 19:45:42 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,21 @@
 
 bool	heredoc(t_file *file, t_env **env)
 {
+	int		fd;
 	char	*new_file;
 
+	fd = 0;
 	new_file = create_file();
 	if (new_file == NULL)
 		return (false);
-	if (read_heredoc(file, env, new_file) == false)
+	fd = open(new_file, O_WRONLY | O_APPEND, 0644);
+	if (fd == -1)
+		return (false);
+	if (read_heredoc(file, env, fd) == false)
 		return (false);
 	if (filename_change(file, new_file) == false)
+		return (false);
+	if (g_flag == 1)
 		return (false);
 	return (true);
 }
@@ -57,29 +64,31 @@ bool	write_heredoc(char *line, t_env **env, int fd)
 	return (true);
 }
 
-bool	read_heredoc(t_file *file, t_env **env, char *new_file)
+bool	read_heredoc(t_file *file, t_env **env, int fd)
 {
-	int		fd;
+	int		input;
 	char	*line;
 
 	signal_heredoc();
+	input = dup(0);
+	if (input < 0)
+		return (false);
 	while (true)
 	{
-		fd = open(new_file, O_WRONLY | O_APPEND, 0644);
-		if (fd == -1)
-			return (false);
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strlen(line) && !is_equal(line, file->file_name))
+		if (ft_strlen(line) && is_equal(line, file->file_name))
 		{
 			free_close(line, fd);
 			break ;
 		}
-		if (write_heredoc(line, env, fd) == false)
-			return (false);
+		else if (write_heredoc(line, env, fd) == false)
+			return (free_close(line, fd), false);
 		free(line);
 	}
 	close(fd);
+	if (dup2(input, 0) < 0)
+		return (false);
 	return (true);
 }
