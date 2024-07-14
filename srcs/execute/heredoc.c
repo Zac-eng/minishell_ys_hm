@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/12 18:56:41 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/14 19:34:34 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ bool	heredoc(t_file *file, t_env **env)
 	if (read_heredoc(file, env, new_file) == false)
 		return (false);
 	if (filename_change(file, new_file) == false)
+		return (false);
+	if (g_flag == 1)
 		return (false);
 	return (true);
 }
@@ -60,9 +62,13 @@ bool	write_heredoc(char *line, t_env **env, int fd)
 bool	read_heredoc(t_file *file, t_env **env, char *new_file)
 {
 	int		fd;
+	int		input;
 	char	*line;
 
 	signal_heredoc();
+	input = dup(0);
+	if (input < 0)
+		return (false);
 	fd = open(new_file, O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
 		return (false);
@@ -76,10 +82,12 @@ bool	read_heredoc(t_file *file, t_env **env, char *new_file)
 			free_close(line, fd);
 			break ;
 		}
-		if (write_heredoc(line, env, fd) == false)
-			return (false);
+		else if (write_heredoc(line, env, fd) == false)
+			return (free(line), false);
 		free(line);
 	}
 	close(fd);
+	if (dup2(input, 0) < 0)
+		return (false);
 	return (true);
 }
