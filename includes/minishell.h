@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/14 17:11:26 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/14 19:43:49 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	signal_heredoc(void);
 int		save_io(int *original_io);
 int		get_back_io(int *original_io);
 bool	filename_change(t_file *file, char *new_file);
-bool	read_heredoc(t_file *file, t_env **env, char *new_file);
+bool	read_heredoc(t_file *file, t_env **env, int fd);
 bool	write_heredoc(char *line, t_env **env, int fd);
 char	*create_new_line(char *line, t_env **env, int *start);
 bool	heredoc_loop(t_file *file, t_env **env);
