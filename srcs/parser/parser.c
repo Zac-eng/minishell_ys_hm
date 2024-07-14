@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:18:10 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/11 13:15:02 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:33:00 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	parser_error(t_parser *parser_head, char *current_str);
 
 bool	lexer_connect_check(t_token *lexer)
 {
+	if (lexer->kind == TK_PIPE)
+		return (put_error(PARSE_ERROR_REDIRECT_STR, "|"), false);
 	if (is_pipe_redirect(lexer) && lexer->next == NULL)
 	{
 		if (lexer->kind == TK_PIPE)
@@ -44,9 +46,13 @@ t_parser	*parser(t_token	*lexer, t_env **env)
 	parser_tmp = parser;
 	while (lexer_tmp != NULL)
 	{
+		while (lexer_tmp != NULL && !lexer_null_check(lexer_tmp))
+			lexer_tmp = lexer_tmp->next;
+		if (lexer_tmp == NULL)
+			break ;
 		if (parser_check(&lexer_tmp, &parser_tmp, &parser) == NULL)
 			return (parser_error(parser, lexer_tmp->str), NULL);
-			lexer_tmp = (lexer_tmp)->next;
+		lexer_tmp = lexer_tmp->next;
 	}
 	return (parser);
 }

@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:04:19 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/11 13:14:51 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:33:25 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+bool	lexer_null_check(t_token *lexer)
+{
+	if (lexer->str[0] == '\0' && lexer->kind == TK_CMD)
+		return (false);
+	return (true);
+}
 
 int	is_special_space(char *str)
 {

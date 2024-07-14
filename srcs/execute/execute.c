@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/14 13:27:39 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:34:09 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "parser.h"
 
 static void	execute_pipe(t_parser *cmd, t_env **env, char **paths);
-static void	pipe_function(t_parser *cmd, t_env **env, char **paths, int dup_out);
+static void	pipe_function(t_parser *cmd, t_env **env \
+							, char **paths, int dup_out);
 static void	pipe_action(t_parser *cmd, t_env **env, char **paths);
 
 bool	heredoc_check_loop(t_parser *parser, t_env **env)

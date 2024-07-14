@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 17:48:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/12 19:20:20 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/14 15:33:36 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ bool		file_add(t_file **file, char *file_name, t_token_kind kind, \
 void		*parser_redirect(t_token **lexer_tmp, t_parser **parser_tmp);
 void		simple_insert(char *new, char c, int *count, int *i);
 // bool		can_connect(t_token *next);
-// void		node_delete(t_token *tmp, t_token *tmp_next);
+void		node_delete(t_token *tmp, t_token *tmp_next);
 // void		token_check(t_token	*lexer);
 void		*parser_check(t_token **lexer_tmp, t_parser **parser_tmp, \
 												t_parser **parser);
@@ -129,5 +129,6 @@ char		*head_env_check(char *line, int *i, int *j);
 bool		env_process_heredoc(char *str, char *new, t_env **env, int *count);
 bool		token_check_pipe_redirect(t_token *lexer);
 bool		lexer_connect_check(t_token *lexer);
+bool		lexer_null_check(t_token *lexer);
 
 #endif
