@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 12:44:33 by h.miyazaki        #+#    #+#             */
-/*   Updated: 2024/07/11 11:16:46 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:03:26 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	_cd(char **cmd, t_env *env)
 	char	*destination;
 
 	destination = set_destination(cmd, env);
-	if (destination == NULL)
+	if (destination == NULL || *destination == '\0')
 		return ;
 	if (chdir(destination) != 0)
 	{

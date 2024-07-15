@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 20:18:16 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/14 15:55:41 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/15 17:36:56 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void	write_error_efd(t_code error_code, char *insert);
 
 void	perror_set_flag(char *insert)
 {
+	if (insert == NULL || *insert == '\0')
+		write(2, ":", 1);
 	perror(insert);
 	g_flag = 1;
 }
