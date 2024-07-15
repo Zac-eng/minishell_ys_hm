@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 19:48:42 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/15 14:44:10 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:59:20 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	quote_read_heredoc(t_file *file, int fd)
 		write(fd, "\n", 1);
 		free(line);
 	}
-	if (!line)
+	if (line)
 		free(line);
 	close(fd);
 	if (dup2(input, 0) < 0)
