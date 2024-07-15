@@ -6,21 +6,22 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/14 19:45:42 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:16:13 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	heredoc(t_file *file, t_env **env)
+bool	heredoc(t_file *file, t_env **env, int *i)
 {
 	int		fd;
 	char	*new_file;
 
 	fd = 0;
-	new_file = create_file();
+	new_file = create_file(i);
 	if (new_file == NULL)
 		return (false);
+	(*i)++;
 	fd = open(new_file, O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
 		return (false);
@@ -81,7 +82,7 @@ bool	read_heredoc(t_file *file, t_env **env, int fd)
 		if (ft_strlen(line) && is_equal(line, file->file_name))
 		{
 			free_close(line, fd);
-			break ;
+			return (true);
 		}
 		else if (write_heredoc(line, env, fd) == false)
 			return (free_close(line, fd), false);
@@ -89,6 +90,6 @@ bool	read_heredoc(t_file *file, t_env **env, int fd)
 	}
 	close(fd);
 	if (dup2(input, 0) < 0)
-		return (false);
+		return (close(input), false);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 18:16:09 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/14 19:32:11 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:11:29 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	rm_heredoc_loop(int *i, char *file, char *tmp)
 	{
 		unlink(file);
 		free(file);
+		file = NULL;
 		(*i)++;
 		tmp = ft_itoa(*i);
 		if (tmp == NULL)
