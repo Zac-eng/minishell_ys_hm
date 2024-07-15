@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:39:21 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/15 14:16:13 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:42:02 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,16 @@ bool	read_heredoc(t_file *file, t_env **env, int fd)
 		if (!line)
 			break ;
 		if (ft_strlen(line) && is_equal(line, file->file_name))
-		{
-			free_close(line, fd);
-			return (true);
-		}
+			break ;
 		else if (write_heredoc(line, env, fd) == false)
-			return (free_close(line, fd), false);
+			break ;
 		free(line);
 	}
+	if (!line)
+		free(line);
 	close(fd);
 	if (dup2(input, 0) < 0)
 		return (close(input), false);
+	close(input);
 	return (true);
 }
