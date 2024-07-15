@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/14 21:14:00 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:23:37 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,20 @@ static void	execute_path(char *path, char **cmd, char **env)
 	pid = safe_fork();
 	if (pid == 0)
 	{
-		if (execve(path, cmd, env) == -1)
-		{
-			if (is_dir(path) == true)
-				errno = EISDIR;
-			write(2, "minishell: ", 11);
-			perror(cmd[0]);
-			if (errno == EACCES)
-				exit(126);
-			else if (errno == EISDIR)
-				exit(126);
-			else if (errno == ENOENT)
-				exit(127);
-			else
-				exit(EXIT_FAILURE);
-		}
+		if (is_dir(path) == true)
+			errno = EISDIR;
+		else if (execve(path, cmd, env) != -1)
+			exit(0);
+		write(2, "minishell: ", 11);
+		perror(cmd[0]);
+		if (errno == EACCES)
+			exit(126);
+		else if (errno == EISDIR)
+			exit(126);
+		else if (errno == ENOENT)
+			exit(127);
+		else
+			exit(EXIT_FAILURE);
 	}
 	handle_status(pid, true);
 }
