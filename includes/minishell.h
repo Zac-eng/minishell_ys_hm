@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:54:00 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/14 19:43:49 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:10:03 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void	handle_status(pid_t pid_to_wait, bool set_flag);
 pid_t	safe_fork(void);
 int		redirect_stream(t_file *file_head);
 int		is_equal(char *str, char *ref);
-bool	heredoc(t_file *file, t_env **env);
+bool	heredoc(t_file *file, t_env **env, int *i);
 char	*heredoc_join(char *before, char *after, char *env_str);
 char	*env_heredoc(char *line, t_env **env, int *i, int j);
-bool	quote_heredoc(t_file *file);
-bool	quote_read_heredoc(t_file *file, char *new_file);
-char	*create_file(void);
+bool	quote_heredoc(t_file *file, int *i);
+bool	quote_read_heredoc(t_file *file, int fd);
+char	*create_file(int *i);
 void	rm_heredoc_file(void);
 void	free_close(char *line, int fd);
 void	signal_heredoc(void);
@@ -94,7 +94,6 @@ bool	write_heredoc(char *line, t_env **env, int fd);
 char	*create_new_line(char *line, t_env **env, int *start);
 bool	heredoc_loop(t_file *file, t_env **env);
 void	free_close(char *line, int fd);
-char	*create_file(void);
 char	*expand_heredoc(char *line, t_env **env);
 char	*env_insert_heredoc(char *str, t_env **env, int len);
 int		get_env_len(char *env_line, int *key_value_len);

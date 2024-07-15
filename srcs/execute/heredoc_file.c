@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 16:45:35 by yususato          #+#    #+#             */
-/*   Updated: 2024/07/14 19:33:24 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/15 14:21:40 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 bool	filename_change(t_file *file, char *new_file)
 {
 	free(file->file_name);
+	file->file_name = NULL;
 	file->file_name = ft_strdup(new_file);
 	if (file->file_name == NULL)
 	{
@@ -22,6 +23,7 @@ bool	filename_change(t_file *file, char *new_file)
 		return (false);
 	}
 	free(new_file);
+	new_file = NULL;
 	return (true);
 }
 
@@ -52,14 +54,12 @@ char	*create_check(int *i)
 	return (new);
 }
 
-char	*create_file(void)
+char	*create_file(int *i)
 {
-	int		i;
-	int		fd;
-	char	*new;
+	int			fd;
+	char		*new;
 
-	i = 0;
-	new = create_check(&i);
+	new = create_check(i);
 	if (new == NULL)
 		return (NULL);
 	fd = open(new, O_CREAT, 0644);
