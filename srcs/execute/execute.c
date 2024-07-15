@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 19:28:09 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/15 13:56:44 by yususato         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:38:58 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	execute_pipe(t_parser *cmd, t_env **env, char **paths)
 {
 	pid_t	pid;
 
+	if (cmd == NULL)
+		return ;
 	if (cmd->prev != NULL)
 	{
 		pid = safe_fork();

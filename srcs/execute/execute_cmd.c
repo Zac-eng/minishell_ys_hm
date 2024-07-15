@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:43:54 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/15 11:23:37 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:42:50 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	is_dir(char *path);
 
 void	execute_cmd(char **cmd, t_env **env, char **paths)
 {
-	if (cmd == NULL || env == NULL)
+	if (cmd == NULL || cmd[0] == NULL || env == NULL)
 		return ;
 	if (is_equal(cmd[0], "echo") == 1)
 		return (_echo(cmd));
@@ -45,8 +45,6 @@ static void	execute_execve(char **cmd, t_env *env, char **paths)
 	if (cmd == NULL || cmd[0] == NULL)
 		return ;
 	env_str = env_into_list(env);
-	if (env_str == NULL)
-		return ;
 	if (paths != NULL && ft_strchr(cmd[0], '/') == NULL)
 		execute_envpath(paths, cmd, env_str);
 	else

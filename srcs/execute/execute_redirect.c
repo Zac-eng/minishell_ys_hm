@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:24:22 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/07/14 13:16:09 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/07/15 16:39:59 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	execute_redirect(t_parser *cmd, t_env **env, char **paths)
 	if (cmd->file == NULL)
 		return (execute_cmd(cmd->cmd, env, paths));
 	if (save_io(&std_io[0]) < 0)
-		return ;
-	if (cmd->cmd == NULL)
 		return ;
 	if (redirect_stream(cmd->file) < 0)
 	{
